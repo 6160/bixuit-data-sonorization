@@ -2,7 +2,7 @@ let TERM;
 let INDEX = 0;
 let PROMPT = '';
 const DELAYCHAR = 40;
-const DELAYMSG = 1500;
+const DELAYMSG = 700;
 jQuery(document).ready(function($) {
     var anim = false;
     function typed(finish_typing) {
