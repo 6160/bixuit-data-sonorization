@@ -4,7 +4,7 @@ var amp;
 var button;
 let sampleNo = 0;
 var volhistory = [];
-
+var bgimg;
 const graphX = 230;
 const lineL = 25 + graphX;
 const lineR = 30 + graphX;
@@ -20,6 +20,7 @@ function toggleSong() {
 
 function preload() {
     song = loadSound('GLADOS.mp3');
+    bgimg = loadImage('2x/Asset1_2x.png');
 }
 
 function setup() {
@@ -77,7 +78,8 @@ function bgTile() {
 
 
 function draw() {
-    background(0);
+    background(37,50,104);
+    image(bgimg, 0, 0, width, height)
     drawUI();
     // bgTile();
     
