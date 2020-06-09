@@ -5,6 +5,11 @@ var button;
 let sampleNo = 0;
 var volhistory = [];
 
+const graphX = 230;
+const lineL = 25 + graphX;
+const lineR = 30 + graphX;
+const graphLineX = lineR + 10;
+
 function toggleSong() {
     if (song.isPlaying()) {
         song.pause();
@@ -18,6 +23,8 @@ function preload() {
 }
 
 function setup() {
+    console.log('dpr ',window.devicePixelRatio)
+    pixelDensity(window.devicePixelRatio)
     console.log(window.innerHeight, window.innerWidth)
     let c = createCanvas(window.innerWidth, window.innerHeight);
     c.parent("p5canvas");
@@ -30,8 +37,6 @@ function setup() {
 
 function drawUI() {
 
-    const lineL = 25;
-    const lineR = 30;
     // graph
     // stroke(255,0,0);
     // line(10,  height - 25, 10, 650)
@@ -53,11 +58,28 @@ function drawUI() {
 
 }
 
+function bgTile() {
+    const tile = 50;
+    const x_tile = width / 50;
+    const y_tile = height / 50;
+    stroke('rgba(255,255,255,0.05)');
+    noFill();
+    for (let i = 0; i < x_tile; i ++) {
+
+        for (let j = 0; j < y_tile; j ++) {
+            console.log(Math.floor(frameCount % y_tile))
+            if (Math.floor(frameCount % y_tile) === i) fill(0,0,255);
+            else noFill();
+            square(j * tile, i * tile, tile);
+        }
+    }
+}
 
 
 function draw() {
     background(0);
     drawUI();
+    // bgTile();
     
     var vol = amp.getLevel();
     volhistory.push(vol);
@@ -70,21 +92,22 @@ function draw() {
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
         var y = map(volhistory[i], 0, 1, height - 25, height - 500);
-        vertex(i + 35, y);
+        vertex(i + graphLineX, y);
     }
     endShape();
     pop();
-    if (volhistory.length > width - 50) {
-        volhistory.splice(0, 1);
+    if (volhistory.length > width - 50 - graphLineX) {
+        // volhistory.splice(0, 1);
+        volhistory = [];
     }
 
     // stroke(255, 0, 0);
     // line(volhistory.length, 0, volhistory.length, height);
-    ellipse(125, 125, 200, vol * 200);
+    ellipse(125, height - 100, 200, vol * 200);
     textFont('monospace');
     textSize(8);
-    textStyle('LIGHT')
+    // textStyle('LIGHT')
     let volstring = vol.toString()
-    text(volstring.substring(0,4), 220, 200);
-    text(sampleNo, 20, 60)
+    text(volstring.substring(0,4), 20, height - 25);
+    text(sampleNo, 20, height - 175)
 }
