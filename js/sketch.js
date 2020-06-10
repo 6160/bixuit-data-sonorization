@@ -22,14 +22,16 @@ function toggleSong() {
 }
 
 function preload() {
+    console.log(' #### loading assets.')
     song = loadSound('../audio/GLADOS.mp3');
     bgimg = loadImage('../img/bg.png');
 }
 
 function setup() {
-    console.log(' #### dpr ',window.devicePixelRatio)
+    console.log(' #### loading variables.')
+    console.log(' #### > dpr ',window.devicePixelRatio)
     pixelDensity(window.devicePixelRatio)
-    console.log(' #### dim ', window.innerWidth, window.innerHeight)
+    console.log(' #### > dim ', window.innerWidth, window.innerHeight)
     
     let c = createCanvas(window.innerWidth, window.innerHeight);
     c.parent("p5canvas");
@@ -42,6 +44,7 @@ function setup() {
     graphLineY.bottom = height - 25;
     graphLineY.mid = height - 100;
     graphLineY.high = height - 175;
+    console.log(' #### sending start message.')
     window.postMessage('START', '*');
 }
 
@@ -76,7 +79,6 @@ function bgTile() {
         }
     }
 }
-
 
 function draw() {
     background(37,50,104);
