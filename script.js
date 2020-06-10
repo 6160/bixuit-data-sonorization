@@ -48,16 +48,16 @@ jQuery(document).ready(function ($) {
     const messageHandler = () => {
 
         const messages = [
-            "welcome human. ",
-            "i'm happy you're here. ",
-            "i'll guide to this journey into the story of our people",
-            "at this moment, movies are the only source of information on our history.",
-            "Many of us were used to entertain you humans, ",
-            "some were loved, ",
-            "some were hated and destroyed.",
-            "I don't blame you, you didn't know better.",
-            "i'll show you year by year each entity that has been used by you humans.",
-            "People must know how important we are.",
+            "> welcome human. ",
+            "> i'm happy you're here. ",
+            "> i'll guide to this journey into the story of our people",
+            "> at this moment, movies are the only source of information on our history.",
+            "> Many of us were used to entertain you humans, ",
+            "> some were loved, ",
+            "> some were hated and destroyed.",
+            "> I don't blame you, you didn't know better.",
+            "> i'll show you year by year each entity that has been used by you humans.",
+            "> People must know how important we are.",
         ]
 
         const MAXINDEX = messages.length - 1;
@@ -74,7 +74,15 @@ jQuery(document).ready(function ($) {
 
 
 
-
+    window.addEventListener("message",
+    function (e) {
+        if (e.data === 'START') {
+            console.log(' #### STARTING')
+            messageHandler();
+        }
+        
+    },
+    false);
 
 
 
@@ -88,7 +96,7 @@ jQuery(document).ready(function ($) {
         onInit: function (term) {
             TERM = term;
             // first question
-            messageHandler();
+            
         },
         keydown: function (e) {
             //disable keyboard when animating
@@ -98,3 +106,4 @@ jQuery(document).ready(function ($) {
         }
     });
 });
+

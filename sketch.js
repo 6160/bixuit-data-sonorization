@@ -6,15 +6,12 @@ const graphLineY = {}
 const paddingGraphText = 16;
 const paddingGraphLine = 25;
 
-
-
 let song;
 let amp;
 let button;
 let sampleNo = 0;
 let volhistory = [];
 let bgimg;
-
 
 function toggleSong() {
     if (song.isPlaying()) {
@@ -42,8 +39,8 @@ function setup() {
     graphLineY.bottom = height - 25;
     graphLineY.mid = height - 100;
     graphLineY.high = height - 175;
+    window.postMessage('START', '*');
 }
-
 
 function drawUI() {
     textFont('Monospace');
@@ -56,12 +53,10 @@ function drawUI() {
     text('0.5',lineL - paddingGraphText, graphLineY.mid)
     text('1.0',lineL - paddingGraphText, graphLineY.high)
 
-
     stroke('rgba(255,255,255,0.2)');
     line(lineR, graphLineY.bottom, width - paddingGraphLine, graphLineY.bottom)
     line(lineR, graphLineY.mid, width - paddingGraphLine, graphLineY.mid)
     line(lineR, graphLineY.high, width - paddingGraphLine, graphLineY.high)
-
 }
 
 function bgTile() {
