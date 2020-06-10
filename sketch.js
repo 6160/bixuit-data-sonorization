@@ -1,14 +1,20 @@
-
-var song;
-var amp;
-var button;
-let sampleNo = 0;
-var volhistory = [];
-var bgimg;
 const graphX = 230;
 const lineL = 25 + graphX;
 const lineR = 30 + graphX;
 const graphLineX = lineR + 10;
+const graphLineY = {}
+const paddingGraphText = 16;
+const paddingGraphLine = 25;
+
+
+
+let song;
+let amp;
+let button;
+let sampleNo = 0;
+let volhistory = [];
+let bgimg;
+
 
 function toggleSong() {
     if (song.isPlaying()) {
@@ -20,7 +26,7 @@ function toggleSong() {
 
 function preload() {
     song = loadSound('GLADOS.mp3');
-    bgimg = loadImage('2x/Asset1_2x.png');
+    bgimg = loadImage('1x/Asset 1.png');
 }
 
 function setup() {
@@ -33,45 +39,42 @@ function setup() {
     // button.mousePressed(toggleSong);
     song.play();
     amp = new p5.Amplitude();
+    graphLineY.bottom = height - 25;
+    graphLineY.mid = height - 100;
+    graphLineY.high = height - 175;
 }
 
 
 function drawUI() {
-
-    // graph
-    // stroke(255,0,0);
-    // line(10,  height - 25, 10, 650)
     textFont('Monospace');
     textSize(8);
-    line(lineL, height - 25, lineR, height - 25)
-    line(lineL, height - 100, lineR, height - 100)
-    line(lineL, height - 175, lineR, height - 175)
+    line(lineL, graphLineY.bottom, lineR, graphLineY.bottom)
+    line(lineL, graphLineY.mid, lineR, graphLineY.mid)
+    line(lineL, graphLineY.high, lineR, graphLineY.high)
 
-    text('0.0',lineL - 16, height - 25)
-    text('0.5',lineL - 16, height - 100)
-    text('1.0',lineL - 16, height - 175)
+    text('0.0',lineL - paddingGraphText, graphLineY.bottom)
+    text('0.5',lineL - paddingGraphText, graphLineY.mid)
+    text('1.0',lineL - paddingGraphText, graphLineY.high)
 
 
-    stroke('rgba(255,255,255,0.15)');
-    line(lineR, height - 25, width - 25, height - 25)
-    line(lineR, height - 100, width - 25, height - 100)
-    line(lineR, height - 175, width - 25, height - 175)
+    stroke('rgba(255,255,255,0.2)');
+    line(lineR, graphLineY.bottom, width - paddingGraphLine, graphLineY.bottom)
+    line(lineR, graphLineY.mid, width - paddingGraphLine, graphLineY.mid)
+    line(lineR, graphLineY.high, width - paddingGraphLine, graphLineY.high)
 
 }
 
 function bgTile() {
     const tile = 50;
-    const x_tile = width / 50;
-    const y_tile = height / 50;
-    stroke('rgba(255,255,255,0.05)');
+    const x_tile = width / tile;
+    const y_tile = height / tile;
+    
+    stroke('rgba(255,255,255,0.01)');
     noFill();
     for (let i = 0; i < x_tile; i ++) {
 
         for (let j = 0; j < y_tile; j ++) {
-            console.log(Math.floor(frameCount % y_tile))
-            if (Math.floor(frameCount % y_tile) === i) fill(0,0,255);
-            else noFill();
-            square(j * tile, i * tile, tile);
+            square(i * tile, j * tile, tile);
         }
     }
 }
@@ -81,7 +84,7 @@ function draw() {
     background(37,50,104);
     image(bgimg, 0, 0, width, height)
     drawUI();
-    // bgTile();
+    bgTile();
     
     var vol = amp.getLevel();
     volhistory.push(vol);
@@ -89,26 +92,22 @@ function draw() {
     stroke(255);
     noFill();
     push();
-    var currentY = map(vol, 0, 1, height - 25, 100);
-    // translate(0, height / 2 - currentY);
+
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
         var y = map(volhistory[i], 0, 1, height - 25, height - 500);
-        vertex(i + graphLineX, y);
+        vertex((i*4)+ graphLineX, y);
     }
     endShape();
     pop();
-    if (volhistory.length > width - 50 - graphLineX) {
-        // volhistory.splice(0, 1);
+
+    if (volhistory.length * 4 > (width) - 50 - graphLineX) {
         volhistory = [];
     }
 
-    // stroke(255, 0, 0);
-    // line(volhistory.length, 0, volhistory.length, height);
     ellipse(125, height - 100, 200, vol * 200);
     textFont('monospace');
     textSize(8);
-    // textStyle('LIGHT')
     let volstring = vol.toString()
     text(volstring.substring(0,4), 20, height - 25);
     text(sampleNo, 20, height - 175)

@@ -21,11 +21,17 @@
 .terminal h1, .terminal h2, .terminal h3, .terminal h4, .terminal h5, .terminal h6, .terminal pre, .cmd {
     margin: 0;
 }
+
+
+
 /*
 .terminal h1, .terminal h2, .terminal h3, .terminal h4, .terminal h5, .terminal h6 {
     line-height: 1.2em;
 }
 /*
+
+
+
 .cmd .mask {
     width: 10px;
     height: 11px;
@@ -82,7 +88,7 @@
 }
 .terminal {
     position: absolute;
-    top: 200px;
+    top: 40%;
     right: 0;
     bottom: 0;
     left: 10px;
