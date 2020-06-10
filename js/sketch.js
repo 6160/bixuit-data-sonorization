@@ -22,18 +22,21 @@ function toggleSong() {
 }
 
 function preload() {
-    song = loadSound('GLADOS.mp3');
-    bgimg = loadImage('1x/Asset 1.png');
+    song = loadSound('../audio/GLADOS.mp3');
+    bgimg = loadImage('../img/bg.png');
 }
 
 function setup() {
-    console.log('dpr ',window.devicePixelRatio)
+    console.log(' #### dpr ',window.devicePixelRatio)
     pixelDensity(window.devicePixelRatio)
-    console.log(window.innerHeight, window.innerWidth)
+    console.log(' #### dim ', window.innerWidth, window.innerHeight)
+    
     let c = createCanvas(window.innerWidth, window.innerHeight);
     c.parent("p5canvas");
+    
     // button = createButton('toggle');
     // button.mousePressed(toggleSong);
+    
     song.play();
     amp = new p5.Amplitude();
     graphLineY.bottom = height - 25;

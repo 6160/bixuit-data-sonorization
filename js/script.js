@@ -1,8 +1,25 @@
+const DELAYCHAR = 40;
+const DELAYMSG = 700;
+const messages = [
+    "> welcome human. ",
+    "> i'm happy you're here. ",
+    "> i'll guide to this journey into the story of our people",
+    "> at this moment, movies are the only source of information on our history.",
+    "> Many of us were used to entertain you humans, ",
+    "> some were loved, ",
+    "> some were hated and destroyed.",
+    "> I don't blame you, you didn't know better.",
+    "> i'll show you year by year each entity that has been used by you humans.",
+    "> People must know how important we are.",
+]
+const MAXINDEX = messages.length - 1;
+
 let TERM;
 let INDEX = 0;
 let PROMPT = '';
-const DELAYCHAR = 40;
-const DELAYMSG = 700;
+
+
+
 jQuery(document).ready(function ($) {
     var anim = false;
     function typed(finish_typing) {
@@ -44,27 +61,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-
     const messageHandler = () => {
-
-        const messages = [
-            "> welcome human. ",
-            "> i'm happy you're here. ",
-            "> i'll guide to this journey into the story of our people",
-            "> at this moment, movies are the only source of information on our history.",
-            "> Many of us were used to entertain you humans, ",
-            "> some were loved, ",
-            "> some were hated and destroyed.",
-            "> I don't blame you, you didn't know better.",
-            "> i'll show you year by year each entity that has been used by you humans.",
-            "> People must know how important we are.",
-        ]
-
-        const MAXINDEX = messages.length - 1;
         if (INDEX > MAXINDEX) return;
-        typed_message(TERM, messages[INDEX], function () {
-        });
-
+        typed_message(TERM, messages[INDEX], () => {});
     }
 
     const nextMessage = () => {
@@ -72,23 +71,14 @@ jQuery(document).ready(function ($) {
         setTimeout(messageHandler(), 2000);
     }
 
-
-
-    window.addEventListener("message",
-    function (e) {
+    window.addEventListener("message",function (e) {
         if (e.data === 'START') {
             console.log(' #### STARTING')
             messageHandler();
         }
-        
-    },
-    false);
+    }, false);
 
-
-
-    $('body').terminal(function (cmd, term) {
-
-    }, {
+    $('body').terminal(() => {}, {
         name: 'xxx',
         greetings: null,
         width: 900,
