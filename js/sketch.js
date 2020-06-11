@@ -84,7 +84,6 @@ function draw() {
     background(37,50,104);
     image(bgimg, 0, 0, width, height)
     drawUI();
-    bgTile();
     
     var vol = amp.getLevel();
     volhistory.push(vol);

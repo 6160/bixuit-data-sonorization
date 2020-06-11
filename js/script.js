@@ -18,8 +18,6 @@ let TERM;
 let INDEX = 0;
 let PROMPT = '';
 
-
-
 jQuery(document).ready(function ($) {
     var anim = false;
     function typed(finish_typing) {
@@ -63,7 +61,7 @@ jQuery(document).ready(function ($) {
 
     const messageHandler = () => {
         if (INDEX > MAXINDEX) return;
-        typed_message(TERM, messages[INDEX], () => {});
+        typed_message(TERM, messages[INDEX], () => { });
     }
 
     const nextMessage = () => {
@@ -71,14 +69,14 @@ jQuery(document).ready(function ($) {
         setTimeout(messageHandler(), 2000);
     }
 
-    window.addEventListener("message",function (e) {
+    window.addEventListener("message", function (e) {
         if (e.data === 'START') {
             console.log(' #### STARTING')
             messageHandler();
         }
     }, false);
 
-    $('body').terminal(() => {}, {
+    $('body').terminal(() => { }, {
         name: 'xxx',
         greetings: null,
         width: 900,
@@ -86,7 +84,7 @@ jQuery(document).ready(function ($) {
         onInit: function (term) {
             TERM = term;
             // first question
-            
+
         },
         keydown: function (e) {
             //disable keyboard when animating
