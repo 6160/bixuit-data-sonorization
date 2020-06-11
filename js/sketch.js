@@ -1,5 +1,5 @@
 // constants
-const MINWIDTH = 400;
+const MINWIDTH = 480;
 const UI = {};
 
 // other stuff
