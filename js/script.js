@@ -1,12 +1,12 @@
 const DELAYCHAR = 40;
 const DELAYMSG = 700;
 const messages = [
-    "> welcome human. ",
-    "> i'm happy you're here. ",
+    "> welcome human.",
+    "> i'm happy you're here.",
     "> i'll guide to this journey into the story of our people",
     "> at this moment, movies are the only source of information on our history.",
-    "> Many of us were used to entertain you humans, ",
-    "> some were loved, ",
+    "> Many of us were used to entertain you humans,",
+    "> some were loved,",
     "> some were hated and destroyed.",
     "> I don't blame you, you didn't know better.",
     "> i'll show you year by year each entity that has been used by you humans.",
@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
     $('body').terminal(() => { }, {
         name: 'xxx',
         greetings: null,
-        width: 900,
+        width: window.innerWidth <= 400 ? 365 : 900,
         height: 400,
         onInit: function (term) {
             TERM = term;
