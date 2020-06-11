@@ -113,6 +113,7 @@ function setup() {
     assignPositions();
     console.log(' #### sending start message.')
     window.postMessage('START', '*');
+    
 }
 
 function drawUI() {
@@ -136,6 +137,7 @@ function drawUI() {
 
 function draw() {
     clear();
+    text(`width: ${width}`, 10, 10)
     // background(37,50,104);
     // image(bgimg, 0, 0, width, height)
     drawUI();
