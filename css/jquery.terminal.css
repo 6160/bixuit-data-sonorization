@@ -86,7 +86,7 @@
 .terminal {
     --background: transparent;
 }
-@media (max-width: 400px) {
+@media (max-width: 812px) {
     .terminal {
         position: absolute;
         top: 10%;
@@ -98,7 +98,7 @@
         /* overflow-x: hidden; */
     }
 }
-@media (min-width: 401px) {
+@media (min-width: 813px) {
     .terminal {
         position: absolute;
         top: 35%;

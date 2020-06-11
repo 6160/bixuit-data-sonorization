@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
     $('body').terminal(() => { }, {
         name: 'xxx',
         greetings: null,
-        width: window.innerWidth <= 400 ? 365 : 900,
+        width: window.innerWidth <= 812 ? 365 : 900,
         height: 400,
         onInit: function (term) {
             TERM = term;
