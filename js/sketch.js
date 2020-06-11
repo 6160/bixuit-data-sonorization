@@ -24,7 +24,7 @@ function toggleSong() {
 function preload() {
     console.log(' #### loading assets.')
     song = loadSound('./audio/GLADOS.mp3');
-    bgimg = loadImage('./img/bg.png');
+    // bgimg = loadImage('./img/bg.png');
 }
 
 function setup() {
@@ -81,8 +81,9 @@ function bgTile() {
 }
 
 function draw() {
-    background(37,50,104);
-    image(bgimg, 0, 0, width, height)
+    clear();
+    // background(37,50,104);
+    // image(bgimg, 0, 0, width, height)
     drawUI();
     
     var vol = amp.getLevel();
