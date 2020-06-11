@@ -9,6 +9,7 @@ let button;
 let sampleNo = 0;
 let volhistory = [];
 let bgimg;
+let ismobile = false;
 
 function toggleSong() {
     if (song.isPlaying()) {
@@ -25,6 +26,7 @@ function preload() {
 
 function assignPositions() {
     if (width < MINWIDTH) {
+        ismobile = true;
         // mobile
         UI.graphStartX = 5;
         UI.graphUI = {};
@@ -137,7 +139,7 @@ function drawUI() {
 
 function draw() {
     clear();
-    text(`width: ${width}`, 10, 10)
+    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
     // background(37,50,104);
     // image(bgimg, 0, 0, width, height)
     drawUI();
