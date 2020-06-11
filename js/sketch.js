@@ -25,7 +25,7 @@ function preload() {
 }
 
 function assignPositions() {
-    if (width < MINWIDTH) {
+    if (width <= MINWIDTH) {
         ismobile = true;
         // mobile
         UI.graphStartX = 5;
