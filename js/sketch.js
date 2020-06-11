@@ -23,8 +23,8 @@ function toggleSong() {
 
 function preload() {
     console.log(' #### loading assets.')
-    song = loadSound('../audio/GLADOS.mp3');
-    bgimg = loadImage('../img/bg.png');
+    song = loadSound('./audio/GLADOS.mp3');
+    bgimg = loadImage('./img/bg.png');
 }
 
 function setup() {
