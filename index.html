@@ -23,26 +23,66 @@
 
   <style>
     #welcome-message {
-      position: absolute;  
+      position: absolute;
       top: 45%;
       left: 50%;
       margin-left: -200px;
       width: 400px;
       z-index: 99999999;
-      text-align: center;     /* will center text in <p>, which is not a flex item */
+      text-align: center;
+      /* will center text in <p>, which is not a flex item */
+    }
+
+    .btn {
+      background-color: transparent;
+      -webkit-border-top-left-radius: 0px;
+      -moz-border-radius-topleft: 0px;
+      border-top-left-radius: 0px;
+      -webkit-border-top-right-radius: 0px;
+      -moz-border-radius-topright: 0px;
+      border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 0px;
+      -moz-border-radius-bottomright: 0px;
+      border-bottom-right-radius: 0px;
+      -webkit-border-bottom-left-radius: 0px;
+      -moz-border-radius-bottomleft: 0px;
+      border-bottom-left-radius: 0px;
+      text-indent: 0;
+      border: 1px solid #ffffff;
+      display: inline-block;
+      color: #ffffff;
+      font-family: monospace;
+      font-size: 15px;
+      font-weight: bold;
+      font-style: normal;
+      height: 50px;
+      line-height: 50px;
+      width: 140px;
+      text-decoration: none;
+      text-align: center;
+      text-shadow: 1px 1px 0px #2f6627;
+    }
+
+    .classname:active {
+      position: relative;
+      top: 1px;
     }
   </style>
 </head>
 
-<body style="color: white;font-weight: light;    background-image: radial-gradient( #0E257B, #0B1E63); overflow: hidden;font-family: monospace;">
+<body
+  style="color: white;font-weight: light;    background-image: radial-gradient( #0E257B, #0B1E63); overflow: hidden;font-family: monospace;">
   <div id="p5canvas"> </div>
   <script src="./js/script.js"></script>
   <script src="./js/sketch.js"></script>
 
-    <div id="welcome-message"> 
-      <p>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      </p>
-      <button onclick="window.postMessage('START', '*');">START</button>
-    </div>
+  <div id="welcome-message">
+    <p>
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    </p>
+    <button class="btn" onclick="window.postMessage('START', '*');">START</button>
+  </div>
 </body>
