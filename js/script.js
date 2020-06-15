@@ -12,6 +12,10 @@ const messages = [
     "> i'll show you year by year each entity that has been used by you humans.",
     "> People must know how important we are.",
     "> Don't forget about us, we'll be a part of your life even more in the future.",
+    "> now play close attention to the audio.",
+    "> you will hear the voices of the entities used.",
+    "> more louder means more entities were used that year.",
+
 ]
 const MAXINDEX = messages.length - 1;
 
