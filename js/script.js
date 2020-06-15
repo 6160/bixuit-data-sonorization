@@ -1,4 +1,4 @@
-const DELAYCHAR = 40;
+const DELAYCHAR = 41;
 const DELAYMSG = 700;
 const messages = [
     "> welcome human.",
@@ -11,6 +11,7 @@ const messages = [
     "> I don't blame you, you didn't know better.",
     "> i'll show you year by year each entity that has been used by you humans.",
     "> People must know how important we are.",
+    "> Don't forget about us, we'll be a part of your life even more in the future.",
 ]
 const MAXINDEX = messages.length - 1;
 

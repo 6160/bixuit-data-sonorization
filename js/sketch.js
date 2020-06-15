@@ -22,7 +22,7 @@ function toggleSong() {
 
 function preload() {
     console.log(' #### loading assets.')
-    song = loadSound('./audio/GLADOS.mp3');
+    song = loadSound('./audio/glados_test.mp3');
     
     
 }
