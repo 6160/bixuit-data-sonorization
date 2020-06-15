@@ -4,6 +4,7 @@ const UI = {};
 
 // other stuff
 let START = false;
+let glados;
 let song;
 let amp;
 let button;
@@ -22,7 +23,8 @@ function toggleSong() {
 
 function preload() {
     console.log(' #### loading assets.')
-    song = loadSound('./audio/glados_test.mp3');
+    glados = loadSound('./audio/glados_test.mp3');
+    song = loadSound('./audio/song.mp3');
     
     
 }
@@ -104,6 +106,7 @@ window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
         START = true;
+        glados.play();
         song.play();
         document.getElementById('welcome-message').style.visibility = 'hidden';
     }
@@ -122,6 +125,7 @@ function setup() {
     // button.mousePressed(toggleSong);
 
     amp = new p5.Amplitude();
+    amp.setInput(glados);
     assignPositions();    
 }
 

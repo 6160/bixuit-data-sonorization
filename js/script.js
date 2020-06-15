@@ -79,7 +79,7 @@ jQuery(document).ready(function ($) {
 
     $('body').terminal(() => { }, {
         name: 'xxx',
-        greetings: null,
+        greetings: '██████╗ ██╗██╗  ██╗██╗   ██╗██╗████████╗\n██╔══██╗██║╚██╗██╔╝██║   ██║██║╚══██╔══╝\n██████╔╝██║ ╚███╔╝ ██║   ██║██║   ██║   \n██╔══██╗██║ ██╔██╗ ██║   ██║██║   ██║   \n██████╔╝██║██╔╝ ██╗╚██████╔╝██║   ██║   \n╚═════╝ ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝   ╚═╝  \n',
         width: window.innerWidth <= 812 ? 365 : 900,
         height: 400,
         onInit: function (term) {
