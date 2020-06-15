@@ -3,6 +3,7 @@ const MINWIDTH = 480;
 const UI = {};
 
 // other stuff
+let START = false;
 let song;
 let amp;
 let button;
@@ -22,6 +23,8 @@ function toggleSong() {
 function preload() {
     console.log(' #### loading assets.')
     song = loadSound('./audio/GLADOS.mp3');
+    
+    
 }
 
 function assignPositions() {
@@ -97,6 +100,14 @@ function assignPositions() {
     }
 }
 
+window.addEventListener("message", function (e) {
+    if (e.data === 'START') {
+        console.log(' #### STARTING P5')
+        START = true;
+        song.play();
+        document.getElementById('welcome-message').style.visibility = 'hidden';
+    }
+}, false);
 
 function setup() {
     console.log(' #### loading variables.')
@@ -110,12 +121,8 @@ function setup() {
     // button = createButton('toggle');
     // button.mousePressed(toggleSong);
 
-    song.play();
     amp = new p5.Amplitude();
-    assignPositions();
-    console.log(' #### sending start message.')
-    window.postMessage('START', '*');
-    
+    assignPositions();    
 }
 
 function drawUI() {
@@ -138,8 +145,9 @@ function drawUI() {
 
 
 function draw() {
+    if (!START) return;
     clear();
-    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
+    // text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
     // background(37,50,104);
     // image(bgimg, 0, 0, width, height)
     drawUI();

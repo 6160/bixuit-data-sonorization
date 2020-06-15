@@ -71,7 +71,7 @@ jQuery(document).ready(function ($) {
 
     window.addEventListener("message", function (e) {
         if (e.data === 'START') {
-            console.log(' #### STARTING')
+            console.log(' #### STARTING CLI')
             messageHandler();
         }
     }, false);
