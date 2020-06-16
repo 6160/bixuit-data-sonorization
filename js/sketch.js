@@ -5,31 +5,31 @@ const AUDIO = {};
 const graphData = {
     2010: {
         label: '',
-        color: 'rgb(255,0,0)',
+        color: 'rgb(214, 169, 75)',
         points: [],
         seed: 2,
     },
     2011: {
         label: '',
-        color: 'rgb(0,255,0)',
+        color: 'rgb(66, 150, 247)',
         points: [],
         seed: 13,
     },
     2012: {
         label: '',
-        color: 'rgb(0,0,255)',
+        color: 'rgb(243, 5, 2)',
         points: [],
         seed: 1,
     },
     2013: {
         label: '',
-        color: 'rgb(255,0,255)',
+        color: 'rgb(255,255,255)',
         points: [],
         seed: 4
     },
     2014: {
         label: '',
-        color: 'rgb(255,255,0)',
+        color: 'rgb(136, 250, 78)',
         points: [],
         seed: 5,
     }
@@ -286,8 +286,10 @@ function mid() {
             return;
         }
         console.log('index is now: ', MID.index)
+        console.log('> fetched points: ', graphData[MID.year].points)
         MID.year = MID.yearList[MID.index];
         console.log('CHANGING YEAR TO ', MID.year)
+
     }
 
     // storing points in bucket
