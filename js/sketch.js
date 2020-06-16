@@ -1,6 +1,7 @@
 // constants
 const MINWIDTH = 480;
 const UI = {};
+const AUDIO = {};
 
 // other stuff
 let START = false;
@@ -15,6 +16,9 @@ let bgimg;
 let ismobile = false;
 let SCENE;
 let vol;
+let graphVolHistory = [];
+
+
 
 function toggleSong() {
     if (song.isPlaying()) {
@@ -25,10 +29,12 @@ function toggleSong() {
 }
 
 function preload() {
+
     console.log(' #### loading assets.')
-    glados = loadSound('./audio/glados_test.mp3');
-    song = loadSound('./audio/song.mp3');
-    graph = loadSound('./audio/graph.mp3');
+    AUDIO.glados = loadSound('./audio/glados_test.mp3');
+    AUDIO.song = loadSound('./audio/song.mp3');
+    AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
+    AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
 }
 
 function startMid() {
@@ -37,10 +43,19 @@ function startMid() {
     SCENE = mid;
     setMidPositions();
     amp = new p5.Amplitude();
-    amp.setInput(graph);
-    graph.play();
+    amp.setInput(AUDIO.moviesGraph);
+    AUDIO.gladosGraph.play();
+    AUDIO.gladosGraph.onended(startEnd);
+    AUDIO.moviesGraph.play();
     console.log('starting gruhigieghrieughrieu')
     
+}
+
+function startEnd() {
+    
+    SCENE = end;
+    setEndPositions();
+    console.log('startendddddd')
 }
 
 
@@ -155,7 +170,24 @@ function setMidPositions() {
 }
 
 function setEndPositions() {
+    UI.graphStartX = 230;
+    UI.graphUI = {};
+    UI.graphUI.indicator = {
+        start: 25 + UI.graphStartX,
+        end: 30 + UI.graphStartX,
+    };
 
+    UI.graphUI.line = {
+        x: UI.graphUI.indicator.end + 10,
+        y: {
+            bottom: height - 25,
+            mid: height - 100,
+            high: height - 175,
+        }
+    };
+
+    UI.paddingGraphLine = 25;
+    UI.paddingGraphText = 16
 }
 
 
@@ -163,9 +195,9 @@ window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
         START = true;
-        glados.play();
-        glados.onended(startMid);
-        song.play();
+        AUDIO.glados.play();
+        AUDIO.glados.onended(startMid);
+        AUDIO.song.play();
         document.getElementById('welcome-message').style.visibility = 'hidden';
     }
 }, false);
@@ -203,17 +235,30 @@ function intro() {
 
 
 function mid() {
-    vol = amp.getLevel();
-    ellipse(UI.ellipse.x, UI.ellipse.y, 200, vol * 200);
+    let mid_vol = amp.getLevel();
+
+    if (mid_vol > 0) graphVolHistory.push(mid_vol) 
+    ellipse(UI.ellipse.x, UI.ellipse.y, 200, mid_vol * 200);
     textFont('monospace');
     textSize(8);
 
-    let volstring = vol.toString()
+    let volstring = mid_vol.toString()
     text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
     text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
 }
 
 function end() {
+
+    push();
+
+    beginShape();
+    for (var i = 0; i < graphVolHistory.length; i++) {
+        var y = map(graphVolHistory[i], 0, 1, height - 25, height - 500);
+        vertex(i, y);
+    }
+    endShape();
+    pop();
+
 
 }
 
