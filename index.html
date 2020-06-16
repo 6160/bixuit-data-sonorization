@@ -24,13 +24,24 @@
   <style>
     .msg {
       position: absolute;
-      top: 45%;
+      top: 40%;
+      left: 60%;
+      margin-left: -200px;
+      width: 90%;
+      z-index: 99999999;
+      text-align: center;
+      visibility: hidden;
+      /* will center text in <p>, which is not a flex item */
+    }
+    .loading-msg {
+      position: absolute;
+      top: 50%;
       left: 50%;
       margin-left: -200px;
       width: 400px;
       z-index: 99999999;
       text-align: center;
-      visibility: hidden;
+
       /* will center text in <p>, which is not a flex item */
     }
 
@@ -76,7 +87,7 @@
   <div id="p5canvas"> </div>
   <script src="./js/script.js"></script>
   <script src="./js/sketch.js"></script>
-  <div id="p5_loading" class="msg">LOADING</div>
+  <div id="p5_loading" class="loading-msg">LOADING</div>
   <div id="welcome-message" class="msg">
     <p>
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore

@@ -2,7 +2,40 @@
 const MINWIDTH = 480;
 const UI = {};
 const AUDIO = {};
+const graphData = {
+    2010: {
+        label: '',
+        color: 'rgb(255,0,0)',
+        points: [],
+        seed: 2,
+    },
+    2011: {
+        label: '',
+        color: 'rgb(0,255,0)',
+        points: [],
+        seed: 13,
+    },
+    2012: {
+        label: '',
+        color: 'rgb(0,0,255)',
+        points: [],
+        seed: 1,
+    },
+    2013: {
+        label: '',
+        color: 'rgb(255,0,255)',
+        points: [],
+        seed: 4
+    },
+    2014: {
+        label: '',
+        color: 'rgb(255,255,0)',
+        points: [],
+        seed: 5,
+    }
+}
 
+const MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
 // other stuff
 let START = false;
 let glados;
@@ -41,6 +74,8 @@ function startMid() {
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'none';
     SCENE = mid;
+    MID.yearList = Object.keys(graphData);
+    MID.year = MID.yearList[MID.index];
     setMidPositions();
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.moviesGraph);
@@ -52,7 +87,7 @@ function startMid() {
 }
 
 function startEnd() {
-    
+    console.log(graphData)
     SCENE = end;
     setEndPositions();
     console.log('startendddddd')
@@ -132,7 +167,6 @@ function setIntroPositions() {
     }
 }
 
-
 function setMidPositions() {
     // desktop
     UI.graphStartX = 230;
@@ -170,24 +204,26 @@ function setMidPositions() {
 }
 
 function setEndPositions() {
-    UI.graphStartX = 230;
-    UI.graphUI = {};
-    UI.graphUI.indicator = {
-        start: 25 + UI.graphStartX,
-        end: 30 + UI.graphStartX,
-    };
+    if (width <= MINWIDTH) {
+        UI.graphStartX = 10;
+        UI.graphUI = {};
+        UI.graphUI.indicator = {
+            start: 25 + UI.graphStartX,
+            end: 30 + UI.graphStartX,
+        };
 
-    UI.graphUI.line = {
-        x: UI.graphUI.indicator.end + 10,
-        y: {
-            bottom: height - 25,
-            mid: height - 100,
-            high: height - 175,
-        }
-    };
-
-    UI.paddingGraphLine = 25;
-    UI.paddingGraphText = 16
+        UI.graphUI.line = {
+            x: UI.graphUI.indicator.end + 10,
+            y: {
+                bottom: height - 150,
+                mid: height - 270,
+                high: height - 375,
+            }
+        };
+        UI.graphEndX = width -  UI.graphUI.indicator.end
+        UI.paddingGraphLine = 25;
+        UI.paddingGraphText = 16
+    }
 }
 
 
@@ -204,6 +240,7 @@ window.addEventListener("message", function (e) {
 
 
 function intro() {
+    clear();
     drawUI();
     vol = amp.getLevel();
     volhistory.push(vol);
@@ -235,31 +272,72 @@ function intro() {
 
 
 function mid() {
-    let mid_vol = amp.getLevel();
+    clear();
+    MID.curr = amp.getLevel();
+    // if (MID.prev === undefined) MID.prev = MID.curr;
 
-    if (mid_vol > 0) graphVolHistory.push(mid_vol) 
-    ellipse(UI.ellipse.x, UI.ellipse.y, 200, mid_vol * 200);
+
+    
+    if (MID.prev > 0 & MID.curr === 0) {
+        // change points bucket
+        MID.index++
+        if (MID.index === MID.yearList.length) {
+            MID.prev = 0;
+            return;
+        }
+        console.log('index is now: ', MID.index)
+        MID.year = MID.yearList[MID.index];
+        console.log('CHANGING YEAR TO ', MID.year)
+    }
+
+    // storing points in bucket
+    if (MID.curr > 0) graphData[MID.year].points.push(MID.curr);
+
+    ellipse(UI.ellipse.x, UI.ellipse.y, 200, MID.curr * 200);
     textFont('monospace');
     textSize(8);
 
-    let volstring = mid_vol.toString()
+    let volstring = MID.curr.toString()
     text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
     text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
+    
+    // storing 
+    MID.prev = MID.curr;
 }
 
+
 function end() {
+    clear();
+    drawUI();
+    const noiseScale = 0.02;
+    const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
+    Object.keys(graphData).forEach((year, index) => {
+        const DATA = graphData[year];
+        noiseSeed(DATA.seed);
+        const points = DATA.points.map(p => map(p, 0, 1, height - 25, height - 500));
+        stroke(DATA.color);
+        text(year, UI.graphUI.indicator.end + index * 30 +10,height - 140 );
+        const average = arrAvg(points)
+        // if (index === 0) UI.graphStartX = average;
 
-    push();
+        push();
 
-    beginShape();
-    for (var i = 0; i < graphVolHistory.length; i++) {
-        var y = map(graphVolHistory[i], 0, 1, height - 25, height - 500);
-        vertex(i, y);
-    }
-    endShape();
-    pop();
+        beginShape();
+        xoff = 0.01
+        for (var i = 0; i < UI.graphEndX / 4; i+=4) {
+            xoff += 0.1
+            let noiseVal = noise(xoff);
+            // var y = map(points[i], 0, 1, height - 25, height - 800);
+            // var y = map(noiseVal, 0, 1, height - 25, height - 500);
+            var y = average - (300 * noiseVal);
+            vertex(i*4 +  UI.graphUI.indicator.end,  y);
+        }
+        endShape();
+        pop();
 
+    })
 
+    START = false;
 }
 
 
@@ -276,7 +354,7 @@ function setup() {
     c.parent("p5canvas");
 
     amp = new p5.Amplitude();
-    amp.setInput(glados);
+    amp.setInput(AUDIO.glados);
     setIntroPositions();    
     SCENE = intro;
 }
@@ -301,7 +379,7 @@ function drawUI() {
 
 function draw() {
     if (!START) return;
-    clear();
+
     // text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
     SCENE();
 }
