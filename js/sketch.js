@@ -65,6 +65,10 @@ function continueMid() {
 }
 
 function startMid() {
+
+    document.getElementById('bxt').style.left = '50%';
+    document.getElementById('bxt').style["margin-left"] = '-75px';
+
     // hide terminal
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'none';
@@ -93,6 +97,9 @@ function startMid() {
 function startEnd() {
     console.log(graphData)
     
+    document.getElementById('bxt').style.left = '20px';
+    document.getElementById('bxt').style["margin-left"] = '0px';
+
     // setting up END data
     SCENE = end;
     setEndPositions();
@@ -129,13 +136,13 @@ function setIntroPositions() {
         };
 
         UI.volstring = {
-            x: 12,
-            y: UI.ellipse.y - 50,
+            x: width - 35,
+            y: UI.ellipse.y + 50,
         }
 
         UI.sampleNo = {
-            x: width - 20,
-            y: UI.ellipse.y + 50,
+            x: 12,
+            y: UI.ellipse.y - 50,
         }
     } else {
         // desktop

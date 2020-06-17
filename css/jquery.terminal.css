@@ -89,7 +89,7 @@
 @media (max-width: 812px) {
     .terminal {
         position: absolute;
-        top: 10%;
+        top: 15%;
         right: 0;
         bottom: 0;
         left: 10px;

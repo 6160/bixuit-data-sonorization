@@ -17,12 +17,15 @@ const messages = [
     "> more louder means more entities were used that year.",
 
 ]
+
 const MAXINDEX = messages.length - 1;
 
 let TERM;
 let INDEX = 0;
 let PROMPT = '';
 let RESET = 0;
+
+
 jQuery(document).ready(function ($) {
     var anim = false;
     function typed(finish_typing) {
