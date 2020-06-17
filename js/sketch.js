@@ -35,7 +35,7 @@ const graphData = {
     }
 }
 
-const MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
+let MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
 // other stuff
 let START = false;
 let glados;
@@ -52,17 +52,7 @@ let vol;
 let graphVolHistory = [];
 
 
-
-function toggleSong() {
-    if (song.isPlaying()) {
-        song.pause();
-    } else {
-        song.play();
-    }
-}
-
 function preload() {
-
     console.log(' #### loading assets.')
     AUDIO.glados = loadSound('./audio/glados_test.mp3');
     AUDIO.song = loadSound('./audio/song.mp3');
@@ -70,27 +60,44 @@ function preload() {
     AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
 }
 
+function continueMid() {
+    document.getElementById('continue').style.visibility = 'visible';
+}
+
 function startMid() {
+    // hide terminal
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'none';
+    document.getElementById('continue').style.visibility = 'hidden';
+    
+    // setting up MID data
+    MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
     SCENE = mid;
     MID.yearList = Object.keys(graphData);
     MID.year = MID.yearList[MID.index];
+    
     setMidPositions();
+    
+    // connecting amplitude to source audio
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.moviesGraph);
+    
+    // starting audio
     AUDIO.gladosGraph.play();
     AUDIO.gladosGraph.onended(startEnd);
     AUDIO.moviesGraph.play();
-    console.log('starting gruhigieghrieughrieu')
     
+    console.log(' #### > starting mid section')
 }
 
 function startEnd() {
     console.log(graphData)
+    
+    // setting up END data
     SCENE = end;
     setEndPositions();
-    console.log('startendddddd')
+
+    console.log(' #### > starting end section')
 }
 
 
@@ -232,13 +239,31 @@ window.addEventListener("message", function (e) {
         console.log(' #### STARTING P5')
         START = true;
         AUDIO.glados.play();
-        AUDIO.glados.onended(startMid);
+        AUDIO.glados.onended(continueMid);
         AUDIO.song.play();
         document.getElementById('welcome-message').style.visibility = 'hidden';
     }
+    if (e.data ==='REPLAY') {
+        // resetting the experiment
+        amp = new p5.Amplitude();
+        amp.setInput(AUDIO.glados);
+        setIntroPositions();    
+        SCENE = intro;
+        START = true;
+        AUDIO.glados.play();
+        AUDIO.glados.onended(startMid);
+        AUDIO.song.play();
+        document.getElementById('restart').style.visibility = 'hidden';
+        const terminal = document.getElementsByClassName("terminal")[0];
+        terminal.style.display = 'block';
+    }
+    if (e.data === 'CONTINUE') {
+        // handles mid section
+        startMid()
+    }
 }, false);
 
-
+// this draws the intro section
 function intro() {
     clear();
     drawUI();
@@ -270,13 +295,11 @@ function intro() {
     text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
 }
 
-
+// this draw the MID section
 function mid() {
     clear();
+
     MID.curr = amp.getLevel();
-    // if (MID.prev === undefined) MID.prev = MID.curr;
-
-
     
     if (MID.prev > 0 & MID.curr === 0) {
         // change points bucket
@@ -285,10 +308,10 @@ function mid() {
             MID.prev = 0;
             return;
         }
-        console.log('index is now: ', MID.index)
-        console.log('> fetched points: ', graphData[MID.year].points)
+
+        console.log(' #### >> fetched points: ', graphData[MID.year].points)
         MID.year = MID.yearList[MID.index];
-        console.log('CHANGING YEAR TO ', MID.year)
+        console.log(' #### >> CHANGING YEAR TO ', MID.year)
 
     }
 
@@ -303,24 +326,28 @@ function mid() {
     text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
     text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
     
-    // storing 
+    // storing curr value for checking year change
     MID.prev = MID.curr;
 }
 
 
+// this handle the END section
 function end() {
     clear();
     drawUI();
-    const noiseScale = 0.02;
+
     const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
+
     Object.keys(graphData).forEach((year, index) => {
         const DATA = graphData[year];
         noiseSeed(DATA.seed);
+
         const points = DATA.points.map(p => map(p, 0, 1, height - 25, height - 500));
+
         stroke(DATA.color);
         text(year, UI.graphUI.indicator.end + index * 30 +10,height - 140 );
+
         const average = arrAvg(points)
-        // if (index === 0) UI.graphStartX = average;
 
         push();
 
@@ -329,8 +356,6 @@ function end() {
         for (var i = 0; i < UI.graphEndX / 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            // var y = map(points[i], 0, 1, height - 25, height - 800);
-            // var y = map(noiseVal, 0, 1, height - 25, height - 500);
             var y = average - (300 * noiseVal);
             vertex(i*4 +  UI.graphUI.indicator.end,  y);
         }
@@ -338,7 +363,8 @@ function end() {
         pop();
 
     })
-
+    
+    document.getElementById('restart').style.visibility = 'visible';
     START = false;
 }
 

@@ -22,7 +22,7 @@ const MAXINDEX = messages.length - 1;
 let TERM;
 let INDEX = 0;
 let PROMPT = '';
-
+let RESET = 0;
 jQuery(document).ready(function ($) {
     var anim = false;
     function typed(finish_typing) {
@@ -32,6 +32,12 @@ jQuery(document).ready(function ($) {
             var c = 0;
             if (message.length > 0) {
                 // term.set_prompt('');
+                if (RESET) {
+                    term.clear();
+                    console.log('DIOCANEMADONNA')
+                    term.set_prompt('');
+                    RESET = 0;
+                }
                 PROMPT += '\n\n\n';
                 var interval = setInterval(function () {
                     var chr = $.terminal.substring(message, c, c + 1);
@@ -79,11 +85,19 @@ jQuery(document).ready(function ($) {
             console.log(' #### STARTING CLI')
             messageHandler();
         }
+        if (e.data === 'REPLAY') {
+            console.log(' #### RE STARTING CLI')
+            TERM.clear();
+            INDEX = 0;
+            RESET = 1;
+            PROMPT = '';
+            messageHandler();
+        }
     }, false);
 
     $('body').terminal(() => { }, {
         name: 'xxx',
-        greetings: '██████╗ ██╗██╗  ██╗██╗   ██╗██╗████████╗\n██╔══██╗██║╚██╗██╔╝██║   ██║██║╚══██╔══╝\n██████╔╝██║ ╚███╔╝ ██║   ██║██║   ██║   \n██╔══██╗██║ ██╔██╗ ██║   ██║██║   ██║   \n██████╔╝██║██╔╝ ██╗╚██████╔╝██║   ██║   \n╚═════╝ ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝   ╚═╝  \n',
+        greetings: null,
         width: window.innerWidth <= 812 ? 365 : 900,
         height: 400,
         onInit: function (term) {
