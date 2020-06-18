@@ -443,6 +443,7 @@ function drawUI() {
 function draw() {
     if (!START) return;
 
-    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
+    
     SCENE();
+    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
 }
