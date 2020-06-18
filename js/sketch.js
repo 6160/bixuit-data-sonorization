@@ -11,7 +11,7 @@ const graphData = {
     },
     2011: {
         label: '',
-        color: 'rgb(11, 30, 99)',//'rgb(66, 150, 247)',
+        color: 'rgb(66, 130, 247)',//'rgb(11, 30, 99)',//,
         points: [],
         seed: 13,
     },
@@ -333,7 +333,7 @@ function intro() {
 // this draw the MID section
 function mid() {
     clear();
-
+    sampleNo += 1;
     MID.curr = amp.getLevel();
     
     if (MID.prev > 0 & MID.curr === 0) {
