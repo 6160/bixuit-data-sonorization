@@ -236,9 +236,9 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 150,
-                mid: height - 270,
-                high: height - 375,
+                bottom: height - 160,
+                mid: height - 280,
+                high: height - 385,
             }
         };
         UI.graphEndX = width -  UI.graphUI.indicator.end
@@ -255,9 +255,9 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 150,
-                mid: height - 270,
-                high: height - 375,
+                bottom: height - 160,
+                mid: height - 280,
+                high: height - 385,
             }
         };
         UI.graphEndX = width -  UI.graphUI.indicator.end
@@ -391,7 +391,7 @@ function end() {
         for (var i = 0; i < UI.graphEndX / 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            var y = average - (OFFSET + 10*index) - (100 * noiseVal); // 300 mobile
+            var y = average - (OFFSET + 5*index) - (100 * noiseVal); // 300 mobile
             vertex(i*4 +  UI.graphUI.indicator.end,  y);
         }
         endShape();
@@ -443,6 +443,6 @@ function drawUI() {
 function draw() {
     if (!START) return;
 
-    // text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
+    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
     SCENE();
 }
