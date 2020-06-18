@@ -89,7 +89,7 @@
 
 @media(max-width: 440px) {
     .terminal {
-        font-size:10px;
+        font-size:10px !important;
     }
 }
 
