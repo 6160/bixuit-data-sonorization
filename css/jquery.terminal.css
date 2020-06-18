@@ -86,6 +86,14 @@
 .terminal {
     --background: transparent;
 }
+
+@media(max-width: 440px) {
+    .terminal {
+        font-size:10px;
+    }
+}
+
+
 @media (max-width: 812px) {
     .terminal {
         position: absolute;
