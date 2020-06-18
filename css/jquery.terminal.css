@@ -94,7 +94,6 @@
     } */
     .terminal {
         --size: 0.8;
-        top: 18%;
     }
 }
 
@@ -102,7 +101,7 @@
 @media (max-width: 812px) {
     .terminal {
         position: absolute;
-        top: 15%;
+        top: 18%;
         right: 0;
         bottom: 0;
         left: 0px;
