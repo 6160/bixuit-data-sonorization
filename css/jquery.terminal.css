@@ -92,7 +92,10 @@
         top: 15%;
         right: 0;
         bottom: 0;
-        left: 10px;
+        left: 0px;
+        width: 94%;
+        margin-left: 3%;
+        margin-right: 3%;;
         /*overflow: hidden;*/
         overflow-y: auto;
         /* overflow-x: hidden; */
