@@ -51,13 +51,17 @@ let SCENE;
 let vol;
 let graphVolHistory = [];
 
+function replaySong() {
+    AUDIO.song.play();
+}
 
 function preload() {
     console.log(' #### loading assets.')
-    AUDIO.glados = loadSound('./audio/glados_test.mp3');
+    AUDIO.glados = loadSound('./audio/glados_intro.mp3');
     AUDIO.song = loadSound('./audio/song.mp3');
     AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
     AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
+    AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
 }
 
 function continueMid() {
@@ -107,6 +111,7 @@ function startEnd() {
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'block';
     console.log(' #### > starting end section')
+    AUDIO.gladosEnd.play();
 }
 
 
@@ -269,6 +274,7 @@ window.addEventListener("message", function (e) {
         AUDIO.glados.play();
         AUDIO.glados.onended(continueMid);
         AUDIO.song.play();
+        AUDIO.song.onended(replaySong);
         document.getElementById('welcome-message').style.visibility = 'hidden';
     }
     if (e.data ==='REPLAY') {
@@ -385,7 +391,7 @@ function end() {
         for (var i = 0; i < UI.graphEndX / 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            var y = average - OFFSET - (100 * noiseVal); // 300 mobile
+            var y = average - (OFFSET + 20*index) - (100 * noiseVal); // 300 mobile
             vertex(i*4 +  UI.graphUI.indicator.end,  y);
         }
         endShape();
