@@ -39,6 +39,10 @@ let PROMPT = '';
 let RESET = 0;
 
 let MH;
+let WWWW = 900;
+if (window.innerWidth <= 812) WWWW = 450;
+else if (window.innerWidth <= 440) WWWW = 400;
+
 
 jQuery(document).ready(function ($) {
     var anim = false;
@@ -133,7 +137,7 @@ jQuery(document).ready(function ($) {
     $('body').terminal(() => { }, {
         name: 'xxx',
         greetings: null,
-        width: window.innerWidth <= 812 ? 365 : 900,
+        width: WWWW,
         height: 400,
         onInit: function (term) {
             TERM = term;
