@@ -69,10 +69,11 @@ function continueMid() {
 }
 
 function startMid() {
-
-    document.getElementById('bxt').style.left = '50%';
-    document.getElementById('bxt').style["margin-left"] = '-75px';
-
+    if (ismobile) {
+        document.getElementById('bxt').style.left = '50%';
+        document.getElementById('bxt').style["margin-left"] = '-75px';    
+    }
+    
     // hide terminal
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'none';
@@ -388,7 +389,7 @@ function end() {
 
         beginShape();
         xoff = 0.01
-        for (var i = 0; i < UI.graphEndX / 4; i+=4) {
+        for (var i = 0; i < (UI.graphEndX / 4 )- 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
             var y = average - (OFFSET + 5*index) - (100 * noiseVal); // 300 mobile
