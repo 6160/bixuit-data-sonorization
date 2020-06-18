@@ -41,7 +41,7 @@ let RESET = 0;
 let MH;
 let WWWW = 900;
 if (window.innerWidth <= 812) WWWW = 450;
-else if (window.innerWidth <= 440) WWWW = 390;
+else if (window.innerWidth <= 440) WWWW = 380;
 
 
 jQuery(document).ready(function ($) {
