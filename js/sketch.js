@@ -391,7 +391,7 @@ function end() {
         for (var i = 0; i < UI.graphEndX / 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            var y = average - (OFFSET + 20*index) - (100 * noiseVal); // 300 mobile
+            var y = average - (OFFSET + 10*index) - (100 * noiseVal); // 300 mobile
             vertex(i*4 +  UI.graphUI.indicator.end,  y);
         }
         endShape();
