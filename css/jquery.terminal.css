@@ -89,8 +89,8 @@
 
 @media (max-width: 440px) {
     .terminal, .cmd, .terminal .terminal-output div div, .cmd .prompt {
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 10px !important;
+        line-height: 12px !important;
     }
 }
 
