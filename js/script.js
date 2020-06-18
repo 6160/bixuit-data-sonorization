@@ -20,11 +20,24 @@ const messages = [
 
 const MAXINDEX = messages.length - 1;
 
+const messages_end = [
+    "> the experiment has ended.",
+    "> below you can see a graph of what you've heard.",
+    "> thank you for taking this journey with me.",
+    "> here's your cake human.",
+    "> this cake is not a lie.",
+    "> 🎂"
+
+]
+
+const MAXINDEX_END = messages_end.length - 1;
+
 let TERM;
 let INDEX = 0;
 let PROMPT = '';
 let RESET = 0;
 
+let MH;
 
 jQuery(document).ready(function ($) {
     var anim = false;
@@ -77,15 +90,23 @@ jQuery(document).ready(function ($) {
         if (INDEX > MAXINDEX) return;
         typed_message(TERM, messages[INDEX], () => { });
     }
+    
+    const messageHandlerEnd = () => {
+        if (INDEX > MAXINDEX_END) return;
+        typed_message(TERM, messages_end[INDEX], () => { });
+    }
+
+
 
     const nextMessage = () => {
         INDEX += 1;
-        setTimeout(messageHandler(), 2000);
+        setTimeout(MH(), 2000);
     }
 
     window.addEventListener("message", function (e) {
         if (e.data === 'START') {
             console.log(' #### STARTING CLI')
+            MH = messageHandler;
             messageHandler();
         }
         if (e.data === 'REPLAY') {
@@ -94,7 +115,17 @@ jQuery(document).ready(function ($) {
             INDEX = 0;
             RESET = 1;
             PROMPT = '';
+            MH = messageHandler;
             messageHandler();
+        }
+        if (e.data === 'END') {
+            console.log(' #### RE STARTING CLI')
+            TERM.clear();
+            INDEX = 0;
+            RESET = 1;
+            PROMPT = '';
+            MH = messageHandlerEnd;
+            messageHandlerEnd();
         }
     }, false);
 

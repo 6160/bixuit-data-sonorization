@@ -103,7 +103,9 @@ function startEnd() {
     // setting up END data
     SCENE = end;
     setEndPositions();
-
+    window.postMessage('END', '*');
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.display = 'block';
     console.log(' #### > starting end section')
 }
 
@@ -237,6 +239,25 @@ function setEndPositions() {
         UI.graphEndX = width -  UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
+    } else {
+        UI.graphStartX = 10;
+        UI.graphUI = {};
+        UI.graphUI.indicator = {
+            start: 25 + UI.graphStartX,
+            end: 30 + UI.graphStartX,
+        };
+
+        UI.graphUI.line = {
+            x: UI.graphUI.indicator.end + 10,
+            y: {
+                bottom: height - 150,
+                mid: height - 270,
+                high: height - 375,
+            }
+        };
+        UI.graphEndX = width -  UI.graphUI.indicator.end
+        UI.paddingGraphLine = 25;
+        UI.paddingGraphText = 16
     }
 }
 
@@ -342,7 +363,8 @@ function mid() {
 function end() {
     clear();
     drawUI();
-
+    const MULT_MOBILE = 300;
+    const OFFSET = 100;
     const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
 
     Object.keys(graphData).forEach((year, index) => {
@@ -363,7 +385,7 @@ function end() {
         for (var i = 0; i < UI.graphEndX / 4; i+=4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            var y = average - (300 * noiseVal);
+            var y = average - OFFSET - (100 * noiseVal); // 300 mobile
             vertex(i*4 +  UI.graphUI.indicator.end,  y);
         }
         endShape();
@@ -379,7 +401,7 @@ function end() {
 
 function setup() {
     document.getElementById('welcome-message').style.visibility = 'visible';
-    // document.getElementById('p5_loading').style.visibility = 'hidden';
+
     console.log(' #### loading variables.')
     console.log(' #### > dpr ', window.devicePixelRatio)
     console.log(' #### > dim ', window.innerWidth, window.innerHeight)
