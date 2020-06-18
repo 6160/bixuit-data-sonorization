@@ -87,8 +87,8 @@
     --background: transparent;
 }
 
-@media(max-width: 440px) {
-    .terminal {
+@media (max-width: 440px) {
+    .cmd {
         font-size:10px !important;
     }
 }
