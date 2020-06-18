@@ -22,6 +22,7 @@
   <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
 
   <style>
+
     @media (max-width: 812px) {
       .msg {
         position: absolute;
@@ -34,9 +35,34 @@
         visibility: hidden;
         /* will center text in <p>, which is not a flex item */
       }
+      .logo{
+        z-index: 999999;
+        top: 20px;
+        left: 20px;
+        width: 300px;
+        position: absolute;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .logo{
+        z-index: 999999;
+        top: 20px;
+        left: 10px;
+        width: 300px;
+        position: absolute;
+      }
     }
 
     @media (min-width: 813px) {
+      .logo{
+        z-index: 999999;
+        top: 20px;
+        left: 20px;
+        width: 300px;
+        position: absolute;
+
+      }
       .msg {
         position: absolute;
         top: 40%;
@@ -125,14 +151,7 @@
       
     }
 
-    .logo{
-      z-index: 999999;
-      top: 20px;
-      left: 20px;
-      width: 300px;
-      position: absolute;
 
-    }
 
   </style>
 </head>
