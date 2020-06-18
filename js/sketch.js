@@ -11,7 +11,7 @@ const graphData = {
     },
     2011: {
         label: '',
-        color: 'rgb(66, 150, 247)',
+        color: 'rgb(11, 30, 99)',//'rgb(66, 150, 247)',
         points: [],
         seed: 13,
     },
@@ -62,6 +62,7 @@ function preload() {
     AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
     AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
     AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
+
 }
 
 function continueMid() {
@@ -114,7 +115,6 @@ function startEnd() {
     console.log(' #### > starting end section')
     AUDIO.gladosEnd.play();
 }
-
 
 function setIntroPositions() {
     if (width <= MINWIDTH) {
@@ -407,6 +407,7 @@ function end() {
 
 
 function setup() {
+    window.postMessage('STOPLOADING', '*');
     document.getElementById('welcome-message').style.visibility = 'visible';
 
     console.log(' #### loading variables.')
@@ -442,6 +443,7 @@ function drawUI() {
 
 
 function draw() {
+
     if (!START) return;
 
     
