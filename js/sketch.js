@@ -448,5 +448,5 @@ function draw() {
 
     
     SCENE();
-    // text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
+    text(`width: ${width} / ismobile: ${ismobile}`, 10, 10)
 }
