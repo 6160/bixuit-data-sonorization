@@ -1,4 +1,5 @@
 // constants
+const DEBUG = false;
 const MINWIDTH = 480;
 const UI = {};
 const AUDIO = {};
@@ -35,8 +36,8 @@ const graphData = {
     }
 }
 
-let MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
 // other stuff
+let MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
 let START = false;
 let glados;
 let song;
@@ -50,6 +51,7 @@ let ismobile = false;
 let SCENE;
 let vol;
 let graphVolHistory = [];
+let voiceAmp;
 
 function replaySong() {
     AUDIO.song.play();
@@ -91,6 +93,9 @@ function startMid() {
     // connecting amplitude to source audio
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.moviesGraph);
+
+    voiceAmp = new p5.Amplitude();
+    voiceAmp.setInput(AUDIO.gladosGraph);
     
     // starting audio
     AUDIO.gladosGraph.play();
@@ -237,9 +242,9 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 160,
-                mid: height - 280,
-                high: height - 385,
+                bottom: height > 600 ? height - 160 : height - 100,
+                mid:height > 600 ? height - 280 : height - 220,
+                high: height > 600 ? height - 385 : height - 325,
             }
         };
         UI.graphEndX = width -  UI.graphUI.indicator.end
@@ -267,7 +272,7 @@ function setEndPositions() {
     }
 }
 
-
+// event handler
 window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
@@ -336,6 +341,7 @@ function mid() {
     sampleNo += 1;
     MID.curr = amp.getLevel();
     
+    
     if (MID.prev > 0 & MID.curr === 0) {
         // change points bucket
         MID.index++
@@ -353,7 +359,7 @@ function mid() {
     // storing points in bucket
     if (MID.curr > 0) graphData[MID.year].points.push(MID.curr);
 
-    ellipse(UI.ellipse.x, UI.ellipse.y, 200, MID.curr * 200);
+    ellipse(UI.ellipse.x, UI.ellipse.y, 200, (MID.curr || voiceAmp.getLevel()) * 200);
     textFont('monospace');
     textSize(8);
 
@@ -371,7 +377,7 @@ function end() {
     clear();
     drawUI();
     const MULT_MOBILE = 300;
-    const OFFSET = 100;
+    const OFFSET = height > 600 ? 100 : 0;
     const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
 
     Object.keys(graphData).forEach((year, index) => {
@@ -381,8 +387,8 @@ function end() {
         const points = DATA.points.map(p => map(p, 0, 1, height - 25, height - 500));
 
         stroke(DATA.color);
-        text(year, UI.graphUI.indicator.end + index * 30 +10,height - 140 );
-
+        // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
+        text(year, UI.graphUI.indicator.end + index * 30 +10, UI.graphUI.line.y.bottom + 20 );
         const average = arrAvg(points)
 
         push();
@@ -403,7 +409,6 @@ function end() {
     document.getElementById('restart').style.visibility = 'visible';
     START = false;
 }
-
 
 
 function setup() {
@@ -443,10 +448,8 @@ function drawUI() {
 
 
 function draw() {
-
     if (!START) return;
 
-    
     SCENE();
-    text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10)
+    if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10);
 }
