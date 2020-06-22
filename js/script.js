@@ -40,7 +40,8 @@ let RESET = 0;
 
 let MH;
 let WWWW = 900;
-if (window.innerWidth <= 440) WWWW = 410;
+if (window.innerWidth <= 400) WWWW = 370;
+else if (window.innerWidth <= 440) WWWW = 410;
 else if (window.innerWidth <= 812) WWWW = 450;
 
 
