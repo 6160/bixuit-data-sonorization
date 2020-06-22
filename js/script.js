@@ -27,7 +27,7 @@ const messages_end = [
     "> thank you for taking this journey with me.",
     "> here's your cake human.",
     "> this cake is not a lie.",
-    "> 🎂"
+    "> 🎂 "
 
 ]
 
