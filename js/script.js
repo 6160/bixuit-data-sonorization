@@ -64,7 +64,6 @@ jQuery(document).ready(function ($) {
                 // term.set_prompt('');
                 if (RESET) {
                     term.clear();
-                    console.log('DIOCANEMADONNA')
                     term.set_prompt('');
                     RESET = 0;
                 }
