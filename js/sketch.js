@@ -140,7 +140,7 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: width/2,
-            y: height - 175 - 80,
+            y: width < 380 ? height - 175 - 70 : height - 175 - 80 ,
         };
 
         UI.volstring = {
