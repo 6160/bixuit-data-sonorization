@@ -40,6 +40,13 @@ let RESET = 0;
 
 let MH;
 let WWWW = 900;
+let TRIM = false;
+
+if (window.innerHeight < 600) {
+    TRIM = true;
+
+}
+console.log('TRIM: ', TRIM)
 if (window.innerWidth <= 400) WWWW = 370;
 else if (window.innerWidth <= 440) WWWW = 410;
 else if (window.innerWidth <= 812) WWWW = 450;
@@ -61,7 +68,7 @@ jQuery(document).ready(function ($) {
                     term.set_prompt('');
                     RESET = 0;
                 }
-                PROMPT += '\n\n\n';
+                PROMPT += '\n';
                 var interval = setInterval(function () {
                     var chr = $.terminal.substring(message, c, c + 1);
                     PROMPT += chr;
@@ -95,6 +102,7 @@ jQuery(document).ready(function ($) {
 
     const messageHandler = () => {
         if (INDEX > MAXINDEX) return;
+
         typed_message(TERM, messages[INDEX], () => { });
     }
     
@@ -106,6 +114,12 @@ jQuery(document).ready(function ($) {
 
 
     const nextMessage = () => {
+        const maxLines = 5;
+        if (TRIM && INDEX > maxLines) {
+            console.log('TRIMMING???')
+            const charIndex = messages[INDEX-maxLines].length
+            PROMPT = PROMPT.slice(charIndex);
+        }
         INDEX += 1;
         setTimeout(MH(), 2000);
     }
