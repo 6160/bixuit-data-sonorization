@@ -377,7 +377,7 @@ function end() {
     clear();
     drawUI();
     const MULT_MOBILE = 300;
-    const OFFSET = height > 600 ? 100 : 0;
+    const OFFSET = 100;//height > 600 ? 100 : 0;
     const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
 
     Object.keys(graphData).forEach((year, index) => {
