@@ -140,7 +140,7 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: width/2,
-            y: height - 175 - 100,
+            y: height - 175 - 80,
         };
 
         UI.volstring = {
@@ -311,7 +311,7 @@ function intro() {
 
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height - 25, height - 500);
+        var y = map(volhistory[i], 0, 1, height - 25, height - 450);
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
