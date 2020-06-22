@@ -101,6 +101,22 @@
 @media (max-width: 812px) {
     .terminal {
         position: absolute;
+        top: 18%;
+        right: 0;
+        bottom: 0;
+        left: 0px;
+        width: 100%;
+        margin-left: 0%;
+        margin-right: 0%;;
+        /*overflow: hidden;*/
+        overflow-y: auto;
+        /* overflow-x: hidden; */
+    }
+}
+
+@media (max-height: 600px) {
+    .terminal {
+        position: absolute;
         top: 20%;
         right: 0;
         bottom: 0;
