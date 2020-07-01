@@ -193,8 +193,8 @@ function startEnd() {
 }
 
 function setIntroPositions() {
-    console.log('calledfihiugfhreiughreuighreuigheriu: ', width, height)
-    if (width <= MINWIDTH) {
+    console.log('calledfihiugfhreiughreuighreuigheriu: ', windowWidth, windowHeight)
+    if (windowWidth <= MINWIDTH) {
         ismobile = true;
         // mobile
         UI.graphStartX = 5;
@@ -207,21 +207,21 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 25,
-                mid: height - 100,
-                high: height - 175,
+                bottom: windowHeight - 25,
+                mid: windowHeight - 100,
+                high: windowHeight - 175,
             }
         };
 
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
         UI.ellipse = {
-            x: width / 2,
-            y: width < 380 ? height - 175 - 70 : height - 175 - 80,
+            x: windowWidth / 2,
+            y: windowWidth < 380 ? windowHeight - 175 - 70 : windowHeight - 175 - 80,
         };
 
         UI.volstring = {
-            x: width - 35,
+            x: windowWidth - 35,
             y: UI.ellipse.y + 50,
         }
 
@@ -241,9 +241,9 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 25,
-                mid: height - 100,
-                high: height - 175,
+                bottom: windowHeight - 25,
+                mid: windowHeight - 100,
+                high: windowHeight - 175,
             }
         };
 
@@ -251,24 +251,26 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: 125,
-            y: height - 100,
+            y: windowHeight - 100,
         };
 
         UI.volstring = {
             x: 20,
-            y: height - 25,
+            y: windowHeight - 25,
         }
 
         UI.sampleNo = {
             x: 20,
-            y: height - 175,
+            y: windowHeight - 175,
         }
     }
+
+    console.log(UI)
 }
 
 function setMidPositions() {
     // desktop
-    if (width <= MINWIDTH) {
+    if (windowWidth <= MINWIDTH) {
         UI.graphStartX = 10;
         UI.graphUI = {};
         UI.graphUI.indicator = {
@@ -279,12 +281,12 @@ function setMidPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height > 600 ? height - 160 : height - 100,
-                mid: height > 600 ? height - 280 : height - 220,
-                high: height > 600 ? height - 385 : height - 325,
+                bottom: windowHeight > 600 ? windowHeight - 160 : windowHeight - 100,
+                mid: windowHeight > 600 ? windowHeight - 280 : windowHeight - 220,
+                high: windowHeight > 600 ? windowHeight - 385 : windowHeight - 325,
             }
         };
-        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     } else {
@@ -298,12 +300,12 @@ function setMidPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 160,
-                mid: height - 280,
-                high: height - 385,
+                bottom: windowHeight - 160,
+                mid: windowHeight - 280,
+                high: windowHeight - 385,
             }
         };
-        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     }
@@ -313,23 +315,23 @@ function setMidPositions() {
    
    
     UI.ellipse = {
-        x: width / 2,
-        y: height / 2,
+        x: windowWidth / 2,
+        y: windowHeight / 2,
     };
 
     UI.volstring = {
-        x: (width / 2) + 100,
-        y: (height / 2) + 75,
+        x: (windowWidth / 2) + 100,
+        y: (windowHeight / 2) + 75,
     }
 
     UI.sampleNo = {
-        x: (width / 2) - 100,
-        y: (height / 2) - 75,
+        x: (windowWidth / 2) - 100,
+        y: (windowHeight / 2) - 75,
     }
 }
 
 function setEndPositions() {
-    if (width <= MINWIDTH) {
+    if (windowWidth <= MINWIDTH) {
         UI.graphStartX = 10;
         UI.graphUI = {};
         UI.graphUI.indicator = {
@@ -340,12 +342,12 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height > 600 ? height - 160 : height - 100,
-                mid: height > 600 ? height - 280 : height - 220,
-                high: height > 600 ? height - 385 : height - 325,
+                bottom: windowHeight > 600 ? windowHeight - 160 : windowHeight - 100,
+                mid: windowHeight > 600 ? windowHeight - 280 : windowHeight - 220,
+                high: windowHeight > 600 ? windowHeight - 385 : windowHeight - 325,
             }
         };
-        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     } else {
@@ -359,12 +361,12 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: height - 160,
-                mid: height - 280,
-                high: height - 385,
+                bottom: windowHeight - 160,
+                mid: windowHeight - 280,
+                high: windowHeight - 385,
             }
         };
-        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     }
@@ -596,9 +598,9 @@ function drawUI() {
     text('1.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.high)
 
     stroke('rgba(0, 162, 255,1)');
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, width - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, width - UI.paddingGraphLine, UI.graphUI.line.y.mid)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, width - UI.paddingGraphLine, UI.graphUI.line.y.high)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.mid)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.high)
 }
 
 
