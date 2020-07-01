@@ -56,7 +56,6 @@ const graphData = {
     }
 }
 
-
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
@@ -120,7 +119,7 @@ window.addEventListener("message", function (e) {
 }, false);
 
 function replaySong() {
-    if(START) AUDIO.song.play();
+    if (START) AUDIO.song.play();
 }
 
 function preload() {
@@ -135,7 +134,7 @@ function preload() {
 
 function continueMid() {
     console.log('TRIGGERED FUCKIN END')
-    if(START) document.getElementById('continue').style.visibility = 'visible';
+    if (START) document.getElementById('continue').style.visibility = 'visible';
 }
 
 function startMid() {
@@ -155,17 +154,15 @@ function startMid() {
     SCENEPOS = setMidPositions;
     MID.yearList = Object.keys(graphData);
     MID.year = MID.yearList[MID.index];
-
     setMidPositions();
 
     // connecting amplitude to source audio
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.moviesGraph);
-
     voiceAmp = new p5.Amplitude();
     voiceAmp.setInput(AUDIO.gladosGraph);
 
-    // starting audio
+    // starting and storing current audio playing for play/pause
     AUDIO.gladosGraph.play();
     AUDIO.gladosGraph.onended(startEnd);
     AUDIO.moviesGraph.play();
@@ -175,8 +172,7 @@ function startMid() {
 }
 
 function startEnd() {
-    console.log(graphData)
-
+    // moving logo back
     document.getElementById('bxt').style.left = '20px';
     document.getElementById('bxt').style["margin-left"] = '0px';
 
@@ -184,16 +180,21 @@ function startEnd() {
     SCENE = end;
     SCENEPOS = setEndPositions;
     setEndPositions();
+
+    // triggering text
     window.postMessage('END', '*');
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'block';
-    console.log(' #### > starting end section')
+
+    // triggering and storing audio
     AUDIO.gladosEnd.play();
     CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
+
+    console.log(' #### > starting end section')
+
 }
 
 function setIntroPositions() {
-    console.log('calledfihiugfhreiughreuighreuigheriu: ', windowWidth, windowHeight)
     if (windowWidth <= MINWIDTH) {
         ismobile = true;
         // mobile
@@ -309,11 +310,7 @@ function setMidPositions() {
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     }
-   
-   
-   
-   
-   
+
     UI.ellipse = {
         x: windowWidth / 2,
         y: windowHeight / 2,
@@ -428,14 +425,15 @@ function mid() {
         }
 
         console.log(' #### >> fetched points: ', graphData[MID.year].points.raw)
-        
+
         // storing points 
         graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
         graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
-        
+
         // emptying point window, we don't need that anymore
         graphData[MID.year].points.window = [];
-        
+
+        // changing year
         MID.year = MID.yearList[MID.index];
         console.log(' #### >> CHANGING YEAR TO ', MID.year)
     }
@@ -449,19 +447,17 @@ function mid() {
         graphData[MID.year].points.window = [];
     }
 
-
-
-
-
     // drawing graph
     if (DRAW_MID_GRAPH) {
         drawUI();
         const cb = drawAudioGraphAverage;
+
         // draw live window
         stroke(graphData[MID.year].color)
         drawAudioGraphLive(graphData[MID.year].points.window, cb);
     }
 
+    // resetting stroke color
     stroke('rgb(255,255,255');
 
     // drawing mouth
@@ -478,6 +474,8 @@ function mid() {
     MID.prev = MID.curr;
 }
 
+
+// draws the live audiograph for mid section
 function drawAudioGraphLive(points, cb) {
     const OFFSET = 135;
     beginShape();
@@ -492,10 +490,10 @@ function drawAudioGraphLive(points, cb) {
 }
 
 
-
+// draws average graph
 function drawAudioGraphAverage() {
     const OFFSET = 100;//height > 600 ? 100 : 0;
-    
+
     let xoff = 0.01
 
     Object.keys(graphData).forEach((year, index) => {
@@ -509,7 +507,7 @@ function drawAudioGraphAverage() {
 
         push();
         beginShape();
-        
+
         for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
@@ -550,23 +548,25 @@ function setup() {
     setIntroPositions();
     SCENE = intro;
     SCENEPOS = setIntroPositions;
-    
-    
+
+    // creating buttons
     toggleButton = createButton('toggle');
     toggleButton.position(319, 19);
     toggleButton.mousePressed(toggleGraph);
 
     pauseButton = createButton('pause');
     pauseButton.position(419, 19);
-    pauseButton.mousePressed(pauseAll);
+    pauseButton.mousePressed(toggleAudio);
 
 
 }
 
-function pauseAll() {
+
+// this toggle audio
+function toggleAudio() {
     START = !START
     console.log('toggle start: ', START)
-    
+
     // NEED TO STOP AUDIO AND TEXT
     window.postMessage('PAUSE', '*');
     console.log(CURR_AUDIO_PLAYING)
@@ -580,9 +580,8 @@ function pauseAll() {
 }
 
 function toggleGraph() {
-    
     DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
-    console.log('toggled: ',DRAW_MID_GRAPH)
+    console.log('toggled: ', DRAW_MID_GRAPH)
 }
 
 function drawUI() {
@@ -608,5 +607,6 @@ function draw() {
     if (!START) return;
 
     SCENE();
+
     if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10);
 }
