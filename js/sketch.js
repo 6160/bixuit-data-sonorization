@@ -7,37 +7,60 @@ const graphData = {
     2010: {
         label: '',
         color: 'rgb(214, 169, 75)',
-        points: [],
+        points: {
+            raw: [],
+            normalized: [],
+            window: [],
+        },
         seed: 2,
     },
     2011: {
         label: '',
         color: 'rgb(66, 130, 247)',//'rgb(11, 30, 99)',//,
-        points: [],
+        points: {
+            raw: [],
+            normalized: [],
+            window: [],
+        },
         seed: 13,
     },
     2012: {
         label: '',
         color: 'rgb(243, 5, 2)',
-        points: [],
+        points: {
+            raw: [],
+            normalized: [],
+            window: [],
+        },
         seed: 1,
     },
     2013: {
         label: '',
         color: 'rgb(255,255,255)',
-        points: [],
+        points: {
+            raw: [],
+            normalized: [],
+            window: [],
+        },
         seed: 4
     },
     2014: {
         label: '',
         color: 'rgb(136, 250, 78)',
-        points: [],
+        points: {
+            raw: [],
+            normalized: [],
+            window: [],
+        },
         seed: 5,
     }
 }
 
+
+const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+
 // other stuff
-let MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
+let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
 let START = false;
 let glados;
 let song;
@@ -49,12 +72,55 @@ let volhistory = [];
 let bgimg;
 let ismobile = false;
 let SCENE;
+let SCENEPOS;
 let vol;
 let graphVolHistory = [];
 let voiceAmp;
+let DRAW_MID_GRAPH = true;
+let CURR_AUDIO_PLAYING = []
+
+function windowResized() {
+    console.log('TRIGGERED RESIZE')
+    SCENEPOS();
+}
+
+// event handler
+window.addEventListener("message", function (e) {
+    if (e.data === 'START') {
+        console.log(' #### STARTING P5')
+        START = true;
+        AUDIO.glados.play();
+        AUDIO.glados.onended(continueMid);
+        AUDIO.song.play();
+        AUDIO.song.onended(replaySong);
+
+        CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
+        document.getElementById('welcome-message').style.visibility = 'hidden';
+    }
+    if (e.data === 'REPLAY') {
+        // resetting the experiment
+        amp = new p5.Amplitude();
+        amp.setInput(AUDIO.glados);
+        setIntroPositions();
+        SCENE = intro;
+        SCENEPOS = setIntroPositions;
+        START = true;
+        AUDIO.glados.play();
+        AUDIO.glados.onended(startMid);
+        AUDIO.song.play();
+        CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
+        document.getElementById('restart').style.visibility = 'hidden';
+        const terminal = document.getElementsByClassName("terminal")[0];
+        terminal.style.display = 'block';
+    }
+    if (e.data === 'CONTINUE') {
+        // handles mid section
+        startMid()
+    }
+}, false);
 
 function replaySong() {
-    AUDIO.song.play();
+    if(START) AUDIO.song.play();
 }
 
 function preload() {
@@ -68,60 +134,66 @@ function preload() {
 }
 
 function continueMid() {
-    document.getElementById('continue').style.visibility = 'visible';
+    console.log('TRIGGERED FUCKIN END')
+    if(START) document.getElementById('continue').style.visibility = 'visible';
 }
 
 function startMid() {
     if (ismobile) {
         document.getElementById('bxt').style.left = '50%';
-        document.getElementById('bxt').style["margin-left"] = '-75px';    
+        document.getElementById('bxt').style["margin-left"] = '-75px';
     }
-    
+
     // hide terminal
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'none';
     document.getElementById('continue').style.visibility = 'hidden';
-    
+
     // setting up MID data
-    MID = {prev: undefined, curr: 0, year: '', yearList: undefined, index: 0};
+    MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
     SCENE = mid;
+    SCENEPOS = setMidPositions;
     MID.yearList = Object.keys(graphData);
     MID.year = MID.yearList[MID.index];
-    
+
     setMidPositions();
-    
+
     // connecting amplitude to source audio
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.moviesGraph);
 
     voiceAmp = new p5.Amplitude();
     voiceAmp.setInput(AUDIO.gladosGraph);
-    
+
     // starting audio
     AUDIO.gladosGraph.play();
     AUDIO.gladosGraph.onended(startEnd);
     AUDIO.moviesGraph.play();
-    
+    CURR_AUDIO_PLAYING = [AUDIO.gladosGraph, AUDIO.moviesGraph, AUDIO.song];
+
     console.log(' #### > starting mid section')
 }
 
 function startEnd() {
     console.log(graphData)
-    
+
     document.getElementById('bxt').style.left = '20px';
     document.getElementById('bxt').style["margin-left"] = '0px';
 
     // setting up END data
     SCENE = end;
+    SCENEPOS = setEndPositions;
     setEndPositions();
     window.postMessage('END', '*');
     const terminal = document.getElementsByClassName("terminal")[0];
     terminal.style.display = 'block';
     console.log(' #### > starting end section')
     AUDIO.gladosEnd.play();
+    CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
 }
 
 function setIntroPositions() {
+    console.log('calledfihiugfhreiughreuighreuigheriu: ', width, height)
     if (width <= MINWIDTH) {
         ismobile = true;
         // mobile
@@ -144,8 +216,8 @@ function setIntroPositions() {
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
         UI.ellipse = {
-            x: width/2,
-            y: width < 380 ? height - 175 - 70 : height - 175 - 80 ,
+            x: width / 2,
+            y: width < 380 ? height - 175 - 70 : height - 175 - 80,
         };
 
         UI.volstring = {
@@ -196,31 +268,57 @@ function setIntroPositions() {
 
 function setMidPositions() {
     // desktop
-    UI.graphStartX = 230;
-    UI.graphUI = {};
-    UI.graphUI.indicator = {
-        start: 25 + UI.graphStartX,
-        end: 30 + UI.graphStartX,
-    };
+    if (width <= MINWIDTH) {
+        UI.graphStartX = 10;
+        UI.graphUI = {};
+        UI.graphUI.indicator = {
+            start: 25 + UI.graphStartX,
+            end: 30 + UI.graphStartX,
+        };
 
-    UI.graphUI.line = {
-        x: UI.graphUI.indicator.end + 10,
-        y: {
-            bottom: height - 25,
-            mid: height - 100,
-            high: height - 175,
-        }
-    };
+        UI.graphUI.line = {
+            x: UI.graphUI.indicator.end + 10,
+            y: {
+                bottom: height > 600 ? height - 160 : height - 100,
+                mid: height > 600 ? height - 280 : height - 220,
+                high: height > 600 ? height - 385 : height - 325,
+            }
+        };
+        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.paddingGraphLine = 25;
+        UI.paddingGraphText = 16
+    } else {
+        UI.graphStartX = 10;
+        UI.graphUI = {};
+        UI.graphUI.indicator = {
+            start: 25 + UI.graphStartX,
+            end: 30 + UI.graphStartX,
+        };
 
-    UI.paddingGraphLine = 25;
-    UI.paddingGraphText = 16
+        UI.graphUI.line = {
+            x: UI.graphUI.indicator.end + 10,
+            y: {
+                bottom: height - 160,
+                mid: height - 280,
+                high: height - 385,
+            }
+        };
+        UI.graphEndX = width - UI.graphUI.indicator.end
+        UI.paddingGraphLine = 25;
+        UI.paddingGraphText = 16
+    }
+   
+   
+   
+   
+   
     UI.ellipse = {
         x: width / 2,
-        y: height/2,
+        y: height / 2,
     };
 
     UI.volstring = {
-        x: (width / 2)  + 100,
+        x: (width / 2) + 100,
         y: (height / 2) + 75,
     }
 
@@ -243,11 +341,11 @@ function setEndPositions() {
             x: UI.graphUI.indicator.end + 10,
             y: {
                 bottom: height > 600 ? height - 160 : height - 100,
-                mid:height > 600 ? height - 280 : height - 220,
+                mid: height > 600 ? height - 280 : height - 220,
                 high: height > 600 ? height - 385 : height - 325,
             }
         };
-        UI.graphEndX = width -  UI.graphUI.indicator.end
+        UI.graphEndX = width - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     } else {
@@ -266,42 +364,17 @@ function setEndPositions() {
                 high: height - 385,
             }
         };
-        UI.graphEndX = width -  UI.graphUI.indicator.end
+        UI.graphEndX = width - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     }
 }
 
-// event handler
-window.addEventListener("message", function (e) {
-    if (e.data === 'START') {
-        console.log(' #### STARTING P5')
-        START = true;
-        AUDIO.glados.play();
-        AUDIO.glados.onended(continueMid);
-        AUDIO.song.play();
-        AUDIO.song.onended(replaySong);
-        document.getElementById('welcome-message').style.visibility = 'hidden';
-    }
-    if (e.data ==='REPLAY') {
-        // resetting the experiment
-        amp = new p5.Amplitude();
-        amp.setInput(AUDIO.glados);
-        setIntroPositions();    
-        SCENE = intro;
-        START = true;
-        AUDIO.glados.play();
-        AUDIO.glados.onended(startMid);
-        AUDIO.song.play();
-        document.getElementById('restart').style.visibility = 'hidden';
-        const terminal = document.getElementsByClassName("terminal")[0];
-        terminal.style.display = 'block';
-    }
-    if (e.data === 'CONTINUE') {
-        // handles mid section
-        startMid()
-    }
-}, false);
+function normalizePoints(points) {
+    return points.map(p => map(p, 0, 1, height - 25, height - 500))
+}
+
+
 
 // this draws the intro section
 function intro() {
@@ -338,74 +411,121 @@ function intro() {
 // this draw the MID section
 function mid() {
     clear();
-    sampleNo += 1;
+    sampleNo++;
     MID.curr = amp.getLevel();
-    
-    
+
+    // change year
     if (MID.prev > 0 & MID.curr === 0) {
         // change points bucket
         MID.index++
         if (MID.index === MID.yearList.length) {
+            graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
+            graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
             MID.prev = 0;
             return;
         }
 
-        console.log(' #### >> fetched points: ', graphData[MID.year].points)
+        console.log(' #### >> fetched points: ', graphData[MID.year].points.raw)
+        
+        // storing points 
+        graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
+        graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
+        
+        // emptying point window, we don't need that anymore
+        graphData[MID.year].points.window = [];
+        
         MID.year = MID.yearList[MID.index];
         console.log(' #### >> CHANGING YEAR TO ', MID.year)
-
     }
 
     // storing points in bucket
-    if (MID.curr > 0) graphData[MID.year].points.push(MID.curr);
+    if (MID.curr > 0) graphData[MID.year].points.raw.push(MID.curr);
 
+    // storing points for live graph
+    if (MID.curr) graphData[MID.year].points.window.push(MID.curr);
+    if (graphData[MID.year].points.window.length * 4 > (width) - 50 - UI.graphUI.line.x) {
+        graphData[MID.year].points.window = [];
+    }
+
+
+
+
+
+    // drawing graph
+    if (DRAW_MID_GRAPH) {
+        drawUI();
+        const cb = drawAudioGraphAverage;
+        // draw live window
+        stroke(graphData[MID.year].color)
+        drawAudioGraphLive(graphData[MID.year].points.window, cb);
+    }
+
+    stroke('rgb(255,255,255');
+
+    // drawing mouth
     ellipse(UI.ellipse.x, UI.ellipse.y, 200, (MID.curr || voiceAmp.getLevel()) * 200);
     textFont('monospace');
     textSize(8);
 
+    // drawing framecount and vol value
     let volstring = MID.curr.toString()
     text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
     text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
-    
+
     // storing curr value for checking year change
     MID.prev = MID.curr;
 }
 
+function drawAudioGraphLive(points, cb) {
+    const OFFSET = 135;
+    beginShape();
+    for (var i = 0; i < points.length; i++) {
+        var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
+        vertex((i * 4) + UI.graphUI.line.x, y);
+    }
+    endShape();
+    pop();
 
-// this handle the END section
-function end() {
-    clear();
-    drawUI();
-    const MULT_MOBILE = 300;
+    if (cb) cb();
+}
+
+
+
+function drawAudioGraphAverage() {
     const OFFSET = 100;//height > 600 ? 100 : 0;
-    const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length;
+    
+    let xoff = 0.01
 
     Object.keys(graphData).forEach((year, index) => {
         const DATA = graphData[year];
         noiseSeed(DATA.seed);
 
-        const points = DATA.points.map(p => map(p, 0, 1, height - 25, height - 500));
-
         stroke(DATA.color);
         // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
-        text(year, UI.graphUI.indicator.end + index * 30 +10, UI.graphUI.line.y.bottom + 20 );
-        const average = arrAvg(points)
+        text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
+        const average = DATA.points.average;
 
         push();
-
         beginShape();
-        xoff = 0.01
-        for (var i = 0; i < (UI.graphEndX / 4 )- 4; i+=4) {
+        
+        for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
             xoff += 0.1
             let noiseVal = noise(xoff);
-            var y = average - (OFFSET + 5*index) - (100 * noiseVal); // 300 mobile
-            vertex(i*4 +  UI.graphUI.indicator.end,  y);
+            var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
+            vertex(i * 4 + UI.graphUI.indicator.end, y);
         }
         endShape();
         pop();
-
     })
-    
+
+}
+
+// this handle the END section
+function end() {
+    clear();
+    drawUI();
+    drawAudioGraphAverage()
+
     document.getElementById('restart').style.visibility = 'visible';
     START = false;
 }
@@ -418,18 +538,53 @@ function setup() {
     console.log(' #### loading variables.')
     console.log(' #### > dpr ', window.devicePixelRatio)
     console.log(' #### > dim ', window.innerWidth, window.innerHeight)
-    
+
     pixelDensity(window.devicePixelRatio)
     let c = createCanvas(window.innerWidth, window.innerHeight);
     c.parent("p5canvas");
 
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.glados);
-    setIntroPositions();    
+    setIntroPositions();
     SCENE = intro;
+    SCENEPOS = setIntroPositions;
+    
+    
+    toggleButton = createButton('toggle');
+    toggleButton.position(319, 19);
+    toggleButton.mousePressed(toggleGraph);
+
+    pauseButton = createButton('pause');
+    pauseButton.position(419, 19);
+    pauseButton.mousePressed(pauseAll);
+
+
+}
+
+function pauseAll() {
+    START = !START
+    console.log('toggle start: ', START)
+    
+    // NEED TO STOP AUDIO AND TEXT
+    window.postMessage('PAUSE', '*');
+    console.log(CURR_AUDIO_PLAYING)
+    CURR_AUDIO_PLAYING.forEach(a => {
+        if (a.isPlaying()) {
+            a.pause();
+        } else {
+            a.play();
+        }
+    })
+}
+
+function toggleGraph() {
+    
+    DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
+    console.log('toggled: ',DRAW_MID_GRAPH)
 }
 
 function drawUI() {
+    stroke('rgb(255,255,255');
     textFont('Monospace');
     textSize(8);
     line(UI.graphUI.indicator.start, UI.graphUI.line.y.bottom, UI.graphUI.indicator.end, UI.graphUI.line.y.bottom)

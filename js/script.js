@@ -37,7 +37,7 @@ let TERM;
 let INDEX = 0;
 let PROMPT = '';
 let RESET = 0;
-
+let PAUSE = false;
 let MH;
 let WWWW = 900;
 let TRIM = false;
@@ -69,6 +69,7 @@ jQuery(document).ready(function ($) {
                 }
                 PROMPT += '\n';
                 var interval = setInterval(function () {
+                    if (PAUSE) return;
                     var chr = $.terminal.substring(message, c, c + 1);
                     PROMPT += chr;
                     term.set_prompt(PROMPT);
@@ -146,6 +147,9 @@ jQuery(document).ready(function ($) {
             PROMPT = '';
             MH = messageHandlerEnd;
             messageHandlerEnd();
+        }
+        if (e.data === 'PAUSE') {
+            PAUSE = !PAUSE;
         }
     }, false);
 
