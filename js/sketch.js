@@ -56,45 +56,34 @@ const graphData = {
     }
 }
 
+const BUTTONS = {};
+
+const BUTTON_STYLE ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-weight: bold; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;  '
+
+
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
 let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
 let START = false;
-let glados;
-let song;
-let graph;
 let amp;
-let button;
 let sampleNo = 0;
 let volhistory = [];
-let bgimg;
 let ismobile = false;
 let SCENE;
 let SCENEPOS;
 let vol;
 let graphVolHistory = [];
 let voiceAmp;
-let DRAW_MID_GRAPH = true;
+let DRAW_MID_GRAPH = false;
 let CURR_AUDIO_PLAYING = []
 
-function windowResized() {
-    console.log('TRIGGERED RESIZE')
-    SCENEPOS();
-}
 
 // event handler
 window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
-        START = true;
-        AUDIO.glados.play();
-        AUDIO.glados.onended(continueMid);
-        AUDIO.song.play();
-        AUDIO.song.onended(replaySong);
-
-        CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
-        document.getElementById('welcome-message').style.visibility = 'hidden';
+        startIntro();
     }
     if (e.data === 'REPLAY') {
         // resetting the experiment
@@ -118,80 +107,110 @@ window.addEventListener("message", function (e) {
     }
 }, false);
 
+// ###############################
+// UTILITY
+// ###############################
+
+
+function mute() {
+    const curr = getMasterVolume();
+    masterVolume(curr > 0 ? 0.0 : 1.0);
+    BUTTONS.muteButton.setLabel(curr > 0 ? 'mute': 'unmute')
+}
+
+
+// this toggle audio
+function toggleAudio() {
+    START = !START
+    console.log('toggle start: ', START)
+
+    // NEED TO STOP AUDIO AND TEXT
+    window.postMessage('PAUSE', '*');
+    console.log(CURR_AUDIO_PLAYING)
+    CURR_AUDIO_PLAYING.forEach(a => {
+        if (a.isPlaying()) {
+            a.pause();
+        } else {
+            a.play();
+        }
+    })
+}
+
+function toggleGraph() {
+    DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
+    console.log('toggled: ', DRAW_MID_GRAPH)
+}
+
 function replaySong() {
     if (START) AUDIO.song.play();
 }
 
-function preload() {
-    console.log(' #### loading assets.')
-    AUDIO.glados = loadSound('./audio/glados_intro.mp3');
-    AUDIO.song = loadSound('./audio/song.mp3');
-    AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
-    AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
-    AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
-
+function normalizePoints(points) {
+    return points.map(p => map(p, 0, 1, height - 25, height - 500))
 }
 
-function continueMid() {
-    console.log('TRIGGERED FUCKIN END')
-    if (START) document.getElementById('continue').style.visibility = 'visible';
-}
 
-function startMid() {
-    if (ismobile) {
-        document.getElementById('bxt').style.left = '50%';
-        document.getElementById('bxt').style["margin-left"] = '-75px';
+
+// ###############################
+// UI METHODS
+// ###############################
+
+// this draws the basic UI 
+function drawUIDesktop() {
+    let DRAW_FILL;
+    const RADIUS = 10;
+    const PADDING_X = 10;
+    const PADDING_Y = 10;
+    const TOP_H = 130;
+    const BOTTOM_H = 70;
+    // const MID2_H = DRAW_MID_GRAPH ? 350 : 5;//windowHeight - TOP_H - BOTTOM_H - PADDING_X * 4;
+    let MID2_H;
+    if (SCENE === intro) {
+        MID2_H = 225;
+        DRAW_FILL = true
+    } else {
+        MID2_H = DRAW_MID_GRAPH ? 350 : 5
+        // DRAW_FILL = !DRAW_MID_GRAPH
+        DRAW_FILL = true
     }
 
-    // hide terminal
-    const terminal = document.getElementsByClassName("terminal")[0];
-    terminal.style.display = 'none';
-    document.getElementById('continue').style.visibility = 'hidden';
+    const MID1_H = windowHeight - TOP_H - BOTTOM_H - MID2_H - PADDING_X * 5;
+    
 
-    // setting up MID data
-    MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
-    SCENE = mid;
-    SCENEPOS = setMidPositions;
-    MID.yearList = Object.keys(graphData);
-    MID.year = MID.yearList[MID.index];
-    setMidPositions();
 
-    // connecting amplitude to source audio
-    amp = new p5.Amplitude();
-    amp.setInput(AUDIO.moviesGraph);
-    voiceAmp = new p5.Amplitude();
-    voiceAmp.setInput(AUDIO.gladosGraph);
 
-    // starting and storing current audio playing for play/pause
-    AUDIO.gladosGraph.play();
-    AUDIO.gladosGraph.onended(startEnd);
-    AUDIO.moviesGraph.play();
-    CURR_AUDIO_PLAYING = [AUDIO.gladosGraph, AUDIO.moviesGraph, AUDIO.song];
+    const ALL_W = windowWidth - PADDING_X * 2;
+    stroke('rgba(255, 255,255, 0.5)')
+    // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
+    rect(PADDING_X, PADDING_Y*2 + TOP_H, ALL_W, MID1_H, RADIUS)
+    if (DRAW_FILL) fill('rgba(255,255,255,0.02)')
+    rect(PADDING_X, PADDING_Y*3 + TOP_H + MID1_H, ALL_W, MID2_H, RADIUS)
+    
+    rect(PADDING_X, PADDING_Y*4 + TOP_H + MID1_H + MID2_H, ALL_W, BOTTOM_H, RADIUS)
+    noFill()
 
-    console.log(' #### > starting mid section')
+
 }
 
-function startEnd() {
-    // moving logo back
-    document.getElementById('bxt').style.left = '20px';
-    document.getElementById('bxt').style["margin-left"] = '0px';
+// this draws the graph ui (lines, scale, etc)
+function drawGraphUI() {
+    stroke('rgb(255,255,255');
+    textFont('Monospace');
+    textSize(8);
+    line(UI.graphUI.indicator.start, UI.graphUI.line.y.bottom, UI.graphUI.indicator.end, UI.graphUI.line.y.bottom)
+    line(UI.graphUI.indicator.start, UI.graphUI.line.y.mid, UI.graphUI.indicator.end, UI.graphUI.line.y.mid)
+    line(UI.graphUI.indicator.start, UI.graphUI.line.y.high, UI.graphUI.indicator.end, UI.graphUI.line.y.high)
 
-    // setting up END data
-    SCENE = end;
-    SCENEPOS = setEndPositions;
-    setEndPositions();
-
-    // triggering text
-    window.postMessage('END', '*');
-    const terminal = document.getElementsByClassName("terminal")[0];
-    terminal.style.display = 'block';
-
-    // triggering and storing audio
-    AUDIO.gladosEnd.play();
-    CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
-
-    console.log(' #### > starting end section')
-
+    noStroke();
+    fill('rgb(255,255,255')
+    text('0.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.bottom)
+    text('0.5', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.mid)
+    text('1.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.high)
+    noFill()
+    stroke('rgba(0, 162, 255,1)');
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.mid)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.high)
 }
 
 function setIntroPositions() {
@@ -242,9 +261,9 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 25,
-                mid: windowHeight - 100,
-                high: windowHeight - 175,
+                bottom: windowHeight - 125,
+                mid: windowHeight - 200,
+                high: windowHeight - 275,
             }
         };
 
@@ -252,21 +271,19 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: 125,
-            y: windowHeight - 100,
+            y: windowHeight - 200,
         };
 
         UI.volstring = {
             x: 20,
-            y: windowHeight - 25,
+            y: windowHeight - 125,
         }
 
         UI.sampleNo = {
             x: 20,
-            y: windowHeight - 175,
+            y: windowHeight - 275,
         }
     }
-
-    console.log(UI)
 }
 
 function setMidPositions() {
@@ -369,16 +386,142 @@ function setEndPositions() {
     }
 }
 
-function normalizePoints(points) {
-    return points.map(p => map(p, 0, 1, height - 25, height - 500))
+// draws the live audiograph for mid section
+function drawAudioGraphLive(points, cb) {
+    const OFFSET = 135;
+    beginShape();
+    for (var i = 0; i < points.length; i++) {
+        var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
+        vertex((i * 4) + UI.graphUI.line.x, y);
+    }
+    endShape();
+    pop();
+
+    if (cb) cb();
+}
+
+// draws average graph
+function drawAudioGraphAverage() {
+    const OFFSET = 100;//height > 600 ? 100 : 0;
+
+    let xoff = 0.01
+
+    Object.keys(graphData).forEach((year, index) => {
+        const DATA = graphData[year];
+        noiseSeed(DATA.seed);
+
+        stroke(DATA.color);
+        // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
+        text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
+        const average = DATA.points.average;
+
+        push();
+        beginShape();
+
+        for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
+            xoff += 0.1
+            let noiseVal = noise(xoff);
+            var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
+            vertex(i * 4 + UI.graphUI.indicator.end, y);
+        }
+        endShape();
+        pop();
+    })
+
 }
 
 
+// ###############################
+// SCENE METHODS
+// ###############################
+
+// handles the "CONTINUE BUTTON" before MID section
+function continueMid() {
+    if (START) document.getElementById('continue').style.visibility = 'visible';
+}
+
+function startIntro(){
+    START = true;
+    AUDIO.glados.play();
+    AUDIO.glados.onended(continueMid);
+    AUDIO.song.play();
+    AUDIO.song.onended(replaySong);
+
+    CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
+    document.getElementById('welcome-message').style.visibility = 'hidden';
+
+    // Object.values(BUTTONS).forEach(btn => btn.show())
+    BUTTONS.pauseButton.show();
+    BUTTONS.muteButton.show();
+
+
+}
+
+
+// starts MID section
+function startMid() {
+    if (ismobile) {
+        document.getElementById('bxt').style.left = '50%';
+        document.getElementById('bxt').style["margin-left"] = '-75px';
+    }
+
+    // hide terminal
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.display = 'none';
+    document.getElementById('continue').style.visibility = 'hidden';
+
+    // setting up MID data
+    MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
+    SCENE = mid;
+    SCENEPOS = setMidPositions;
+    MID.yearList = Object.keys(graphData);
+    MID.year = MID.yearList[MID.index];
+    setMidPositions();
+
+    // connecting amplitude to source audio
+    amp = new p5.Amplitude();
+    amp.setInput(AUDIO.moviesGraph);
+    voiceAmp = new p5.Amplitude();
+    voiceAmp.setInput(AUDIO.gladosGraph);
+
+    // starting and storing current audio playing for play/pause
+    AUDIO.gladosGraph.play();
+    AUDIO.gladosGraph.onended(startEnd);
+    AUDIO.moviesGraph.play();
+    CURR_AUDIO_PLAYING = [AUDIO.gladosGraph, AUDIO.moviesGraph, AUDIO.song];
+
+    console.log(' #### > starting mid section')
+}
+
+// starts END section
+function startEnd() {
+    DRAW_MID_GRAPH = true;
+    // moving logo back
+    document.getElementById('bxt').style.left = '20px';
+    document.getElementById('bxt').style["margin-left"] = '0px';
+
+    // setting up END data
+    SCENE = end;
+    SCENEPOS = setEndPositions;
+    setEndPositions();
+
+    // triggering text
+    window.postMessage('END', '*');
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.display = 'block';
+
+    // triggering and storing audio
+    AUDIO.gladosEnd.play();
+    CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
+
+    console.log(' #### > starting end section')
+
+}
 
 // this draws the intro section
 function intro() {
     clear();
-    drawUI();
+    drawGraphUI();
     vol = amp.getLevel();
     volhistory.push(vol);
     sampleNo += 1;
@@ -388,7 +531,7 @@ function intro() {
 
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height - 25, height - 450);
+        var y = map(volhistory[i], 0, 1, height - 125, height - 550);
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
@@ -449,12 +592,17 @@ function mid() {
 
     // drawing graph
     if (DRAW_MID_GRAPH) {
-        drawUI();
+        drawGraphUI();
         const cb = drawAudioGraphAverage;
 
         // draw live window
         stroke(graphData[MID.year].color)
         drawAudioGraphLive(graphData[MID.year].points.window, cb);
+    } else {
+        // textSize(16);
+        // fill('rgb(255,255,255');
+        // text('GRAPH DISABLED', (windowWidth / 2) - 100, windowHeight -250 )
+        // noFill();
     }
 
     // resetting stroke color
@@ -474,56 +622,10 @@ function mid() {
     MID.prev = MID.curr;
 }
 
-
-// draws the live audiograph for mid section
-function drawAudioGraphLive(points, cb) {
-    const OFFSET = 135;
-    beginShape();
-    for (var i = 0; i < points.length; i++) {
-        var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
-        vertex((i * 4) + UI.graphUI.line.x, y);
-    }
-    endShape();
-    pop();
-
-    if (cb) cb();
-}
-
-
-// draws average graph
-function drawAudioGraphAverage() {
-    const OFFSET = 100;//height > 600 ? 100 : 0;
-
-    let xoff = 0.01
-
-    Object.keys(graphData).forEach((year, index) => {
-        const DATA = graphData[year];
-        noiseSeed(DATA.seed);
-
-        stroke(DATA.color);
-        // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
-        text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
-        const average = DATA.points.average;
-
-        push();
-        beginShape();
-
-        for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
-            xoff += 0.1
-            let noiseVal = noise(xoff);
-            var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
-            vertex(i * 4 + UI.graphUI.indicator.end, y);
-        }
-        endShape();
-        pop();
-    })
-
-}
-
 // this handle the END section
 function end() {
     clear();
-    drawUI();
+    drawGraphUI();
     drawAudioGraphAverage()
 
     document.getElementById('restart').style.visibility = 'visible';
@@ -531,7 +633,29 @@ function end() {
 }
 
 
+// ###############################
+// P5 STANDARD FUNCTIONS
+// ###############################
+
+function preload() {
+    console.log(' #### loading assets.')
+    AUDIO.glados = loadSound('./audio/glados_intro.mp3');
+    AUDIO.song = loadSound('./audio/song.mp3');
+    AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
+    AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
+    AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
+
+}
+
+function setBTNPosition() {
+    BUTTONS.muteButton.position(windowWidth - 120, windowHeight - 60);
+    BUTTONS.pauseButton.position(windowWidth - 240, windowHeight - 60);
+    BUTTONS.toggleButton.position(windowWidth - 360, windowHeight - 60);
+
+}
+
 function setup() {
+    smooth()
     window.postMessage('STOPLOADING', '*');
     document.getElementById('welcome-message').style.visibility = 'visible';
 
@@ -550,63 +674,33 @@ function setup() {
     SCENEPOS = setIntroPositions;
 
     // creating buttons
-    toggleButton = createButton('toggle');
-    toggleButton.position(319, 19);
-    toggleButton.mousePressed(toggleGraph);
+    BUTTONS.toggleButton = createButton('toggle');
+    BUTTONS.toggleButton.style(BUTTON_STYLE)
+    BUTTONS.toggleButton.mousePressed(toggleGraph);
 
-    pauseButton = createButton('pause');
-    pauseButton.position(419, 19);
-    pauseButton.mousePressed(toggleAudio);
+    BUTTONS.pauseButton = createButton('pause');
+    BUTTONS.pauseButton.style(BUTTON_STYLE)
+    BUTTONS.pauseButton.mousePressed(toggleAudio);
 
+    BUTTONS.muteButton = createButton('mute');
+    BUTTONS.muteButton.style(BUTTON_STYLE)
+    BUTTONS.muteButton.mousePressed(mute);
 
+    Object.values(BUTTONS).forEach(btn => btn.hide())
+
+    setBTNPosition();
 }
-
-
-// this toggle audio
-function toggleAudio() {
-    START = !START
-    console.log('toggle start: ', START)
-
-    // NEED TO STOP AUDIO AND TEXT
-    window.postMessage('PAUSE', '*');
-    console.log(CURR_AUDIO_PLAYING)
-    CURR_AUDIO_PLAYING.forEach(a => {
-        if (a.isPlaying()) {
-            a.pause();
-        } else {
-            a.play();
-        }
-    })
-}
-
-function toggleGraph() {
-    DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
-    console.log('toggled: ', DRAW_MID_GRAPH)
-}
-
-function drawUI() {
-    stroke('rgb(255,255,255');
-    textFont('Monospace');
-    textSize(8);
-    line(UI.graphUI.indicator.start, UI.graphUI.line.y.bottom, UI.graphUI.indicator.end, UI.graphUI.line.y.bottom)
-    line(UI.graphUI.indicator.start, UI.graphUI.line.y.mid, UI.graphUI.indicator.end, UI.graphUI.line.y.mid)
-    line(UI.graphUI.indicator.start, UI.graphUI.line.y.high, UI.graphUI.indicator.end, UI.graphUI.line.y.high)
-
-    text('0.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.bottom)
-    text('0.5', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.mid)
-    text('1.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.high)
-
-    stroke('rgba(0, 162, 255,1)');
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.mid)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.high)
-}
-
 
 function draw() {
     if (!START) return;
 
+    
     SCENE();
-
+    drawUIDesktop()
     if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10);
+}
+
+function windowResized() {
+    SCENEPOS();
+    setBTNPosition()
 }
