@@ -1,5 +1,5 @@
 // constants
-const DEBUG = false;
+const DEBUG = true;
 const MINWIDTH = 480;
 const UI = {};
 const AUDIO = {};
@@ -57,14 +57,12 @@ const graphData = {
 }
 
 const BUTTONS = {};
-
-const BUTTON_STYLE ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-weight: bold; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;  '
-
+const BUTTON_STYLE ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
 
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
-let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
+let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 , wasPaused: false, changeYear: true};
 let START = false;
 let amp;
 let sampleNo = 0;
@@ -72,11 +70,13 @@ let volhistory = [];
 let ismobile = false;
 let SCENE;
 let SCENEPOS;
+let NEXTSCENE;
 let vol;
 let graphVolHistory = [];
 let voiceAmp;
 let DRAW_MID_GRAPH = false;
 let CURR_AUDIO_PLAYING = []
+let REPLAYED = false;
 
 
 // event handler
@@ -93,13 +93,25 @@ window.addEventListener("message", function (e) {
         SCENE = intro;
         SCENEPOS = setIntroPositions;
         START = true;
+        
+        volhistory = [];
+        
         AUDIO.glados.play();
-        AUDIO.glados.onended(startMid);
-        AUDIO.song.play();
+        AUDIO.glados.onended(continueMid);
+        // AUDIO.song.play();
+        AUDIO.gladosEnd.stop();
         CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
         document.getElementById('restart').style.visibility = 'hidden';
         const terminal = document.getElementsByClassName("terminal")[0];
         terminal.style.display = 'block';
+        REPLAYED = true;
+        Object.values(BUTTONS).forEach(btn => btn.hide())
+        BUTTONS.pauseButton.show();
+        BUTTONS.muteButton.show();
+        if (REPLAYED) BUTTONS.skipButton.show();
+        NEXTSCENE = startMid;
+
+        setBTNPosition() 
     }
     if (e.data === 'CONTINUE') {
         // handles mid section
@@ -115,15 +127,30 @@ window.addEventListener("message", function (e) {
 function mute() {
     const curr = getMasterVolume();
     masterVolume(curr > 0 ? 0.0 : 1.0);
-    BUTTONS.muteButton.setLabel(curr > 0 ? 'mute': 'unmute')
+    BUTTONS.muteButton.html(curr > 0 ? 'unmute': 'mute')
 }
 
+function exit() {
+    window.location.href = 'https://bixuit.spindox.it'
+    console.log('EXIT');
+}
+
+function replay() {
+    console.log('replay');
+    window.postMessage('REPLAY', '*')
+}
+
+function skip() {
+    NEXTSCENE();
+    window.postMessage('SKIP', '*')
+    console.log('skip')
+}
 
 // this toggle audio
 function toggleAudio() {
-    START = !START
+    
     console.log('toggle start: ', START)
-
+    BUTTONS.pauseButton.html(START ? 'play': 'pause')
     // NEED TO STOP AUDIO AND TEXT
     window.postMessage('PAUSE', '*');
     console.log(CURR_AUDIO_PLAYING)
@@ -134,6 +161,16 @@ function toggleAudio() {
             a.play();
         }
     })
+
+    
+    START = !START
+    MID.wasPaused = START;
+}
+
+function toggleStart(){
+    
+    START = !START
+    console.log('toggled start: ', START)
 }
 
 function toggleGraph() {
@@ -158,7 +195,7 @@ function normalizePoints(points) {
 // this draws the basic UI 
 function drawUIDesktop() {
     let DRAW_FILL;
-    const RADIUS = 10;
+    const RADIUS = 5;
     const PADDING_X = 10;
     const PADDING_Y = 10;
     const TOP_H = 130;
@@ -389,6 +426,7 @@ function setEndPositions() {
 // draws the live audiograph for mid section
 function drawAudioGraphLive(points, cb) {
     const OFFSET = 135;
+    push();
     beginShape();
     for (var i = 0; i < points.length; i++) {
         var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
@@ -402,18 +440,20 @@ function drawAudioGraphLive(points, cb) {
 
 // draws average graph
 function drawAudioGraphAverage() {
+    const END = SCENE === end ? 'averageEnd' : 'average';
     const OFFSET = 100;//height > 600 ? 100 : 0;
 
     let xoff = 0.01
 
     Object.keys(graphData).forEach((year, index) => {
+        
         const DATA = graphData[year];
         noiseSeed(DATA.seed);
 
         stroke(DATA.color);
         // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
         text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
-        const average = DATA.points.average;
+        const average = DATA.points[END];
 
         push();
         beginShape();
@@ -430,18 +470,22 @@ function drawAudioGraphAverage() {
 
 }
 
-
 // ###############################
 // SCENE METHODS
 // ###############################
 
 // handles the "CONTINUE BUTTON" before MID section
 function continueMid() {
-    if (START) document.getElementById('continue').style.visibility = 'visible';
+    if (START) {
+        document.getElementById('continue').style.visibility = 'visible';
+        window.postMessage('CLEAR', '*')
+    }
 }
 
 function startIntro(){
     START = true;
+
+    AUDIO.gladosEnd.stop();
     AUDIO.glados.play();
     AUDIO.glados.onended(continueMid);
     AUDIO.song.play();
@@ -450,16 +494,20 @@ function startIntro(){
     CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
     document.getElementById('welcome-message').style.visibility = 'hidden';
 
-    // Object.values(BUTTONS).forEach(btn => btn.show())
+    Object.values(BUTTONS).forEach(btn => btn.hide())
     BUTTONS.pauseButton.show();
     BUTTONS.muteButton.show();
+    if (REPLAYED) BUTTONS.skipButton.show();
 
-
+    NEXTSCENE = startMid;
 }
 
 
 // starts MID section
 function startMid() {
+    AUDIO.glados.onended(() => {});
+    AUDIO.glados.stop();
+    
     if (ismobile) {
         document.getElementById('bxt').style.left = '50%';
         document.getElementById('bxt').style["margin-left"] = '-75px';
@@ -471,12 +519,15 @@ function startMid() {
     document.getElementById('continue').style.visibility = 'hidden';
 
     // setting up MID data
-    MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 };
+    MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0, wasPaused: false, changeYear: true };
     SCENE = mid;
     SCENEPOS = setMidPositions;
+    NEXTSCENE = startEnd;
     MID.yearList = Object.keys(graphData);
     MID.year = MID.yearList[MID.index];
     setMidPositions();
+    // emptying averages
+    MID.yearList.forEach(year => delete graphData[year].points.average)
 
     // connecting amplitude to source audio
     amp = new p5.Amplitude();
@@ -490,11 +541,24 @@ function startMid() {
     AUDIO.moviesGraph.play();
     CURR_AUDIO_PLAYING = [AUDIO.gladosGraph, AUDIO.moviesGraph, AUDIO.song];
 
+    Object.values(BUTTONS).forEach(btn => btn.hide())
+    BUTTONS.toggleButton.show();
+    BUTTONS.pauseButton.show();
+    BUTTONS.muteButton.show();
+    if (REPLAYED) BUTTONS.skipButton.show();
+
     console.log(' #### > starting mid section')
 }
 
 // starts END section
 function startEnd() {
+    if (!START) return;
+    clear();
+    AUDIO.gladosGraph.onended(() => {});
+    AUDIO.gladosGraph.stop();
+    AUDIO.moviesGraph.stop();
+    console.log(graphData);
+
     DRAW_MID_GRAPH = true;
     // moving logo back
     document.getElementById('bxt').style.left = '20px';
@@ -503,6 +567,7 @@ function startEnd() {
     // setting up END data
     SCENE = end;
     SCENEPOS = setEndPositions;
+    NEXTSCENE = startIntro;
     setEndPositions();
 
     // triggering text
@@ -514,9 +579,22 @@ function startEnd() {
     AUDIO.gladosEnd.play();
     CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
 
-    console.log(' #### > starting end section')
+    setBTNPosition(true);
 
+    Object.values(BUTTONS).forEach(btn => btn.hide())
+
+    BUTTONS.pauseButton.show();
+    BUTTONS.muteButton.show();
+    BUTTONS.exitButton.show();
+    BUTTONS.replayButton.show();
+    // if (REPLAYED) BUTTONS.skipButton.show();
+    console.log(' #### > starting end section')
 }
+
+
+
+
+
 
 // this draws the intro section
 function intro() {
@@ -537,7 +615,7 @@ function intro() {
     endShape();
     pop();
 
-    if (volhistory.length * 4 > (width) - 50 - UI.graphUI.line.x) {
+    if (volhistory.length * 4 > (windowWidth) - 50 - UI.graphUI.line.x) {
         volhistory = [];
     }
 
@@ -556,13 +634,29 @@ function mid() {
     sampleNo++;
     MID.curr = amp.getLevel();
 
+
+    // this sucks
+    // console.log(MID.curr, MID.wasPaused)
+    if (MID.curr === 0 && MID.wasPaused) MID.changeYear = false;
+    if (MID.curr > 0 && MID.wasPaused) {
+        MID.wasPaused = false;
+        MID.changeYear= true
+    }
+
+
+
     // change year
-    if (MID.prev > 0 & MID.curr === 0) {
+    if (MID.prev > 0 && MID.curr === 0 && MID.changeYear) {
+        console.log('change year', MID.changeYear)
+        console.log(MID.prev , MID.curr)
         // change points bucket
+        console.log('qua non devo entrare')
         MID.index++
         if (MID.index === MID.yearList.length) {
             graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
             graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
+            graphData[MID.year].points.averageEnd = graphData[MID.year].points.average
+            graphData[MID.year].points.window = [];
             MID.prev = 0;
             return;
         }
@@ -572,7 +666,7 @@ function mid() {
         // storing points 
         graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
         graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
-
+        graphData[MID.year].points.averageEnd = graphData[MID.year].points.average
         // emptying point window, we don't need that anymore
         graphData[MID.year].points.window = [];
 
@@ -598,12 +692,7 @@ function mid() {
         // draw live window
         stroke(graphData[MID.year].color)
         drawAudioGraphLive(graphData[MID.year].points.window, cb);
-    } else {
-        // textSize(16);
-        // fill('rgb(255,255,255');
-        // text('GRAPH DISABLED', (windowWidth / 2) - 100, windowHeight -250 )
-        // noFill();
-    }
+    } 
 
     // resetting stroke color
     stroke('rgb(255,255,255');
@@ -647,10 +736,14 @@ function preload() {
 
 }
 
-function setBTNPosition() {
-    BUTTONS.muteButton.position(windowWidth - 120, windowHeight - 60);
-    BUTTONS.pauseButton.position(windowWidth - 240, windowHeight - 60);
-    BUTTONS.toggleButton.position(windowWidth - 360, windowHeight - 60);
+function setBTNPosition(bypass_offset) {
+    const OFFSET = REPLAYED && !bypass_offset ? 120 : 0;
+    BUTTONS.muteButton.position(windowWidth - 120 - OFFSET, windowHeight - 60);
+    BUTTONS.pauseButton.position(windowWidth - 240 - OFFSET, windowHeight - 60);
+    BUTTONS.toggleButton.position(windowWidth - 360 - OFFSET, windowHeight - 60);
+    BUTTONS.replayButton.position(windowWidth - 360 - OFFSET, windowHeight - 60);
+    BUTTONS.exitButton.position(windowWidth - 480 - OFFSET, windowHeight - 60);
+    BUTTONS.skipButton.position(windowWidth - 120, windowHeight - 60);
 
 }
 
@@ -685,6 +778,18 @@ function setup() {
     BUTTONS.muteButton = createButton('mute');
     BUTTONS.muteButton.style(BUTTON_STYLE)
     BUTTONS.muteButton.mousePressed(mute);
+
+    BUTTONS.replayButton = createButton('replay');
+    BUTTONS.replayButton.style(BUTTON_STYLE)
+    BUTTONS.replayButton.mousePressed(replay);
+
+    BUTTONS.exitButton = createButton('exit');
+    BUTTONS.exitButton.style(BUTTON_STYLE)
+    BUTTONS.exitButton.mousePressed(exit);
+
+    BUTTONS.skipButton = createButton('skip');
+    BUTTONS.skipButton.style(BUTTON_STYLE)
+    BUTTONS.skipButton.mousePressed(skip);
 
     Object.values(BUTTONS).forEach(btn => btn.hide())
 

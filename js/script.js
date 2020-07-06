@@ -41,6 +41,10 @@ let PAUSE = false;
 let MH;
 let WWWW = 900;
 let TRIM = false;
+let SKIP = false;
+
+let interval;
+let timeout;
 
 if (window.innerHeight < 600) {
     TRIM = true;
@@ -68,7 +72,7 @@ jQuery(document).ready(function ($) {
                     RESET = 0;
                 }
                 PROMPT += '\n';
-                var interval = setInterval(function () {
+                interval = setInterval(function () {
                     if (PAUSE) return;
                     var chr = $.terminal.substring(message, c, c + 1);
                     PROMPT += chr;
@@ -77,7 +81,7 @@ jQuery(document).ready(function ($) {
                     if (c == length(message)) {
                         clearInterval(interval);
                         // execute in next interval
-                        setTimeout(function () {
+                        timeout = setTimeout(function () {
                             // swap command with prompt
                             finish_typing(term, message, prompt);
                             anim = false
@@ -103,11 +107,17 @@ jQuery(document).ready(function ($) {
     const messageHandler = () => {
         if (INDEX > MAXINDEX) return;
 
+
         typed_message(TERM, messages[INDEX], () => { });
     }
     
     const messageHandlerEnd = () => {
-        if (INDEX > MAXINDEX_END) return;
+        console.log('called messagehandlerend')
+        if (INDEX > MAXINDEX_END) {
+            console.log('returninggggg')
+            return;
+        }
+
         typed_message(TERM, messages_end[INDEX], () => { });
     }
 
@@ -132,6 +142,9 @@ jQuery(document).ready(function ($) {
         }
         if (e.data === 'REPLAY') {
             console.log(' #### RE STARTING CLI')
+            SKIP = true;
+            clearInterval(interval);
+            clearTimeout(timeout);
             TERM.clear();
             INDEX = 0;
             RESET = 1;
@@ -141,6 +154,8 @@ jQuery(document).ready(function ($) {
         }
         if (e.data === 'END') {
             console.log(' #### RE STARTING CLI')
+            clearInterval(interval);
+            clearTimeout(timeout);
             TERM.clear();
             INDEX = 0;
             RESET = 1;
@@ -151,6 +166,20 @@ jQuery(document).ready(function ($) {
         if (e.data === 'PAUSE') {
             PAUSE = !PAUSE;
         }
+        // if (e.data === 'SKIP') {
+        //     clearInterval(interval);
+        //     // clearTimeout(timeout);
+        //     TERM.clear();
+        //     // INDEX = 0;
+        //     // RESET = 1;
+        //     // PROMPT = '';
+        //     // SKIP = true
+        // }
+
+        if (e.data === 'CLEAR') {
+            TERM.clear()
+        }
+
     }, false);
 
     $('body').terminal(() => { }, {
