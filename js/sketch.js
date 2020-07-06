@@ -57,12 +57,14 @@ const graphData = {
 }
 
 const BUTTONS = {};
-const BUTTON_STYLE ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
+const BUTTON_STYLE_DESKTOP ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
 
+const BUTTON_STYLE_MOBILE ='background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;'
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
 let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 , wasPaused: false, changeYear: true};
+let MID_UI_MOBILE = {};
 let START = false;
 let amp;
 let sampleNo = 0;
@@ -77,7 +79,7 @@ let voiceAmp;
 let DRAW_MID_GRAPH = false;
 let CURR_AUDIO_PLAYING = []
 let REPLAYED = false;
-
+let setBTNPosition;
 
 // event handler
 window.addEventListener("message", function (e) {
@@ -101,7 +103,7 @@ window.addEventListener("message", function (e) {
         // AUDIO.song.play();
         AUDIO.gladosEnd.stop();
         CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
-        document.getElementById('restart').style.visibility = 'hidden';
+        // document.getElementById('restart').style.visibility = 'hidden';
         const terminal = document.getElementsByClassName("terminal")[0];
         terminal.style.display = 'block';
         REPLAYED = true;
@@ -212,9 +214,7 @@ function drawUIDesktop() {
     }
 
     const MID1_H = windowHeight - TOP_H - BOTTOM_H - MID2_H - PADDING_X * 5;
-    
-
-
+    // const MID1_H = 50
 
     const ALL_W = windowWidth - PADDING_X * 2;
     stroke('rgba(255, 255,255, 0.5)')
@@ -225,9 +225,45 @@ function drawUIDesktop() {
     
     rect(PADDING_X, PADDING_Y*4 + TOP_H + MID1_H + MID2_H, ALL_W, BOTTOM_H, RADIUS)
     noFill()
-
-
 }
+
+
+function drawUIMobile() {
+    // MID_UI_MOBILE.MID_FLAG = SCENE === mid;
+    // let DRAW_FILL;
+    // MID_UI_MOBILE.RADIUS = 5;
+    // MID_UI_MOBILE.PADDING_X = 5;
+    // MID_UI_MOBILE.PADDING_Y = 5;
+    // MID_UI_MOBILE.TOP_H = 80;
+    // MID_UI_MOBILE.BOTTOM_H = 50;
+
+    
+    // // if (SCENE === intro) {
+    // //     MID2_H = 340;
+    // //     DRAW_FILL = true
+    // // } else {
+    // //     MID2_H = DRAW_MID_GRAPH ? 350 : 5
+    // //     // DRAW_FILL = !DRAW_MID_GRAPH
+    // //     DRAW_FILL = true
+    // // }
+
+    // // MID2 VA CALCOLATO
+
+    // MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
+    // MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    
+    // MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
+
+    stroke('rgba(255, 255,255, 0.5)')
+    // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
+    if (!MID_UI_MOBILE.MID_FLAG) rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*2 + MID_UI_MOBILE.TOP_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.RADIUS)
+    // if (DRAW_MID_GRAPH) fill('rgba(11,30,99,0.4)')
+    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.RADIUS)
+    noFill()
+    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*4 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.BOTTOM_H, MID_UI_MOBILE.RADIUS)
+    
+}
+
 
 // this draws the graph ui (lines, scale, etc)
 function drawGraphUI() {
@@ -251,6 +287,21 @@ function drawGraphUI() {
 }
 
 function setIntroPositions() {
+
+    MID_UI_MOBILE.MID_FLAG = SCENE === mid;
+    MID_UI_MOBILE.RADIUS = 5;
+    MID_UI_MOBILE.PADDING_X = 5;
+    MID_UI_MOBILE.PADDING_Y = 5;
+    MID_UI_MOBILE.TOP_H = 80;
+    MID_UI_MOBILE.BOTTOM_H = 50;
+
+    MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
+    MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    
+    MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
+   
+    console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
+   
     if (windowWidth <= MINWIDTH) {
         ismobile = true;
         // mobile
@@ -264,9 +315,9 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 25,
-                mid: windowHeight - 100,
-                high: windowHeight - 175,
+                bottom: windowHeight - 100,
+                mid: windowHeight - 175,
+                high: windowHeight - 250,
             }
         };
 
@@ -274,7 +325,8 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: windowWidth / 2,
-            y: windowWidth < 380 ? windowHeight - 175 - 70 : windowHeight - 175 - 80,
+            // y: windowWidth < 380 ? windowHeight - 175 - 70 : windowHeight - 175 - 80,
+            y: (MID_UI_MOBILE.PADDING_Y *3) + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + 60,
         };
 
         UI.volstring = {
@@ -321,11 +373,23 @@ function setIntroPositions() {
             y: windowHeight - 275,
         }
     }
+    console.log('ELLIPSE ', UI.ellipse)
 }
 
 function setMidPositions() {
-    // desktop
+    MID_UI_MOBILE.MID_FLAG = SCENE === mid;
+    MID_UI_MOBILE.RADIUS = 5;
+    MID_UI_MOBILE.PADDING_X = 5;
+    MID_UI_MOBILE.PADDING_Y = 5;
+    MID_UI_MOBILE.TOP_H = 80;
+    MID_UI_MOBILE.BOTTOM_H = 50;
+
+    MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
+    MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    
+    MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
     if (windowWidth <= MINWIDTH) {
+        console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
         UI.graphStartX = 10;
         UI.graphUI = {};
         UI.graphUI.indicator = {
@@ -344,6 +408,10 @@ function setMidPositions() {
         UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
+        UI.ellipse = {
+            x: windowWidth / 2,
+            y:  (MID_UI_MOBILE.PADDING_Y * 3) + MID_UI_MOBILE.TOP_H + (MID_UI_MOBILE.MID2_H/2) + (MID_UI_MOBILE.MID1_H/2),
+        };
     } else {
         UI.graphStartX = 10;
         UI.graphUI = {};
@@ -363,12 +431,13 @@ function setMidPositions() {
         UI.graphEndX = windowWidth - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
+
+        UI.ellipse = {
+            x: windowWidth / 2,
+            y: windowHeight / 2,
+        };
     }
 
-    UI.ellipse = {
-        x: windowWidth / 2,
-        y: windowHeight / 2,
-    };
 
     UI.volstring = {
         x: (windowWidth / 2) + 100,
@@ -379,9 +448,23 @@ function setMidPositions() {
         x: (windowWidth / 2) - 100,
         y: (windowHeight / 2) - 75,
     }
+
+    console.log('ELLIPSE: ', UI.ellipse)
+
 }
 
 function setEndPositions() {
+    MID_UI_MOBILE.MID_FLAG = SCENE === mid;
+    MID_UI_MOBILE.RADIUS = 5;
+    MID_UI_MOBILE.PADDING_X = 5;
+    MID_UI_MOBILE.PADDING_Y = 5;
+    MID_UI_MOBILE.TOP_H = 80;
+    MID_UI_MOBILE.BOTTOM_H = 50;
+
+    MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
+    MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    
+    MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
     if (windowWidth <= MINWIDTH) {
         UI.graphStartX = 10;
         UI.graphUI = {};
@@ -425,7 +508,7 @@ function setEndPositions() {
 
 // draws the live audiograph for mid section
 function drawAudioGraphLive(points, cb) {
-    const OFFSET = 135;
+    const OFFSET = ismobile ? 0 : 135;
     push();
     beginShape();
     for (var i = 0; i < points.length; i++) {
@@ -441,7 +524,7 @@ function drawAudioGraphLive(points, cb) {
 // draws average graph
 function drawAudioGraphAverage() {
     const END = SCENE === end ? 'averageEnd' : 'average';
-    const OFFSET = 100;//height > 600 ? 100 : 0;
+    const OFFSET = ismobile? 0 : 100;//height > 600 ? 100 : 0;
 
     let xoff = 0.01
 
@@ -508,10 +591,10 @@ function startMid() {
     AUDIO.glados.onended(() => {});
     AUDIO.glados.stop();
     
-    if (ismobile) {
-        document.getElementById('bxt').style.left = '50%';
-        document.getElementById('bxt').style["margin-left"] = '-75px';
-    }
+    // if (ismobile) {
+    //     document.getElementById('bxt').style.left = '50%';
+    //     document.getElementById('bxt').style["margin-left"] = '-75px';
+    // }
 
     // hide terminal
     const terminal = document.getElementsByClassName("terminal")[0];
@@ -561,8 +644,8 @@ function startEnd() {
 
     DRAW_MID_GRAPH = true;
     // moving logo back
-    document.getElementById('bxt').style.left = '20px';
-    document.getElementById('bxt').style["margin-left"] = '0px';
+    // document.getElementById('bxt').style.left = '20px';
+    // document.getElementById('bxt').style["margin-left"] = '0px';
 
     // setting up END data
     SCENE = end;
@@ -592,13 +675,9 @@ function startEnd() {
 }
 
 
-
-
-
-
 // this draws the intro section
 function intro() {
-    clear();
+    // clear();
     drawGraphUI();
     vol = amp.getLevel();
     volhistory.push(vol);
@@ -606,10 +685,10 @@ function intro() {
     stroke(255);
     noFill();
     push();
-
+    const minHeight = ismobile ? 100 : 125
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height - 125, height - 550);
+        var y = map(volhistory[i], 0, 1, height - minHeight, height - 550);
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
@@ -630,7 +709,7 @@ function intro() {
 
 // this draw the MID section
 function mid() {
-    clear();
+    // clear();
     sampleNo++;
     MID.curr = amp.getLevel();
 
@@ -713,11 +792,11 @@ function mid() {
 
 // this handle the END section
 function end() {
-    clear();
+    // clear();
     drawGraphUI();
     drawAudioGraphAverage()
 
-    document.getElementById('restart').style.visibility = 'visible';
+    // document.getElementById('restart').style.visibility = 'visible';
     START = false;
 }
 
@@ -736,7 +815,7 @@ function preload() {
 
 }
 
-function setBTNPosition(bypass_offset) {
+function setBTNPositionDesktop(bypass_offset) {
     const OFFSET = REPLAYED && !bypass_offset ? 120 : 0;
     BUTTONS.muteButton.position(windowWidth - 120 - OFFSET, windowHeight - 60);
     BUTTONS.pauseButton.position(windowWidth - 240 - OFFSET, windowHeight - 60);
@@ -746,6 +825,20 @@ function setBTNPosition(bypass_offset) {
     BUTTONS.skipButton.position(windowWidth - 120, windowHeight - 60);
 
 }
+
+function setBTNPositionMobile(bypass_offset) {
+    const OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
+    const PADDING_BOTTOM = 50;
+    BUTTONS.muteButton.position(windowWidth - 50 - OFFSET, windowHeight - PADDING_BOTTOM);
+    BUTTONS.pauseButton.position(windowWidth - 100 - OFFSET, windowHeight - PADDING_BOTTOM);
+    BUTTONS.toggleButton.position(windowWidth - 150 - OFFSET, windowHeight - PADDING_BOTTOM);
+    BUTTONS.replayButton.position(windowWidth - 150 - OFFSET, windowHeight - PADDING_BOTTOM);
+    BUTTONS.exitButton.position(windowWidth - 200 - OFFSET, windowHeight - PADDING_BOTTOM);
+    BUTTONS.skipButton.position(windowWidth - 50, windowHeight - PADDING_BOTTOM);
+
+}
+
+
 
 function setup() {
     smooth()
@@ -765,6 +858,9 @@ function setup() {
     setIntroPositions();
     SCENE = intro;
     SCENEPOS = setIntroPositions;
+
+
+    const BUTTON_STYLE = ismobile ? BUTTON_STYLE_MOBILE : BUTTON_STYLE_DESKTOP; 
 
     // creating buttons
     BUTTONS.toggleButton = createButton('toggle');
@@ -793,15 +889,22 @@ function setup() {
 
     Object.values(BUTTONS).forEach(btn => btn.hide())
 
+    setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
+    
     setBTNPosition();
 }
 
 function draw() {
     if (!START) return;
-
+    clear();
+    
+    if (ismobile) drawUIMobile()
+    else drawUIDesktop()
+    
     
     SCENE();
-    drawUIDesktop()
+    
+    
     if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10);
 }
 

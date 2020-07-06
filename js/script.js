@@ -124,7 +124,7 @@ jQuery(document).ready(function ($) {
 
 
     const nextMessage = () => {
-        const maxLines = 6;
+        const maxLines = 2;
         if (TRIM && INDEX > maxLines) {
             console.log('TRIMMING???')
             const charIndex = messages[INDEX-maxLines].length
