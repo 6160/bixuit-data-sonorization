@@ -89,20 +89,48 @@
         z-index: 999999;
         top: 20px;
         left: 10px;
-        width: 300px;
+        width: 50px;
         position: absolute;
       }
+
+      .logo_img{
+        /* z-index: 999999; */
+        /* top: 20px;
+        left: 10px; */
+        width: 100px;
+        /* position: absolute; */
+      }
+
     }
 
-    @media (min-width: 813px) {
+    @media (min-width: 441px) {
       .logo{
-        z-index: 999999;
-        top: 20px;
-        left: 20px;
-        width: 300px;
-        position: absolute;
+          z-index: 999999;
+          top: 20px;
+          left: 20px;
+          width: 300px;
+          position: absolute;
 
+        }
+        .logo_img{
+        /* z-index: 999999; */
+        /* top: 20px;
+        left: 10px; */
+        width: 150px;
+        /* position: absolute; */
       }
+      }
+
+    @media (min-width: 813px) {
+
+      .logo_img{
+        /* z-index: 999999; */
+        /* top: 20px;
+        left: 10px; */
+        width: 150px;
+        /* position: absolute; */
+      }
+
       .msg {
         position: absolute;
         top: 40%;
@@ -244,7 +272,7 @@
 
 
   <div id="bxt" class="logo"> 
-    <img src="img/BXT.png" style="width: 150px;"/>
+    <img src="img/BXT.png" class="logo_img" />
   </div>
   <div id="p5_loading" class="loading-msg">LOADING ⠋</div>
   <div id="continue" class="mid"> 
@@ -262,7 +290,7 @@
     </p>
     <button class="btn" onclick="window.postMessage('START', '*');">START</button>
   </div>
-  <div id="restart" class="TODO">
+  <!-- <div id="restart" class="TODO">
     <button class="btn" onclick="window.postMessage('REPLAY', '*');">REPLAY</button>
-  </div>
+  </div> -->
 </body>

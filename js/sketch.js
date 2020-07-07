@@ -508,7 +508,7 @@ function setEndPositions() {
 
 // draws the live audiograph for mid section
 function drawAudioGraphLive(points, cb) {
-    const OFFSET = ismobile ? 0 : 135;
+    const OFFSET = ismobile ? 75 : 135;
     push();
     beginShape();
     for (var i = 0; i < points.length; i++) {
@@ -773,19 +773,24 @@ function mid() {
         drawAudioGraphLive(graphData[MID.year].points.window, cb);
     } 
 
-    // resetting stroke color
     stroke('rgb(255,255,255');
+    if(!(DRAW_MID_GRAPH && ismobile)) {
 
-    // drawing mouth
-    ellipse(UI.ellipse.x, UI.ellipse.y, 200, (MID.curr || voiceAmp.getLevel()) * 200);
-    textFont('monospace');
-    textSize(8);
+    
 
-    // drawing framecount and vol value
-    let volstring = MID.curr.toString()
-    text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
-    text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
+        // resetting stroke color
+        stroke('rgba(0,255,255, 0.1');
+    
+        // drawing mouth
+        ellipse(UI.ellipse.x, UI.ellipse.y, 200, (MID.curr || voiceAmp.getLevel()) * 200);
+        textFont('monospace');
+        textSize(8);
 
+        // drawing framecount and vol value
+        let volstring = MID.curr.toString()
+        text(volstring.substring(0, 4), UI.volstring.x, UI.volstring.y);
+        text(sampleNo, UI.sampleNo.x, UI.sampleNo.y);
+    }
     // storing curr value for checking year change
     MID.prev = MID.curr;
 }
