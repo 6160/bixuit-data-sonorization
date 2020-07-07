@@ -58,8 +58,23 @@ const graphData = {
 
 const BUTTONS = {};
 const BUTTON_STYLE_DESKTOP ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
-
 const BUTTON_STYLE_MOBILE ='background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;'
+
+const BUTTON_STYLE_2010_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2011_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2012_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2013_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2014_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+
+const BUTTON_STYLE_2010_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2011_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2012_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2013_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2014_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+
+
+
+
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
@@ -83,6 +98,8 @@ let REPLAYED = false;
 let setBTNPosition;
 let W_HEIGHT;
 let W_WIDTH;
+let OVERLAYS = {};
+
 
 // event handler
 window.addEventListener("message", function (e) {
@@ -134,7 +151,8 @@ window.addEventListener("message", function (e) {
 // ###############################
 
 
-function mute() {
+function mute(event) {
+    console.log('BUTTONEVENT:', event)
     const curr = getMasterVolume();
     masterVolume(curr > 0 ? 0.0 : 1.0);
     BUTTONS.muteButton.html(curr > 0 ? 'unmute': 'mute')
@@ -211,11 +229,23 @@ function setBTNPositionDesktop(bypass_offset) {
     BUTTONS.replayButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
     BUTTONS.exitButton.position(W_WIDTH - 480 - OFFSET, W_HEIGHT - 60);
     BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
+    
+    BUTTONS.aButton.position( 20, W_HEIGHT - 60);
+    BUTTONS.bButton.position( 140, W_HEIGHT - 60);
+    BUTTONS.cButton.position( 260, W_HEIGHT - 60);
+    BUTTONS.dButton.position( 380, W_HEIGHT - 60);
+    BUTTONS.eButton.position( 500, W_HEIGHT - 60);
+    
     Object.values(BUTTONS).forEach(button => {
         button.style(BUTTON_STYLE_DESKTOP)
-
     })
     
+    BUTTONS.aButton.show();
+    BUTTONS.bButton.show();
+    BUTTONS.cButton.show();
+    BUTTONS.dButton.show();
+    BUTTONS.eButton.show();
+
 
 }
 
@@ -228,6 +258,13 @@ function setBTNPositionMobile(bypass_offset) {
     BUTTONS.replayButton.position(W_WIDTH - 150 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.exitButton.position(W_WIDTH - 200 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.skipButton.position(W_WIDTH - 50, W_HEIGHT - PADDING_BOTTOM);
+
+    BUTTONS.aButton.position(10, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.bButton.position(60, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.cButton.position(110, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.dButton.position(160, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.eButton.position(210, W_HEIGHT - PADDING_BOTTOM);
+
 
     Object.values(BUTTONS).forEach(button => {
         button.style(BUTTON_STYLE_MOBILE)
@@ -452,6 +489,11 @@ function setIntroPositions() {
         BUTTONS.pauseButton.show();
         BUTTONS.muteButton.show();
         if (REPLAYED) BUTTONS.skipButton.show();
+        BUTTONS.aButton.show();
+        BUTTONS.bButton.show();
+        BUTTONS.cButton.show();
+        BUTTONS.dButton.show();
+        BUTTONS.eButton.show();
     }
 }
 
@@ -676,6 +718,41 @@ function setCSS() {
 
 }
 
+
+function toggleOverlay(year) {
+    OVERLAYS.all.forEach(ovr => {
+        if (ovr.id === year) {
+            if (ovr.style.display === 'none' || !ovr.style.display) ovr.style.display = 'block';
+            else ovr.style.display = 'none'
+        }
+        else ovr.style.display = 'none'
+    })
+    
+    // console.log('div display: ', div.style.display)
+    // if (div.style.display === 'none' || !div.style.display) div.style.display = 'block';
+    // else div.style.display = 'none';
+} 
+
+function overlay2010() {
+    toggleOverlay('2010')
+}
+
+function overlay2011() {
+    toggleOverlay('2011')
+}
+
+function overlay2012() {
+    toggleOverlay('2012')
+}
+
+function overlay2013() {
+    toggleOverlay('2013')
+}
+
+function overlay2014() {
+    toggleOverlay('2014')
+}
+
 // ###############################
 // SCENE METHODS
 // ###############################
@@ -704,6 +781,12 @@ function startIntro(){
     BUTTONS.pauseButton.show();
     BUTTONS.muteButton.show();
     if (REPLAYED) BUTTONS.skipButton.show();
+
+    BUTTONS.aButton.show();
+    BUTTONS.bButton.show();
+    BUTTONS.cButton.show();
+    BUTTONS.dButton.show();
+    BUTTONS.eButton.show();
 
     NEXTSCENE = startMid;
 }
@@ -938,6 +1021,7 @@ function preload() {
     AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
     AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
 
+
 }
 
 
@@ -978,6 +1062,11 @@ function setup() {
 
    
     const BUTTON_STYLE = ismobile ? BUTTON_STYLE_MOBILE : BUTTON_STYLE_DESKTOP; 
+    const BUTTON_STYLE_2010 = ismobile ? BUTTON_STYLE_2010_MOBILE : BUTTON_STYLE_2010_DESKTOP; 
+    const BUTTON_STYLE_2011 = ismobile ? BUTTON_STYLE_2011_MOBILE : BUTTON_STYLE_2011_DESKTOP; 
+    const BUTTON_STYLE_2012 = ismobile ? BUTTON_STYLE_2012_MOBILE : BUTTON_STYLE_2012_DESKTOP; 
+    const BUTTON_STYLE_2013 = ismobile ? BUTTON_STYLE_2013_MOBILE : BUTTON_STYLE_2013_DESKTOP; 
+    const BUTTON_STYLE_2014 = ismobile ? BUTTON_STYLE_2014_MOBILE : BUTTON_STYLE_2014_DESKTOP; 
 
     // creating buttons
     BUTTONS.toggleButton = createButton('toggle');
@@ -1004,11 +1093,46 @@ function setup() {
     BUTTONS.skipButton.style(BUTTON_STYLE)
     BUTTONS.skipButton.mousePressed(skip);
 
+    BUTTONS.skipButton = createButton('skip');
+    BUTTONS.skipButton.style(BUTTON_STYLE)
+    BUTTONS.skipButton.mousePressed(skip);
+
+
+    BUTTONS.aButton = createButton('2010');
+    BUTTONS.aButton.style(BUTTON_STYLE_2010)
+    BUTTONS.aButton.mousePressed(overlay2010);
+
+    BUTTONS.bButton = createButton('2011');
+    BUTTONS.bButton.style(BUTTON_STYLE_2011)
+    BUTTONS.bButton.mousePressed(overlay2011);
+
+    BUTTONS.cButton = createButton('2012');
+    BUTTONS.cButton.style(BUTTON_STYLE_2012)
+    BUTTONS.cButton.mousePressed(overlay2012);
+
+    BUTTONS.dButton = createButton('2013');
+    BUTTONS.dButton.style(BUTTON_STYLE_2013)
+    BUTTONS.dButton.mousePressed(overlay2013);
+
+    BUTTONS.eButton = createButton('2014');
+    BUTTONS.eButton.style(BUTTON_STYLE_2014)
+    BUTTONS.eButton.mousePressed(overlay2014);
+
+
+
 
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
     
     setBTNPosition();
     Object.values(BUTTONS).forEach(btn => btn.hide())
+
+    OVERLAYS.all = Array.from(document.getElementsByClassName("overlay"));
+
+    OVERLAYS.all.forEach(overlay => {
+        OVERLAYS[overlay.id] = overlay;
+    })
+
+    console.log('%%%%%%%%%%% OVERLAYS ', OVERLAYS)
 
 }
 

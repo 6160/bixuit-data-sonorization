@@ -101,7 +101,35 @@
         /* position: absolute; */
       }
 
+      .overlay {
+        background-image: radial-gradient( #0E257B, #0B1E63); 
+        border: 1px dashed #ffffff;
+        overflow: hidden;
+        font-family: monospace;
+        position: fixed;
+        padding: 15px 15px;
+        bottom: 100px;
+        left: 20px;
+        display: none;
+      }
+
     }
+
+    @media (max-width: 400px){
+      .overlay {
+        background-image: radial-gradient( #0E257B, #0B1E63); 
+        border: 1px dashed #ffffff;
+        overflow: hidden;
+        font-family: monospace;
+        position: fixed;
+        padding: 10px 10px;
+        bottom: 100px;
+        left: 10px;
+        display: none;
+        font-size: 10px;
+      }
+    }
+
 
     @media (min-width: 761px) {
       .logo{
@@ -119,6 +147,20 @@
         width: 150px;
         /* position: absolute; */
       }
+      .overlay {
+        background-image: radial-gradient( #0E257B, #0B1E63); 
+        border: 1px dashed #ffffff;
+        overflow: hidden;
+        font-family: monospace;
+        position: fixed;
+        padding: 15px 15px;
+        bottom: 100px;
+        left: 20px;
+        /* visibility: hidden; */
+        display: none;
+      }
+
+
       }
 
     @media (min-width: 813px) {
@@ -220,6 +262,8 @@
     }
 
 
+
+
   </style>
  
 
@@ -293,7 +337,7 @@
   <!-- <div id="restart" class="TODO">
     <button class="btn" onclick="window.postMessage('REPLAY', '*');">REPLAY</button>
   </div> -->
-  <div id="2013" style="position: absolute; left: 400px">
+  <div id="2013" class="overlay">
     YEAR: 2013<br/>
     +-------------+---------------------+<br/>
     | MOVIES..... | ENTITIES........... |<br/>
@@ -306,7 +350,7 @@
     | Oblivion... | Tet................ |<br/>
     +-------------+---------------------+<br/>
   </div>
-  <div id="2010" style="position: absolute; left: 400px">
+  <div id="2010" class="overlay">
     YEAR: 2010<br/>
     +-------------+------------------+<br/>
     | MOVIES..... | ENTITIES........ |<br/>
@@ -316,7 +360,7 @@
     +-------------+------------------+<br/>
   </div>
 
-  <div id="2011" style="position: absolute; left: 400px">
+  <div id="2011" class="overlay">
     YEAR: 2012<br/>
     +------------+----------------+<br/>
     | MOVIES.... | ENTITIES...... |<br/>
@@ -327,15 +371,30 @@
     +------------+----------------+<br/>
   </div>
 
-  <div id="2011" style="position: absolute; left: 400px">
+  <div id="2012" class="overlay">
     YEAR: 2012<br/>
-    +------------+----------------+<br/>
-    | MOVIES.... | ENTITIES...... |<br/>
-    +------------+----------------+<br/>
-    | Eva....... | Eva, Max, SI-9 |<br/>
-    | Real Steel | Robot......... |<br/>
-    | Ra.One.... | Ra.One, G.One. |<br/>
-    +------------+----------------+<br/>
+    +----------------------------+---------------+<br/>
+    | MOVIES.................... | ENTITIES..... |<br/>
+    +----------------------------+---------------+<br/>
+    | Prometheus................ | David........ |<br/>
+    | Resident Evil: Retribution | Red Queen.... |<br/>
+    | Robot & Frank............. | Robot........ |<br/>
+    | Total Recall.............. | Police Robots |<br/>
+    +----------------------------+---------------+<br/>
+  </div>
+
+  <div id="2014" class="overlay">
+    YEAR: 2014<br/>
+    +----------------------------+-----------------+<br/>
+    | MOVIES.................... | ENTITIES....... |<br/>
+    +----------------------------+-----------------+<br/>
+    | Autómata.................. | Autómata....... |<br/>
+    | Big Hero 6................ | Baymax......... |<br/>
+    | Interstellar.............. | TARS, CASE..... |<br/>
+    | Robocop................... | Murphy......... |<br/>
+    | Transcendence............. | Dr. Will Caster |<br/>
+    | X-Men: Days of future past | Sentinels...... |<br/>
+    +----------------------------+-----------------+<br/>
   </div>
 
 </body>
