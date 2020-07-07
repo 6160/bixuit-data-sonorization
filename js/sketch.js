@@ -69,7 +69,7 @@ let START = false;
 let amp;
 let sampleNo = 0;
 let volhistory = [];
-let ismobile = false;
+let ismobile = window.matchMedia("only screen and (max-width: 760px)").matches
 let SCENE;
 let SCENEPOS;
 let NEXTSCENE;
@@ -80,6 +80,8 @@ let DRAW_MID_GRAPH = false;
 let CURR_AUDIO_PLAYING = []
 let REPLAYED = false;
 let setBTNPosition;
+let W_HEIGHT;
+let W_WIDTH;
 
 // event handler
 window.addEventListener("message", function (e) {
@@ -185,7 +187,7 @@ function replaySong() {
 }
 
 function normalizePoints(points) {
-    return points.map(p => map(p, 0, 1, height - 25, height - 500))
+    return points.map(p => map(p, 0, 0.5, UI.graphUI.line.y.bottom, UI.graphUI.line.y.high)) //heigth
 }
 
 
@@ -196,24 +198,24 @@ function normalizePoints(points) {
 
 function setBTNPositionDesktop(bypass_offset) {
     const OFFSET = REPLAYED && !bypass_offset ? 120 : 0;
-    BUTTONS.muteButton.position(windowWidth - 120 - OFFSET, windowHeight - 60);
-    BUTTONS.pauseButton.position(windowWidth - 240 - OFFSET, windowHeight - 60);
-    BUTTONS.toggleButton.position(windowWidth - 360 - OFFSET, windowHeight - 60);
-    BUTTONS.replayButton.position(windowWidth - 360 - OFFSET, windowHeight - 60);
-    BUTTONS.exitButton.position(windowWidth - 480 - OFFSET, windowHeight - 60);
-    BUTTONS.skipButton.position(windowWidth - 120, windowHeight - 60);
+    BUTTONS.muteButton.position(W_WIDTH - 120 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.pauseButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.toggleButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.replayButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.exitButton.position(W_WIDTH - 480 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
 
 }
 
 function setBTNPositionMobile(bypass_offset) {
     const OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
     const PADDING_BOTTOM = 50;
-    BUTTONS.muteButton.position(windowWidth - 50 - OFFSET, windowHeight - PADDING_BOTTOM);
-    BUTTONS.pauseButton.position(windowWidth - 100 - OFFSET, windowHeight - PADDING_BOTTOM);
-    BUTTONS.toggleButton.position(windowWidth - 150 - OFFSET, windowHeight - PADDING_BOTTOM);
-    BUTTONS.replayButton.position(windowWidth - 150 - OFFSET, windowHeight - PADDING_BOTTOM);
-    BUTTONS.exitButton.position(windowWidth - 200 - OFFSET, windowHeight - PADDING_BOTTOM);
-    BUTTONS.skipButton.position(windowWidth - 50, windowHeight - PADDING_BOTTOM);
+    BUTTONS.muteButton.position(W_WIDTH - 50 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.pauseButton.position(W_WIDTH - 100 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.toggleButton.position(W_WIDTH - 150 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.replayButton.position(W_WIDTH - 150 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.exitButton.position(W_WIDTH - 200 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.skipButton.position(W_WIDTH - 50, W_HEIGHT - PADDING_BOTTOM);
 
 }
 
@@ -227,7 +229,7 @@ function drawUIDesktop() {
     const PADDING_Y = 10;
     const TOP_H = 130;
     const BOTTOM_H = 70;
-    // const MID2_H = DRAW_MID_GRAPH ? 350 : 5;//windowHeight - TOP_H - BOTTOM_H - PADDING_X * 4;
+    // const MID2_H = DRAW_MID_GRAPH ? 350 : 5;//W_HEIGHT - TOP_H - BOTTOM_H - PADDING_X * 4;
     let MID2_H;
     if (SCENE === intro) {
         MID2_H = 225;
@@ -238,10 +240,10 @@ function drawUIDesktop() {
         DRAW_FILL = true
     }
 
-    const MID1_H = windowHeight - TOP_H - BOTTOM_H - MID2_H - PADDING_X * 5;
+    const MID1_H = W_HEIGHT - TOP_H - BOTTOM_H - MID2_H - PADDING_X * 5;
     // const MID1_H = 50
 
-    const ALL_W = windowWidth - PADDING_X * 2;
+    const ALL_W = W_WIDTH - PADDING_X * 2;
     stroke('rgba(255, 255,255, 0.5)')
     // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
     rect(PADDING_X, PADDING_Y*2 + TOP_H, ALL_W, MID1_H, RADIUS)
@@ -275,9 +277,9 @@ function drawUIMobile() {
     // // MID2 VA CALCOLATO
 
     // MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
-    // MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    // MID_UI_MOBILE.MID2_H = W_HEIGHT - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
     
-    // MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
+    // MID_UI_MOBILE.ALL_W = W_WIDTH - MID_UI_MOBILE.PADDING_X * 2;
 
     stroke('rgba(255, 255,255, 0.5)')
     // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
@@ -306,9 +308,9 @@ function drawGraphUI() {
     text('1.0', UI.graphUI.indicator.start - UI.paddingGraphText, UI.graphUI.line.y.high)
     noFill()
     stroke('rgba(0, 162, 255,1)');
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.mid)
-    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, windowWidth - UI.paddingGraphLine, UI.graphUI.line.y.high)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.bottom, W_WIDTH - UI.paddingGraphLine, UI.graphUI.line.y.bottom)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.mid, W_WIDTH - UI.paddingGraphLine, UI.graphUI.line.y.mid)
+    line(UI.graphUI.indicator.end, UI.graphUI.line.y.high, W_WIDTH - UI.paddingGraphLine, UI.graphUI.line.y.high)
 }
 
 function setUIMobilePos() {
@@ -320,9 +322,9 @@ function setUIMobilePos() {
     MID_UI_MOBILE.BOTTOM_H = 50;
 
     MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
-    MID_UI_MOBILE.MID2_H = windowHeight - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
+    MID_UI_MOBILE.MID2_H = W_HEIGHT - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
     
-    MID_UI_MOBILE.ALL_W = windowWidth - MID_UI_MOBILE.PADDING_X * 2;
+    MID_UI_MOBILE.ALL_W = W_WIDTH - MID_UI_MOBILE.PADDING_X * 2;
 }
 
 
@@ -330,9 +332,8 @@ function setIntroPositions() {
    
     console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
    
-    if (windowWidth <= MINWIDTH) {
+    if (ismobile) {
         setUIMobilePos();
-        ismobile = true;
         // mobile
         UI.graphStartX = 5;
         UI.graphUI = {};
@@ -344,22 +345,22 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 100,
-                mid: windowHeight - 175,
-                high: windowHeight - 250,
+                bottom: W_HEIGHT - 100,
+                mid: W_HEIGHT - 175,
+                high: W_HEIGHT - 250,
             }
         };
 
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
         UI.ellipse = {
-            x: windowWidth / 2,
-            // y: windowWidth < 380 ? windowHeight - 175 - 70 : windowHeight - 175 - 80,
+            x: W_WIDTH / 2,
+            // y: W_WIDTH < 380 ? W_HEIGHT - 175 - 70 : W_HEIGHT - 175 - 80,
             y: (MID_UI_MOBILE.PADDING_Y *3) + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + 60,
         };
 
         UI.volstring = {
-            x: windowWidth - 35,
+            x: W_WIDTH - 35,
             y: UI.ellipse.y + 50,
         }
 
@@ -379,9 +380,9 @@ function setIntroPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 125,
-                mid: windowHeight - 200,
-                high: windowHeight - 275,
+                bottom: W_HEIGHT - 125,
+                mid: W_HEIGHT - 200,
+                high: W_HEIGHT - 275,
             }
         };
 
@@ -389,25 +390,27 @@ function setIntroPositions() {
         UI.paddingGraphText = 16
         UI.ellipse = {
             x: 125,
-            y: windowHeight - 200,
+            y: W_HEIGHT - 200,
         };
 
         UI.volstring = {
             x: 20,
-            y: windowHeight - 125,
+            y: W_HEIGHT - 125,
         }
 
         UI.sampleNo = {
             x: 20,
-            y: windowHeight - 275,
+            y: W_HEIGHT - 275,
         }
+
+        drawUIDesktop()
     }
     console.log('ELLIPSE ', UI.ellipse)
 }
 
 function setMidPositions() {
 
-    if (windowWidth <= MINWIDTH) {
+    if (ismobile) {
         setUIMobilePos();
         console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
         UI.graphStartX = 10;
@@ -420,16 +423,16 @@ function setMidPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight > 900 ? windowHeight - 160 : windowHeight - 100,
-                mid: windowHeight > 900 ? windowHeight - 280 : windowHeight - 220,
-                high: windowHeight > 900 ? windowHeight - 385 : windowHeight - 325,
+                bottom: W_HEIGHT > 900 ? W_HEIGHT - 160 : W_HEIGHT - 100,
+                mid: W_HEIGHT > 900 ? W_HEIGHT - 280 : W_HEIGHT - 220,
+                high: W_HEIGHT > 900 ? W_HEIGHT - 385 : W_HEIGHT - 325,
             }
         };
-        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
+        UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
         UI.ellipse = {
-            x: windowWidth / 2,
+            x: W_WIDTH / 2,
             y:  (MID_UI_MOBILE.PADDING_Y * 3) + MID_UI_MOBILE.TOP_H + (MID_UI_MOBILE.MID2_H/2) + (MID_UI_MOBILE.MID1_H/2),
         };
     } else {
@@ -443,30 +446,31 @@ function setMidPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 160,
-                mid: windowHeight - 280,
-                high: windowHeight - 385,
+                bottom: W_HEIGHT - 160,
+                mid: W_HEIGHT - 280,
+                high: W_HEIGHT - 385,
             }
         };
-        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
+        UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
 
         UI.ellipse = {
-            x: windowWidth / 2,
-            y: windowHeight / 2,
+            x: W_WIDTH / 2,
+            y: W_HEIGHT / 2,
         };
+        drawUIDesktop()
     }
 
 
     UI.volstring = {
-        x: (windowWidth / 2) + 100,
-        y: (windowHeight / 2) + 75,
+        x: (W_WIDTH / 2) + 100,
+        y: (W_HEIGHT / 2) + 75,
     }
 
     UI.sampleNo = {
-        x: (windowWidth / 2) - 100,
-        y: (windowHeight / 2) - 75,
+        x: (W_WIDTH / 2) - 100,
+        y: (W_HEIGHT / 2) - 75,
     }
 
     console.log('ELLIPSE: ', UI.ellipse)
@@ -475,7 +479,7 @@ function setMidPositions() {
 
 function setEndPositions() {
 
-    if (windowWidth <= MINWIDTH) {
+    if (ismobile) {
         setUIMobilePos();
         UI.graphStartX = 10;
         UI.graphUI = {};
@@ -487,12 +491,12 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight > 600 ? windowHeight - 160 : windowHeight - 100,
-                mid: windowHeight > 600 ? windowHeight - 280 : windowHeight - 220,
-                high: windowHeight > 600 ? windowHeight - 385 : windowHeight - 325,
+                bottom: W_HEIGHT > 900 ? W_HEIGHT - 160 : W_HEIGHT - 100,
+                mid: W_HEIGHT > 900 ? W_HEIGHT - 280 : W_HEIGHT - 220,
+                high: W_HEIGHT > 900 ? W_HEIGHT - 385 : W_HEIGHT - 325,
             }
         };
-        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
+        UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
     } else {
@@ -506,14 +510,15 @@ function setEndPositions() {
         UI.graphUI.line = {
             x: UI.graphUI.indicator.end + 10,
             y: {
-                bottom: windowHeight - 160,
-                mid: windowHeight - 280,
-                high: windowHeight - 385,
+                bottom: W_HEIGHT - 160,
+                mid: W_HEIGHT - 280,
+                high: W_HEIGHT - 385,
             }
         };
-        UI.graphEndX = windowWidth - UI.graphUI.indicator.end
+        UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
+        drawUIDesktop()
     }
 }
 
@@ -523,7 +528,9 @@ function drawAudioGraphLive(points, cb) {
     push();
     beginShape();
     for (var i = 0; i < points.length; i++) {
-        var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
+        // var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
+
+        var y = map(points[i], 0, 0.5, UI.graphUI.line.y.bottom, UI.graphUI.line.y.high) ;
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
@@ -553,9 +560,11 @@ function drawAudioGraphAverage() {
         beginShape();
 
         for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
-            xoff += 0.1
+            xoff += 0.07
             let noiseVal = noise(xoff);
-            var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
+            // var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
+            // var y = average - (5 * index) - (100 * noiseVal); // 300 mobile
+            var y = average - (50 * noiseVal); // 300 mobile
             vertex(i * 4 + UI.graphUI.indicator.end, y);
         }
         endShape();
@@ -699,13 +708,13 @@ function intro() {
     const minHeight = ismobile ? 100 : 125
     beginShape();
     for (var i = 0; i < volhistory.length; i++) {
-        var y = map(volhistory[i], 0, 1, height - minHeight, height - 550);
+        var y = map(volhistory[i], 0, 1, W_HEIGHT - minHeight, W_HEIGHT - 550);
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
     pop();
 
-    if (volhistory.length * 4 > (windowWidth) - 50 - UI.graphUI.line.x) {
+    if (volhistory.length * 4 > (W_WIDTH) - 50 - UI.graphUI.line.x) {
         volhistory = [];
     }
 
@@ -770,7 +779,7 @@ function mid() {
 
     // storing points for live graph
     if (MID.curr) graphData[MID.year].points.window.push(MID.curr);
-    if (graphData[MID.year].points.window.length * 4 > (width) - 50 - UI.graphUI.line.x) {
+    if (graphData[MID.year].points.window.length * 4 > (W_WIDTH) - 50 - UI.graphUI.line.x) { // width
         graphData[MID.year].points.window = [];
     }
 
@@ -832,7 +841,11 @@ function preload() {
 }
 
 
-
+function setWH() {
+    console.log('DIOCANEEEEEE')
+    W_WIDTH = ismobile ? width : windowWidth;
+    W_HEIGHT = ismobile ? height : windowHeight;
+}
 
 function setup() {
     smooth()
@@ -846,6 +859,12 @@ function setup() {
     pixelDensity(window.devicePixelRatio)
     let c = createCanvas(window.innerWidth, window.innerHeight);
     c.parent("p5canvas");
+
+    // double check. 
+    ismobile = ismobile || width <= 760;
+
+    if (ismobile) window.postMessage('TRIM', '*')
+    setWH()
 
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.glados);
@@ -899,10 +918,12 @@ function draw() {
     SCENE();
     
     
-    if (DEBUG) text(`DEBUG: width: ${width} / height: ${height} / ismobile: ${ismobile} / ww: ${windowWidth} / wh: ${windowHeight}`, 10, 10);
+    if (DEBUG) text(`sDEBUG: width: ${width} / height: ${height} / ismobile: ${ismobile} / ww: ${W_WIDTH} / wh: ${W_HEIGHT}`, 10, 10);
 }
 
 function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    setWH()
     SCENEPOS();
     setBTNPosition()
 }

@@ -53,6 +53,7 @@ if (window.innerHeight < 850) {
 console.log('TRIM: ', TRIM)
 if (window.innerWidth <= 400) WWWW = 370;
 else if (window.innerWidth <= 440) WWWW = 410;
+// else if (window.innerWidth <= 500) WWWW = 460;
 else if (window.innerWidth <= 812) WWWW = 450;
 
 
@@ -179,6 +180,9 @@ jQuery(document).ready(function ($) {
 
         if (e.data === 'CLEAR') {
             TERM.clear()
+        }
+        if (e.data === 'TRIM') {
+            TRIM = true;
         }
 
     }, false);

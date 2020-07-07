@@ -121,7 +121,7 @@
         top: 85px;
         right: 0;
         bottom: 0;
-        left: 5px;
+        left: 0px;
         width: 100%;
         margin-left: 0%;
         margin-right: 0%;;
@@ -134,10 +134,10 @@
 @media (max-height: 850px) {
     .terminal {
         position: absolute;
-        top: 87px;
+        top: 85px;
         right: 0;
         bottom: 0;
-        left: 5px;
+        left: 0px;
         width: 100%;
         margin-left: 0%;
         margin-right: 0%;;
@@ -147,7 +147,7 @@
     }
 }
 
-@media (min-width: 813px) {
+@media (min-height: 951px) {
     .terminal {
         position: absolute;
         top: 150px;
