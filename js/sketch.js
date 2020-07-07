@@ -899,7 +899,7 @@ function draw() {
     SCENE();
     
     
-    if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile}`, 10, 10);
+    if (DEBUG) text(`width: ${width} / height: ${height} / ismobile: ${ismobile} / ww: ${windowWidth} / wh: ${windowHeight}`, 10, 10);
 }
 
 function windowResized() {
