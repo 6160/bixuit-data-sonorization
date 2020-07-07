@@ -65,6 +65,7 @@ const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 // other stuff
 let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 , wasPaused: false, changeYear: true};
 let MID_UI_MOBILE = {};
+let MID_UI_DESKTOP = {};
 let START = false;
 let amp;
 let sampleNo = 0;
@@ -87,6 +88,7 @@ let W_WIDTH;
 window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
+        
         startIntro();
     }
     if (e.data === 'REPLAY') {
@@ -109,13 +111,17 @@ window.addEventListener("message", function (e) {
         const terminal = document.getElementsByClassName("terminal")[0];
         terminal.style.display = 'block';
         REPLAYED = true;
+        
+        setBTNPosition() 
         Object.values(BUTTONS).forEach(btn => btn.hide())
         BUTTONS.pauseButton.show();
         BUTTONS.muteButton.show();
         if (REPLAYED) BUTTONS.skipButton.show();
         NEXTSCENE = startMid;
 
-        setBTNPosition() 
+        
+
+
     }
     if (e.data === 'CONTINUE') {
         // handles mid section
@@ -179,6 +185,7 @@ function toggleStart(){
 
 function toggleGraph() {
     DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
+    SCENEPOS();
     console.log('toggled: ', DRAW_MID_GRAPH)
 }
 
@@ -204,6 +211,11 @@ function setBTNPositionDesktop(bypass_offset) {
     BUTTONS.replayButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
     BUTTONS.exitButton.position(W_WIDTH - 480 - OFFSET, W_HEIGHT - 60);
     BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
+    Object.values(BUTTONS).forEach(button => {
+        button.style(BUTTON_STYLE_DESKTOP)
+
+    })
+    
 
 }
 
@@ -217,6 +229,11 @@ function setBTNPositionMobile(bypass_offset) {
     BUTTONS.exitButton.position(W_WIDTH - 200 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.skipButton.position(W_WIDTH - 50, W_HEIGHT - PADDING_BOTTOM);
 
+    Object.values(BUTTONS).forEach(button => {
+        button.style(BUTTON_STYLE_MOBILE)
+
+    })
+
 }
 
 
@@ -224,36 +241,35 @@ function setBTNPositionMobile(bypass_offset) {
 // this draws the basic UI 
 function drawUIDesktop() {
     let DRAW_FILL;
-    const RADIUS = 5;
-    const PADDING_X = 10;
-    const PADDING_Y = 10;
-    const TOP_H = 130;
-    const BOTTOM_H = 70;
-    // const MID2_H = DRAW_MID_GRAPH ? 350 : 5;//W_HEIGHT - TOP_H - BOTTOM_H - PADDING_X * 4;
-    let MID2_H;
+    MID_UI_DESKTOP.RADIUS = 5;
+    MID_UI_DESKTOP.PADDING_X = 10;
+    MID_UI_DESKTOP.PADDING_Y = 10;
+    MID_UI_DESKTOP.TOP_H = 130;
+    MID_UI_DESKTOP.BOTTOM_H = 70;
+    // MID_UI_DESKTOP.MID2_H = DRAW_MID_GRAPH ? 350 : 5;//W_HEIGHT - TOP_H - BOTTOM_H - PADDING_X * 4;
+    
     if (SCENE === intro) {
-        MID2_H = 225;
+        MID_UI_DESKTOP.MID2_H = 225;
         DRAW_FILL = true
     } else {
-        MID2_H = DRAW_MID_GRAPH ? 350 : 5
+        MID_UI_DESKTOP.MID2_H = DRAW_MID_GRAPH ? 350 : 5
         // DRAW_FILL = !DRAW_MID_GRAPH
         DRAW_FILL = true
     }
 
-    const MID1_H = W_HEIGHT - TOP_H - BOTTOM_H - MID2_H - PADDING_X * 5;
-    // const MID1_H = 50
+    MID_UI_DESKTOP.MID1_H = W_HEIGHT - MID_UI_DESKTOP.TOP_H - MID_UI_DESKTOP.BOTTOM_H - MID_UI_DESKTOP.MID2_H - MID_UI_DESKTOP.PADDING_X * 5;
+    // MID_UI_DESKTOP.MID1_H = 50
 
-    const ALL_W = W_WIDTH - PADDING_X * 2;
+    MID_UI_DESKTOP.ALL_W = W_WIDTH - MID_UI_DESKTOP.PADDING_X * 2;
     stroke('rgba(255, 255,255, 0.5)')
     // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
-    rect(PADDING_X, PADDING_Y*2 + TOP_H, ALL_W, MID1_H, RADIUS)
+    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y*2 + MID_UI_DESKTOP.TOP_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.RADIUS)
     if (DRAW_FILL) fill('rgba(255,255,255,0.02)')
-    rect(PADDING_X, PADDING_Y*3 + TOP_H + MID1_H, ALL_W, MID2_H, RADIUS)
+    rect(MID_UI_DESKTOP.PADDING_X,MID_UI_DESKTOP.PADDING_Y*3 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.RADIUS)
     
-    rect(PADDING_X, PADDING_Y*4 + TOP_H + MID1_H + MID2_H, ALL_W, BOTTOM_H, RADIUS)
+    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y*4 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H + MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.BOTTOM_H, MID_UI_DESKTOP.RADIUS)
     noFill()
 }
-
 
 function drawUIMobile() {
     // MID_UI_MOBILE.MID_FLAG = SCENE === mid;
@@ -353,21 +369,46 @@ function setIntroPositions() {
 
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
-        UI.ellipse = {
-            x: W_WIDTH / 2,
-            // y: W_WIDTH < 380 ? W_HEIGHT - 175 - 70 : W_HEIGHT - 175 - 80,
-            y: (MID_UI_MOBILE.PADDING_Y *3) + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + 60,
-        };
+        
+                //  calcolo posizione ellisse
+                const blockHeight = MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
+                const availableSpace =  UI.graphUI.line.y.high - blockHeight;
+                const ellipseHeight = 200;
+                
+                UI.ellipse = {
+                    draw: false,
+                    x: W_WIDTH / 2,
+                    y: blockHeight + availableSpace/2,
+                };
+        
+        
+        // UI.ellipse = {
+        //     x: W_WIDTH / 2,
+        //     // y: W_WIDTH < 380 ? W_HEIGHT - 175 - 70 : W_HEIGHT - 175 - 80,
+        //     y: (MID_UI_MOBILE.PADDING_Y *3) + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + 60,
+        // };
 
+        // UI.volstring = {
+        //     x: W_WIDTH - 35,
+        //     y: UI.ellipse.y + 50,
+        // }
+
+        // UI.sampleNo = {
+        //     x: 12,
+        //     y: UI.ellipse.y - 50,
         UI.volstring = {
-            x: W_WIDTH - 35,
-            y: UI.ellipse.y + 50,
+            // x: (W_WIDTH / 2) + 100,
+            // y: (W_HEIGHT / 2) + 75,
+            x: (W_WIDTH / 2) + 100,
+            y: (UI.ellipse.y) + 50,
+        }
+    
+        UI.sampleNo = {
+            x: (W_WIDTH / 2) - 100,
+            y: (UI.ellipse.y) - 50,
         }
 
-        UI.sampleNo = {
-            x: 12,
-            y: UI.ellipse.y - 50,
-        }
+        
     } else {
         // desktop
         UI.graphStartX = 230;
@@ -403,13 +444,20 @@ function setIntroPositions() {
             y: W_HEIGHT - 275,
         }
 
-        drawUIDesktop()
+        if (START) drawUIDesktop()
     }
     console.log('ELLIPSE ', UI.ellipse)
+    if (Object.keys(BUTTONS).length) {
+        Object.values(BUTTONS).forEach(btn => btn.hide())
+        BUTTONS.pauseButton.show();
+        BUTTONS.muteButton.show();
+        if (REPLAYED) BUTTONS.skipButton.show();
+    }
 }
 
 function setMidPositions() {
-
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.display = 'none';
     if (ismobile) {
         setUIMobilePos();
         console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
@@ -431,11 +479,23 @@ function setMidPositions() {
         UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
+        
+        
+        //  calcolo posizione ellisse
+        const blockHeight = MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
+        const availableSpace = DRAW_MID_GRAPH ? UI.graphUI.line.y.high - blockHeight : MID_UI_MOBILE.MID2_H;
+        const ellipseHeight = 200;
+        
         UI.ellipse = {
+            draw: false,
             x: W_WIDTH / 2,
-            y:  (MID_UI_MOBILE.PADDING_Y * 3) + MID_UI_MOBILE.TOP_H + (MID_UI_MOBILE.MID2_H/2) + (MID_UI_MOBILE.MID1_H/2),
+            y: blockHeight + availableSpace/2,
         };
+        
+        if (availableSpace >= ellipseHeight) UI.ellipse.draw = true
+
     } else {
+        drawUIDesktop()
         UI.graphStartX = 10;
         UI.graphUI = {};
         UI.graphUI.indicator = {
@@ -455,25 +515,44 @@ function setMidPositions() {
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
 
+        //  calcolo posizione ellisse
+        const blockHeight =  MID_UI_DESKTOP.PADDING_Y*2 + MID_UI_DESKTOP.TOP_H;
+        const availableSpace = MID_UI_DESKTOP.MID1_H;//DRAW_MID_GRAPH ? UI.graphUI.line.y.high - blockHeight : MID_UI_DESKTOP.MID1_H;
+        const ellipseHeight = 150;
+
+
+        console.log(blockHeight, availableSpace)
+        
         UI.ellipse = {
             x: W_WIDTH / 2,
-            y: W_HEIGHT / 2,
+            // y: W_HEIGHT / 2,
+            y: blockHeight + availableSpace/2,
         };
-        drawUIDesktop()
+        UI.ellipse.draw = ellipseHeight > availableSpace ? false : true;
+        console.log('ellipse', UI.ellipse)
+        // drawUIDesktop()
     }
 
 
     UI.volstring = {
+        // x: (W_WIDTH / 2) + 100,
+        // y: (W_HEIGHT / 2) + 75,
         x: (W_WIDTH / 2) + 100,
-        y: (W_HEIGHT / 2) + 75,
+        y: (UI.ellipse.y) + 75,
     }
 
     UI.sampleNo = {
         x: (W_WIDTH / 2) - 100,
-        y: (W_HEIGHT / 2) - 75,
+        y: (UI.ellipse.y) - 75,
     }
 
-    console.log('ELLIPSE: ', UI.ellipse)
+    if (Object.keys(BUTTONS).length) {
+        Object.values(BUTTONS).forEach(btn => btn.hide())
+        BUTTONS.toggleButton.show();
+        BUTTONS.pauseButton.show();
+        BUTTONS.muteButton.show();
+        if (REPLAYED) BUTTONS.skipButton.show();
+    }
 
 }
 
@@ -570,6 +649,30 @@ function drawAudioGraphAverage() {
         endShape();
         pop();
     })
+
+}
+
+function setCSS() {
+    // const CSS_LOGO = {
+    //     mobile: 'z-index: 999999; top: 20px; left: 10px; width: 50px; position: absolute;',
+    //     desktop: 'z-index: 999999; top: 20px; left: 20px; width: 300px; position: absolute;',
+    // }
+
+    const CSS_LOGO = {
+        mobile: 'width=100px',
+        desktop: 'width=150px',
+    }
+
+    const CSS_TERMINAL = {
+        mobile: 'position: absolute; top: 80px; right: 0; bottom: 0; left: 0px; width: 100%; margin-left: 0%; margin-right: 0%; overflow-y: auto;',
+        desktop: 'position: absolute; top: 150px; right: 0; bottom: 0; left: 10px; overflow-y: auto;',
+
+    }
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style = ismobile ? CSS_TERMINAL.mobile : CSS_TERMINAL.desktop
+
+    const logo = document.getElementById('bxt_img');
+    logo.style = ismobile ? CSS_LOGO.mobile : CSS_LOGO.desktop;
 
 }
 
@@ -794,10 +897,7 @@ function mid() {
     } 
 
     stroke('rgb(255,255,255');
-    if(!(DRAW_MID_GRAPH && ismobile)) {
-
-    
-
+    if(UI.ellipse.draw) {
         // resetting stroke color
         stroke('rgba(0,255,255, 0.1');
     
@@ -845,6 +945,11 @@ function setWH() {
     console.log('DIOCANEEEEEE')
     W_WIDTH = ismobile ? width : windowWidth;
     W_HEIGHT = ismobile ? height : windowHeight;
+    ismobile = window.matchMedia("only screen and (max-width: 760px)").matches || width <= 760;
+
+    if (ismobile) window.postMessage('TRIM', '*')
+    else window.postMessage('UNTRIM', '*')
+
 }
 
 function setup() {
@@ -862,9 +967,8 @@ function setup() {
 
     // double check. 
     ismobile = ismobile || width <= 760;
-
-    if (ismobile) window.postMessage('TRIM', '*')
     setWH()
+    if (ismobile) window.postMessage('TRIM', '*')
 
     amp = new p5.Amplitude();
     amp.setInput(AUDIO.glados);
@@ -872,7 +976,7 @@ function setup() {
     SCENE = intro;
     SCENEPOS = setIntroPositions;
 
-
+   
     const BUTTON_STYLE = ismobile ? BUTTON_STYLE_MOBILE : BUTTON_STYLE_DESKTOP; 
 
     // creating buttons
@@ -900,17 +1004,18 @@ function setup() {
     BUTTONS.skipButton.style(BUTTON_STYLE)
     BUTTONS.skipButton.mousePressed(skip);
 
-    Object.values(BUTTONS).forEach(btn => btn.hide())
 
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
     
     setBTNPosition();
+    Object.values(BUTTONS).forEach(btn => btn.hide())
+
 }
 
 function draw() {
     if (!START) return;
     clear();
-    
+
     if (ismobile) drawUIMobile()
     else drawUIDesktop()
     
@@ -924,6 +1029,9 @@ function draw() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     setWH()
-    SCENEPOS();
+    setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
+    setCSS();
     setBTNPosition()
+    SCENEPOS();
+    
 }

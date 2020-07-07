@@ -184,7 +184,9 @@ jQuery(document).ready(function ($) {
         if (e.data === 'TRIM') {
             TRIM = true;
         }
-
+        if (e.data === 'UNTRIM') {
+            TRIM = false;
+        }
     }, false);
 
     $('body').terminal(() => { }, {
