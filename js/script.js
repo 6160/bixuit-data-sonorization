@@ -46,7 +46,7 @@ let SKIP = false;
 let interval;
 let timeout;
 
-if (window.innerHeight < 600) {
+if (window.innerHeight < 850) {
     TRIM = true;
 
 }
@@ -124,10 +124,11 @@ jQuery(document).ready(function ($) {
 
 
     const nextMessage = () => {
-        const maxLines = 2;
-        if (TRIM && INDEX > maxLines) {
+        const maxLines = 3;
+        if (TRIM && INDEX >= maxLines) {
             console.log('TRIMMING???')
-            const charIndex = messages[INDEX-maxLines].length
+            const charIndex = messages[INDEX-maxLines].length + 1
+
             PROMPT = PROMPT.slice(charIndex);
         }
         INDEX += 1;
