@@ -157,7 +157,7 @@ function mute(event) {
 }
 
 function exit() {
-    window.location.href = 'https://bixuit.spindox.it'
+    window.location.href = 'https://bixuit.spindox.it/data-sonorization/'
 }
 
 function replay() {
