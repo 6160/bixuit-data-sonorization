@@ -378,8 +378,10 @@ function setUIMobilePos() {
 
 
 function setIntroPositions() {
-    const terminal = document.getElementsByClassName("terminal")[0];
-    terminal.style.opacity = '1';
+    if (START) {
+        const terminal = document.getElementsByClassName("terminal")[0];
+        terminal.style.opacity = '1';
+    }
     if (ismobile) {
         setUIMobilePos();
         // mobile
