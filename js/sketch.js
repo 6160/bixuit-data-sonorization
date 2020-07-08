@@ -1119,6 +1119,10 @@ function setup() {
     OVERLAYS.all.forEach(overlay => {
         OVERLAYS[overlay.id] = overlay;
     })
+
+    
+    console.log('\n\nWARNING! every bug in this code is totally there on purpose. ')
+    console.log(`༼つʘ益ʘ༽つ ░`)
 }
 
 function draw() {
