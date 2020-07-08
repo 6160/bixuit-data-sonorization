@@ -211,20 +211,22 @@ function normalizePoints(points) {
 // UI METHODS
 // ###############################
 
-function setBTNPositionDesktop(bypass_offset) {
+function setBTNPositionDesktop(bypass_offset, isEnd) {
+    if (isEnd && W_WIDTH < 980) return setBTNPositionMobile();
     const OFFSET = REPLAYED && !bypass_offset ? 120 : 0;
-    BUTTONS.muteButton.position(W_WIDTH - 120 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.pauseButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.toggleButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.replayButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.exitButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
+    const PADDING_BOTTOM = 60
+    BUTTONS.muteButton.position(W_WIDTH - 120 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.pauseButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.toggleButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.replayButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.exitButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - PADDING_BOTTOM);
 
-    BUTTONS.aButton.position(20, W_HEIGHT - 60);
-    BUTTONS.bButton.position(140, W_HEIGHT - 60);
-    BUTTONS.cButton.position(260, W_HEIGHT - 60);
-    BUTTONS.dButton.position(380, W_HEIGHT - 60);
-    BUTTONS.eButton.position(500, W_HEIGHT - 60);
+    BUTTONS.aButton.position(20, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.bButton.position(140, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.cButton.position(260, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.dButton.position(380, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.eButton.position(500, W_HEIGHT - PADDING_BOTTOM);
 
 
 
@@ -242,8 +244,10 @@ function setBTNPositionDesktop(bypass_offset) {
 }
 
 function setBTNPositionMobile(bypass_offset) {
-    const OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
-    const PADDING_BOTTOM = 50;
+    let OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
+    OFFSET = W_WIDTH > 760 ? OFFSET + 10 : OFFSET;
+    let X_OFFSET = W_WIDTH > 760 ? 10 : 0;
+    const PADDING_BOTTOM = W_WIDTH > 760 ? 65 : 50;
     BUTTONS.muteButton.position(W_WIDTH - 50 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.pauseButton.position(W_WIDTH - 95 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.toggleButton.position(W_WIDTH - 140 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
@@ -251,11 +255,11 @@ function setBTNPositionMobile(bypass_offset) {
     BUTTONS.exitButton.position(W_WIDTH - 140 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.skipButton.position(W_WIDTH - 50, W_HEIGHT - PADDING_BOTTOM);
 
-    BUTTONS.aButton.position(10, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.bButton.position(55, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.cButton.position(100, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.dButton.position(145, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.eButton.position(190, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.aButton.position(10 + X_OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.bButton.position(55 + X_OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.cButton.position(100 + X_OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.dButton.position(145 + X_OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.eButton.position(190 + X_OFFSET, W_HEIGHT - PADDING_BOTTOM);
 
     Object.values(BUTTONS).forEach(button => {
         button.style(BUTTON_STYLE_MOBILE)
@@ -871,7 +875,7 @@ function startEnd() {
     AUDIO.gladosEnd.play();
     CURR_AUDIO_PLAYING = [AUDIO.gladosEnd, AUDIO.song];
 
-    setBTNPosition(true);
+    setBTNPosition(true, true);
 
     Object.values(BUTTONS).forEach(btn => btn.hide())
 
@@ -1117,7 +1121,7 @@ function setup() {
     BUTTONS.eButton.mousePressed(overlay2014);
 
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
-
+    
     setBTNPosition();
     Object.values(BUTTONS).forEach(btn => btn.hide())
 
@@ -1152,7 +1156,7 @@ function windowResized() {
     setWH()
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
     setCSS();
-    setBTNPosition()
+    setBTNPosition(false, SCENE === end)
     if (GLOBALSTART) {
         if (ismobile) drawUIMobile()
         else drawUIDesktop()
