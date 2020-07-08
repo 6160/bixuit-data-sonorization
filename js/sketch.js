@@ -60,19 +60,17 @@ const BUTTONS = {};
 const BUTTON_STYLE_DESKTOP ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
 const BUTTON_STYLE_MOBILE ='background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;'
 
-const BUTTON_STYLE_2010_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2011_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2012_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2013_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2014_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2010_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #d6a94b; display: inline-block; color: #d6a94b; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2011_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(66, 130, 247); display: inline-block; color: rgb(66, 130, 247); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2012_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(243, 5, 2); display: inline-block; color: rgb(243, 5, 2); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2013_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(255,255,255); display: inline-block; color: rgb(255,255,255); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2014_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(136, 250, 78); display: inline-block; color: rgb(136, 250, 78); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
 
-const BUTTON_STYLE_2010_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2011_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2012_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2013_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
-const BUTTON_STYLE_2014_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
-
-
+const BUTTON_STYLE_2010_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #d6a94b display: inline-block; color:#d6a94b; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2011_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(66, 130, 247); display: inline-block; color: rgb(66, 130, 247); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2012_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(243, 5, 2); display: inline-block; color: rgb(243, 5, 2); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2013_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(255,255,255); display: inline-block; color: rgb(255,255,255); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2014_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(136, 250, 78); display: inline-block; color: rgb(136, 250, 78); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
 
 
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -226,8 +224,8 @@ function setBTNPositionDesktop(bypass_offset) {
     BUTTONS.muteButton.position(W_WIDTH - 120 - OFFSET, W_HEIGHT - 60);
     BUTTONS.pauseButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
     BUTTONS.toggleButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.replayButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
-    BUTTONS.exitButton.position(W_WIDTH - 480 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.replayButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
+    BUTTONS.exitButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
     BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
     
     BUTTONS.aButton.position( 20, W_HEIGHT - 60);
@@ -235,17 +233,19 @@ function setBTNPositionDesktop(bypass_offset) {
     BUTTONS.cButton.position( 260, W_HEIGHT - 60);
     BUTTONS.dButton.position( 380, W_HEIGHT - 60);
     BUTTONS.eButton.position( 500, W_HEIGHT - 60);
+  
     
+
+
     Object.values(BUTTONS).forEach(button => {
         button.style(BUTTON_STYLE_DESKTOP)
     })
-    
-    BUTTONS.aButton.show();
-    BUTTONS.bButton.show();
-    BUTTONS.cButton.show();
-    BUTTONS.dButton.show();
-    BUTTONS.eButton.show();
 
+    BUTTONS.aButton.style(BUTTON_STYLE_2010_DESKTOP)
+    BUTTONS.bButton.style(BUTTON_STYLE_2011_DESKTOP)
+    BUTTONS.cButton.style(BUTTON_STYLE_2012_DESKTOP)
+    BUTTONS.dButton.style(BUTTON_STYLE_2013_DESKTOP)
+    BUTTONS.eButton.style(BUTTON_STYLE_2014_DESKTOP)
 
 }
 
@@ -253,24 +253,28 @@ function setBTNPositionMobile(bypass_offset) {
     const OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
     const PADDING_BOTTOM = 50;
     BUTTONS.muteButton.position(W_WIDTH - 50 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.pauseButton.position(W_WIDTH - 100 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.toggleButton.position(W_WIDTH - 150 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.replayButton.position(W_WIDTH - 150 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.exitButton.position(W_WIDTH - 200 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.pauseButton.position(W_WIDTH - 95 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.toggleButton.position(W_WIDTH - 140 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.replayButton.position(W_WIDTH - 95 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.exitButton.position(W_WIDTH - 140 - OFFSET, W_HEIGHT - PADDING_BOTTOM);
     BUTTONS.skipButton.position(W_WIDTH - 50, W_HEIGHT - PADDING_BOTTOM);
 
     BUTTONS.aButton.position(10, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.bButton.position(60, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.cButton.position(110, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.dButton.position(160, W_HEIGHT - PADDING_BOTTOM);
-    BUTTONS.eButton.position(210, W_HEIGHT - PADDING_BOTTOM);
-
+    BUTTONS.bButton.position(55, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.cButton.position(100, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.dButton.position(145, W_HEIGHT - PADDING_BOTTOM);
+    BUTTONS.eButton.position(190, W_HEIGHT - PADDING_BOTTOM);
 
     Object.values(BUTTONS).forEach(button => {
         button.style(BUTTON_STYLE_MOBILE)
 
     })
 
+    BUTTONS.aButton.style(BUTTON_STYLE_2010_MOBILE)
+    BUTTONS.bButton.style(BUTTON_STYLE_2011_MOBILE)
+    BUTTONS.cButton.style(BUTTON_STYLE_2012_MOBILE)
+    BUTTONS.dButton.style(BUTTON_STYLE_2013_MOBILE)
+    BUTTONS.eButton.style(BUTTON_STYLE_2014_MOBILE)
 }
 
 
@@ -483,17 +487,13 @@ function setIntroPositions() {
 
         if (START) drawUIDesktop()
     }
+
     console.log('ELLIPSE ', UI.ellipse)
     if (Object.keys(BUTTONS).length) {
         Object.values(BUTTONS).forEach(btn => btn.hide())
         BUTTONS.pauseButton.show();
         BUTTONS.muteButton.show();
         if (REPLAYED) BUTTONS.skipButton.show();
-        BUTTONS.aButton.show();
-        BUTTONS.bButton.show();
-        BUTTONS.cButton.show();
-        BUTTONS.dButton.show();
-        BUTTONS.eButton.show();
     }
 }
 
@@ -641,6 +641,13 @@ function setEndPositions() {
         UI.paddingGraphText = 16
         drawUIDesktop()
     }
+
+    BUTTONS.aButton.show();
+    BUTTONS.bButton.show();
+    BUTTONS.cButton.show();
+    BUTTONS.dButton.show();
+    BUTTONS.eButton.show();
+
 }
 
 // draws the live audiograph for mid section
@@ -782,12 +789,6 @@ function startIntro(){
     BUTTONS.muteButton.show();
     if (REPLAYED) BUTTONS.skipButton.show();
 
-    BUTTONS.aButton.show();
-    BUTTONS.bButton.show();
-    BUTTONS.cButton.show();
-    BUTTONS.dButton.show();
-    BUTTONS.eButton.show();
-
     NEXTSCENE = startMid;
 }
 
@@ -872,10 +873,15 @@ function startEnd() {
 
     Object.values(BUTTONS).forEach(btn => btn.hide())
 
-    BUTTONS.pauseButton.show();
+    // BUTTONS.pauseButton.show();
     BUTTONS.muteButton.show();
     BUTTONS.exitButton.show();
     BUTTONS.replayButton.show();
+    BUTTONS.aButton.show();
+    BUTTONS.bButton.show();
+    BUTTONS.cButton.show();
+    BUTTONS.dButton.show();
+    BUTTONS.eButton.show();
     // if (REPLAYED) BUTTONS.skipButton.show();
     console.log(' #### > starting end section')
 }
@@ -1067,7 +1073,7 @@ function setup() {
     const BUTTON_STYLE_2012 = ismobile ? BUTTON_STYLE_2012_MOBILE : BUTTON_STYLE_2012_DESKTOP; 
     const BUTTON_STYLE_2013 = ismobile ? BUTTON_STYLE_2013_MOBILE : BUTTON_STYLE_2013_DESKTOP; 
     const BUTTON_STYLE_2014 = ismobile ? BUTTON_STYLE_2014_MOBILE : BUTTON_STYLE_2014_DESKTOP; 
-
+    console.log('#### BUTTON STYULE 2010' ,BUTTON_STYLE_2010)
     // creating buttons
     BUTTONS.toggleButton = createButton('toggle');
     BUTTONS.toggleButton.style(BUTTON_STYLE)
