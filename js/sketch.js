@@ -97,7 +97,7 @@ let setBTNPosition;
 let W_HEIGHT;
 let W_WIDTH;
 let OVERLAYS = {};
-
+let GLOBALSTART = false;
 
 // event handler
 window.addEventListener("message", function (e) {
@@ -378,7 +378,7 @@ function setUIMobilePos() {
 
 
 function setIntroPositions() {
-    if (START) {
+    if (GLOBALSTART) {
         const terminal = document.getElementsByClassName("terminal")[0];
         terminal.style.opacity = '1';
     }
@@ -481,11 +481,14 @@ function setIntroPositions() {
         if (START) drawUIDesktop()
     }
 
-    if (Object.keys(BUTTONS).length) {
+    if (Object.keys(BUTTONS).length ) {
         Object.values(BUTTONS).forEach(btn => btn.hide())
-        BUTTONS.pauseButton.show();
-        BUTTONS.muteButton.show();
-        if (REPLAYED) BUTTONS.skipButton.show();
+        
+        if (GLOBALSTART){
+            BUTTONS.pauseButton.show();
+            BUTTONS.muteButton.show();
+            if (REPLAYED) BUTTONS.skipButton.show();
+        }
     }
 }
 
@@ -768,6 +771,7 @@ function continueMid() {
 
 function startIntro() {
     START = true;
+    GLOBALSTART = true;
 
     AUDIO.gladosEnd.stop();
     AUDIO.glados.play();
@@ -777,6 +781,7 @@ function startIntro() {
 
     CURR_AUDIO_PLAYING = [AUDIO.glados, AUDIO.song];
     document.getElementById('welcome-message').style.visibility = 'hidden';
+    document.getElementById('start_btn').style.visibility = 'hidden';
 
     Object.values(BUTTONS).forEach(btn => btn.hide())
     BUTTONS.pauseButton.show();
@@ -1146,5 +1151,8 @@ function windowResized() {
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
     setCSS();
     setBTNPosition()
+    if (ismobile) drawUIMobile()
+    else drawUIDesktop()
     SCENEPOS();
+    SCENE();
 }

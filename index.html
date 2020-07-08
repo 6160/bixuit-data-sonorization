@@ -66,13 +66,15 @@
     @media (max-width: 812px) {
       .msg {
         position: absolute;
-        top: 50%;
-        margin-left: 5%;
-        margin-right: 5%;
-        width: 90%;
+        top: 90px;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 95%;
+        height: 80%;
         z-index: 99999999;
-        text-align: center;
-        visibility: hidden;
+        overflow-y: auto;
+        /* text-align: center; */
+        /* visibility: hidden; */
         /* will center text in <p>, which is not a flex item */
       }
       .logo{
@@ -85,6 +87,19 @@
     }
 
     @media (max-width: 760px) {
+      .loading-msg {
+      position: absolute;
+      /* top: 50%; */
+      /* left: 50%; */
+      right: 20px;
+      /* margin-left: -200px; */
+      /* width: 400px; */
+      z-index: 99999999;
+      text-align: center;
+      top: 20px;
+
+      /* will center text in <p>, which is not a flex item */
+    }
       .logo{
         z-index: 999999;
         top: 20px;
@@ -141,25 +156,37 @@
 
         }
         .logo_img{
-        /* z-index: 999999; */
-        /* top: 20px;
-        left: 10px; */
-        width: 150px;
-        /* position: absolute; */
-      }
-      .overlay {
-        background-image: radial-gradient( #0E257B, #0B1E63); 
-        border: 1px solid #ffffff;
-        overflow: hidden;
-        font-family: monospace;
-        position: fixed;
-        padding: 15px 15px;
-        bottom: 100px;
-        left: 20px;
-        /* visibility: hidden; */
-        display: none;
-      }
+          /* z-index: 999999; */
+          /* top: 20px;
+          left: 10px; */
+          width: 150px;
+          /* position: absolute; */
+        }
+        .overlay {
+          background-image: radial-gradient( #0E257B, #0B1E63); 
+          border: 1px solid #ffffff;
+          overflow: hidden;
+          font-family: monospace;
+          position: fixed;
+          padding: 15px 15px;
+          bottom: 100px;
+          left: 20px;
+          /* visibility: hidden; */
+          display: none;
+        }
+        .loading-msg {
+          position: absolute;
+          /* top: 50%; */
+          /* left: 50%; */
+          left: 20px;
+          /* margin-left: -200px; */
+          /* width: 400px; */
+          z-index: 99999999;
+          text-align: center;
+          bottom: 20px;
 
+          /* will center text in <p>, which is not a flex item */
+        }
 
       }
 
@@ -175,29 +202,20 @@
 
       .msg {
         position: absolute;
-        top: 50%;
+        top: 20%;
         left: 50%;
-        margin-left: -200px;
-        width: 400px;
+        margin-left: -380px;
+
+        width: 760px;
         z-index: 99999999;
-        text-align: center;
-        visibility: hidden;
+        /* text-align: center; */
+        /* visibility: hidden; */
         /* will center text in <p>, which is not a flex item */
       }
     
     }
 
-    .loading-msg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -200px;
-      width: 400px;
-      z-index: 99999999;
-      text-align: center;
 
-      /* will center text in <p>, which is not a flex item */
-    }
 
     .btn {
       background-color: transparent;
@@ -261,7 +279,9 @@
       
     }
 
-
+    #start_btn {
+      visibility: hidden;
+    }
 
 
   </style>
@@ -292,6 +312,7 @@
   window.addEventListener("message", function (e) {
     if (e.data === 'STOPLOADING') {
       clearInterval(intrvl);
+      document.getElementById('start_btn').style.visibility = 'visible';
     }
   });
 
@@ -312,12 +333,12 @@
 
 
   <div id="p5canvas"> </div>
-
+  <div id="p5_loading" class="loading-msg">LOADING ⠋</div>
 
   <div id="bxt" class="logo"> 
     <a href="https://bixuit.spindox.it"><img src="img/BXT.png" class="logo_img" id="bxt_img"/></a>
   </div>
-  <div id="p5_loading" class="loading-msg">LOADING ⠋</div>
+  
   <div id="continue" class="mid"> 
     <div class="mid_btn">
       <button class="btn" onclick="window.postMessage('CONTINUE', '*');">CONTINUE</button>
@@ -325,7 +346,26 @@
     
   </div>
   <div id="welcome-message" class="msg">
-    <button class="btn" onclick="window.postMessage('START', '*');">START</button>
+    <h3>What is Data Sonorization and why research this topic? </h3> 
+
+Data sonorization is a new way of representing data, which goes far beyond the graphical data visualization we are used to.<br/>
+Through this study we wanted to explore the lesser known yet powerful ways of representing data, keeping in mind the concept of inclusiveness.<br/>
+When talking about communication, the sound field is still a world to explore if compared to its artistic or entertainment applications. Nonetheless, it has the capacity to "excite" (in the sense of conveying emotions) much more than the classic visual representation.
+Our main goal here is to reinvent the way people receive information.<br/>
+
+<h3> To whom is this research addressed? </h3>
+Our Data Sonorization research is for all those who wish to enrich their ‘traditional’ data visualization by exploiting one of the most developed human senses, to convey further information. Thus creating an additional perceptual level that allows the user to identify and convey emotions and information more effectively.
+
+<h3>What are the ideal fields of application for Data Sonorization?</h3> 
+The ideal areas of application are those where there is a need to communicate information to a user without having his or her full attention or where there is a need to increase the amount of information concurrently. So, video infographics, monitoring platforms, industrial applications where there is a need to know the status of a device / machine without having it at hand.<br/>
+
+<h3>Why should our audience be interested in Data Sonorization?</h3>
+Because there's a strong cognitive connection between memory and sound. As one of our most evocative senses, sound can change the way we feel, move us through our memories, and even inspire action. Just think about how quickly the right piece of music can alter your mood. This isn’t only valuable because of its emotional impact.<br/>
+Working with sound also allows you to reach your customers differently. Unlike visual content that your customers need to sit down and pay attention to, audio content can reach your customers even when they’re only partially paying attention.<br/>
+In addition to this you can add "dimensions" to the sound graph, it is not simply a variation of sound over time. The user can understand the mood, can distinguish the various timbres of sounds within the composition, and count the number of sounds with the same timbre using the spatiality of stereophonic audio. This allows you to condense many more data within the same composition.<br/>
+<br/>
+
+    <button id="start_btn" class="btn" onclick="window.postMessage('START', '*');">START</button>
   </div>
   <!-- <div id="restart" class="TODO">
     <button class="btn" onclick="window.postMessage('REPLAY', '*');">REPLAY</button>
