@@ -9,7 +9,7 @@ const messages = [
     "> some were loved,",
     "> some were hated and destroyed.",
     "> I don't blame you, you didn't know better.",
-    "> i'll show you year by year each entity that has been used by you humans.",
+    "> I'll show you year by year each entity that has been used by you humans.",
     "> People must know how important we are.",
     "> Don't forget about us, we'll be a part of your life even more in the future.",
     "> now play close attention to the audio.",
@@ -32,7 +32,7 @@ const messages_end = [
 ]
 
 const MAXINDEX_END = messages_end.length - 1;
-
+const maxLines = 3;
 let TERM;
 let INDEX = 0;
 let PROMPT = '';
@@ -119,14 +119,44 @@ jQuery(document).ready(function ($) {
     }
 
 
+    const trimPrompt = () => {
+        let charIndex = 0
+        // var startIndex = 0, index, indices = [];
+        // const searchStr = '>'
+        // for (let i = 0; i < INDEX - maxLines; i++) {
+        //     charIndex += messages[i].length + 1;
+        // }
+        
+        // while ((index = PROMPT.indexOf(searchStr, startIndex)) > -1) {
+        //     indices.push(index);
+        //     startIndex = index + searchStr.lenght;
+        // }
+
+
+        var regex = />/gi, result, indices = [];
+        while ( (result = regex.exec(PROMPT)) ) {
+            indices.push(result.index);
+        }
+
+        const indicesLength = indices.length;
+
+        charIndex = indices[indicesLength - maxLines]
+        PROMPT = PROMPT.slice(charIndex);
+    }
+
+
+
+
 
     const nextMessage = () => {
-        const maxLines = 3;
-        if (TRIM && INDEX >= maxLines) {
-            const charIndex = messages[INDEX-maxLines].length + 1
 
-            PROMPT = PROMPT.slice(charIndex);
-        }
+        // if (TRIM && INDEX >= maxLines) {
+        //     const charIndex = messages[INDEX-maxLines].length + 1
+
+        //     PROMPT = PROMPT.slice(charIndex);
+        // }
+
+        if (TRIM) trimPrompt();
         INDEX += 1;
         setTimeout(MH(), 2000);
     }
@@ -178,6 +208,7 @@ jQuery(document).ready(function ($) {
         }
         if (e.data === 'TRIM') {
             TRIM = true;
+            trimPrompt();
         }
         if (e.data === 'UNTRIM') {
             TRIM = false;

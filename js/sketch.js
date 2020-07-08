@@ -678,26 +678,30 @@ function drawAudioGraphAverage() {
     Object.keys(graphData).forEach((year, index) => {
 
         const DATA = graphData[year];
-        noiseSeed(DATA.seed);
-
         stroke(DATA.color);
         // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
         text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
-        const average = DATA.points[END];
+        if (DATA.done){
+            noiseSeed(DATA.seed);
 
-        push();
-        beginShape();
 
-        for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
-            xoff += 0.07
-            let noiseVal = noise(xoff);
-            // var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
-            // var y = average - (5 * index) - (100 * noiseVal); // 300 mobile
-            var y = average - (50 * noiseVal); // 300 mobile
-            vertex(i * 4 + UI.graphUI.indicator.end, y);
+            const normalized = normalizePoints(DATA.points.raw)
+            // const average = DATA.points[END];
+            const average = arrAvg(normalized)
+            push();
+            beginShape();
+
+            for (var i = 0; i < (UI.graphEndX / 4) - 4; i += 4) {
+                xoff += 0.07
+                let noiseVal = noise(xoff);
+                // var y = average - (OFFSET + 5 * index) - (100 * noiseVal); // 300 mobile
+                // var y = average - (5 * index) - (100 * noiseVal); // 300 mobile
+                var y = average - (50 * noiseVal); // 300 mobile
+                vertex(i * 4 + UI.graphUI.indicator.end, y);
+            }
+            endShape();
+            pop();
         }
-        endShape();
-        pop();
     })
 
 }
@@ -943,6 +947,7 @@ function mid() {
             graphData[MID.year].points.average = arrAvg(graphData[MID.year].points.normalized);
             graphData[MID.year].points.averageEnd = graphData[MID.year].points.average
             graphData[MID.year].points.window = [];
+            graphData[MID.year].done = true;
             MID.prev = 0;
             return;
         }
@@ -955,7 +960,7 @@ function mid() {
         graphData[MID.year].points.averageEnd = graphData[MID.year].points.average
         // emptying point window, we don't need that anymore
         graphData[MID.year].points.window = [];
-
+        graphData[MID.year].done = true;
         // changing year
         MID.year = MID.yearList[MID.index];
         console.log(' #### >> CHANGING YEAR TO ', MID.year)
@@ -1027,10 +1032,11 @@ function preload() {
 function setWH() {
     W_WIDTH = ismobile ? width : windowWidth;
     W_HEIGHT = ismobile ? height : windowHeight;
+    const wasMobile = ismobile;
     ismobile = window.matchMedia("only screen and (max-width: 760px)").matches || width <= 760;
 
-    if (ismobile) window.postMessage('TRIM', '*')
-    else window.postMessage('UNTRIM', '*')
+    if (ismobile && !wasMobile) window.postMessage('TRIM', '*')
+    if (!ismobile) window.postMessage('UNTRIM', '*')
 }
 
 function setup() {
