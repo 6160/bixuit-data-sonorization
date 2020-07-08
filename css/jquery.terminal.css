@@ -110,7 +110,8 @@
         margin-left: 0%;
         margin-right: 0%;;
         overflow-y: auto;
-        visibility: hidden;
+        /* visibility: hidden; */
+        opacity: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -157,6 +158,8 @@
         left: 10px;
         overflow-y: auto;
         visibility: hidden;
+        opacity: 0;
+        /* display: none; */
     }
 } 
 

@@ -107,15 +107,11 @@ jQuery(document).ready(function ($) {
 
     const messageHandler = () => {
         if (INDEX > MAXINDEX) return;
-
-
         typed_message(TERM, messages[INDEX], () => { });
     }
     
     const messageHandlerEnd = () => {
-        console.log('called messagehandlerend')
         if (INDEX > MAXINDEX_END) {
-            console.log('returninggggg')
             return;
         }
 
@@ -127,7 +123,6 @@ jQuery(document).ready(function ($) {
     const nextMessage = () => {
         const maxLines = 3;
         if (TRIM && INDEX >= maxLines) {
-            console.log('TRIMMING???')
             const charIndex = messages[INDEX-maxLines].length + 1
 
             PROMPT = PROMPT.slice(charIndex);

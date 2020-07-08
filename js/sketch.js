@@ -66,7 +66,7 @@ const BUTTON_STYLE_2012_MOBILE = 'background-color: transparent; -webkit-border-
 const BUTTON_STYLE_2013_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(255,255,255); display: inline-block; color: rgb(255,255,255); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
 const BUTTON_STYLE_2014_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(136, 250, 78); display: inline-block; color: rgb(136, 250, 78); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
 
-const BUTTON_STYLE_2010_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #d6a94b display: inline-block; color:#d6a94b; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
+const BUTTON_STYLE_2010_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #d6a94b; display: inline-block; color: rgb(214, 169, 75); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
 const BUTTON_STYLE_2011_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(66, 130, 247); display: inline-block; color: rgb(66, 130, 247); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
 const BUTTON_STYLE_2012_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(243, 5, 2); display: inline-block; color: rgb(243, 5, 2); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
 const BUTTON_STYLE_2013_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid rgb(255,255,255); display: inline-block; color: rgb(255,255,255); font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;';
@@ -104,7 +104,7 @@ window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
         const terminal = document.getElementsByClassName("terminal")[0];
-        terminal.style.visibility = 'visible';
+        terminal.style.opacity = '1';
         startIntro();
     }
     if (e.data === 'REPLAY') {
@@ -378,6 +378,8 @@ function setUIMobilePos() {
 
 
 function setIntroPositions() {
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.opacity = '1';
     if (ismobile) {
         setUIMobilePos();
         // mobile
@@ -582,7 +584,8 @@ function setMidPositions() {
 }
 
 function setEndPositions() {
-
+    const terminal = document.getElementsByClassName("terminal")[0];
+    terminal.style.opacity = '1';
     if (ismobile) {
         setUIMobilePos();
         UI.graphStartX = 10;
@@ -625,11 +628,21 @@ function setEndPositions() {
         drawUIDesktop()
     }
 
+    Object.values(BUTTONS).forEach(btn => btn.hide())
+
+    // BUTTONS.pauseButton.show();
+    BUTTONS.muteButton.show();
+    BUTTONS.exitButton.show();
+    BUTTONS.replayButton.show();
+
     BUTTONS.aButton.show();
     BUTTONS.bButton.show();
     BUTTONS.cButton.show();
     BUTTONS.dButton.show();
     BUTTONS.eButton.show();
+
+    drawGraphUI();
+    drawAudioGraphAverage()
 
 }
 
