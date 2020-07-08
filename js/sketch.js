@@ -1151,8 +1151,15 @@ function windowResized() {
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
     setCSS();
     setBTNPosition()
-    if (ismobile) drawUIMobile()
-    else drawUIDesktop()
-    SCENEPOS();
-    SCENE();
+    if (GLOBALSTART) {
+        if (ismobile) drawUIMobile()
+        else drawUIDesktop()
+        SCENEPOS();
+        SCENE();
+    
+    } else {
+        if (Object.keys(BUTTONS).length) {
+            Object.values(BUTTONS).forEach(btn => btn.hide())
+        }
+    }
 }
