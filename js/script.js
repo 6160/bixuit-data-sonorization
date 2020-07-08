@@ -1,5 +1,5 @@
-const DELAYCHAR = 41;
-const DELAYMSG = 700;
+const DELAYCHAR = 45;
+const DELAYMSG = 770;
 const messages = [
     "> welcome human.",
     "> i'm happy you're here.",

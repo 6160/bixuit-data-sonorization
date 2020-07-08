@@ -102,7 +102,7 @@
     .terminal {
         position: absolute;
         /* top: 18%; */
-        top: 80px;
+        top: 81px;
         right: 0;
         bottom: 0;
         left: 0px;
@@ -110,6 +110,13 @@
         margin-left: 0%;
         margin-right: 0%;;
         overflow-y: auto;
+        /* display: none; */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 }
 /*
@@ -149,6 +156,7 @@
         bottom: 0;
         left: 10px;
         overflow-y: auto;
+        display: none;
     }
 } 
 

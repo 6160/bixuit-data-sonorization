@@ -57,8 +57,8 @@ const graphData = {
 }
 
 const BUTTONS = {};
-const BUTTON_STYLE_DESKTOP ='background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
-const BUTTON_STYLE_MOBILE ='background-color: transparent; padding: 0px;-webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;'
+const BUTTON_STYLE_DESKTOP = 'background-color: transparent; -webkit-border-top-left-radius: 0px; -moz-border-radius-topleft: 0px; border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 15px; font-style: normal; height: 30px; line-height: 30px; width: 100px; text-decoration: none; text-align: center;'
+const BUTTON_STYLE_MOBILE = 'background-color: transparent; padding: 0px;-webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #ffffff; display: inline-block; color: #ffffff; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;'
 
 const BUTTON_STYLE_2010_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid #d6a94b; display: inline-block; color: #d6a94b; font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
 const BUTTON_STYLE_2011_MOBILE = 'background-color: transparent; -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px; border-bottom-left-radius: 5px; text-indent: 0; border: 1px solid rgb(66, 130, 247); display: inline-block; color: rgb(66, 130, 247); font-family: monospace; font-size: 8px; font-style: normal; height: 40px; line-height: 16px; width: 40px; text-decoration: none; text-align: center;';
@@ -76,7 +76,7 @@ const BUTTON_STYLE_2014_DESKTOP = 'background-color: transparent; -webkit-border
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 // other stuff
-let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0 , wasPaused: false, changeYear: true};
+let MID = { prev: undefined, curr: 0, year: '', yearList: undefined, index: 0, wasPaused: false, changeYear: true };
 let MID_UI_MOBILE = {};
 let MID_UI_DESKTOP = {};
 let START = false;
@@ -115,9 +115,9 @@ window.addEventListener("message", function (e) {
         SCENE = intro;
         SCENEPOS = setIntroPositions;
         START = true;
-        
+
         volhistory = [];
-        
+
         AUDIO.glados.play();
         AUDIO.glados.onended(continueMid);
         // AUDIO.song.play();
@@ -127,15 +127,15 @@ window.addEventListener("message", function (e) {
         const terminal = document.getElementsByClassName("terminal")[0];
         terminal.style.display = 'block';
         REPLAYED = true;
-        
-        setBTNPosition() 
+
+        setBTNPosition()
         Object.values(BUTTONS).forEach(btn => btn.hide())
         BUTTONS.pauseButton.show();
         BUTTONS.muteButton.show();
         if (REPLAYED) BUTTONS.skipButton.show();
         NEXTSCENE = startMid;
 
-        
+
 
 
     }
@@ -151,15 +151,13 @@ window.addEventListener("message", function (e) {
 
 
 function mute(event) {
-    console.log('BUTTONEVENT:', event)
     const curr = getMasterVolume();
     masterVolume(curr > 0 ? 0.0 : 1.0);
-    BUTTONS.muteButton.html(curr > 0 ? 'unmute': 'mute')
+    BUTTONS.muteButton.html(curr > 0 ? 'unmute' : 'mute')
 }
 
 function exit() {
     window.location.href = 'https://bixuit.spindox.it'
-    console.log('EXIT');
 }
 
 function replay() {
@@ -170,17 +168,13 @@ function replay() {
 function skip() {
     NEXTSCENE();
     window.postMessage('SKIP', '*')
-    console.log('skip')
 }
 
 // this toggle audio
 function toggleAudio() {
-    
-    console.log('toggle start: ', START)
-    BUTTONS.pauseButton.html(START ? 'play': 'pause')
+    BUTTONS.pauseButton.html(START ? 'play' : 'pause')
     // NEED TO STOP AUDIO AND TEXT
     window.postMessage('PAUSE', '*');
-    console.log(CURR_AUDIO_PLAYING)
     CURR_AUDIO_PLAYING.forEach(a => {
         if (a.isPlaying()) {
             a.pause();
@@ -189,21 +183,18 @@ function toggleAudio() {
         }
     })
 
-    
+
     START = !START
     MID.wasPaused = START;
 }
 
-function toggleStart(){
-    
+function toggleStart() {
     START = !START
-    console.log('toggled start: ', START)
 }
 
 function toggleGraph() {
     DRAW_MID_GRAPH = !DRAW_MID_GRAPH;
     SCENEPOS();
-    console.log('toggled: ', DRAW_MID_GRAPH)
 }
 
 function replaySong() {
@@ -228,14 +219,14 @@ function setBTNPositionDesktop(bypass_offset) {
     BUTTONS.replayButton.position(W_WIDTH - 240 - OFFSET, W_HEIGHT - 60);
     BUTTONS.exitButton.position(W_WIDTH - 360 - OFFSET, W_HEIGHT - 60);
     BUTTONS.skipButton.position(W_WIDTH - 120, W_HEIGHT - 60);
-    
-    BUTTONS.aButton.position( 20, W_HEIGHT - 60);
-    BUTTONS.bButton.position( 140, W_HEIGHT - 60);
-    BUTTONS.cButton.position( 260, W_HEIGHT - 60);
-    BUTTONS.dButton.position( 380, W_HEIGHT - 60);
-    BUTTONS.eButton.position( 500, W_HEIGHT - 60);
-  
-    
+
+    BUTTONS.aButton.position(20, W_HEIGHT - 60);
+    BUTTONS.bButton.position(140, W_HEIGHT - 60);
+    BUTTONS.cButton.position(260, W_HEIGHT - 60);
+    BUTTONS.dButton.position(380, W_HEIGHT - 60);
+    BUTTONS.eButton.position(500, W_HEIGHT - 60);
+
+
 
 
     Object.values(BUTTONS).forEach(button => {
@@ -289,7 +280,7 @@ function drawUIDesktop() {
     MID_UI_DESKTOP.TOP_H = 130;
     MID_UI_DESKTOP.BOTTOM_H = 70;
     // MID_UI_DESKTOP.MID2_H = DRAW_MID_GRAPH ? 350 : 5;//W_HEIGHT - TOP_H - BOTTOM_H - PADDING_X * 4;
-    
+
     if (SCENE === intro) {
         MID_UI_DESKTOP.MID2_H = 225;
         DRAW_FILL = true
@@ -305,11 +296,11 @@ function drawUIDesktop() {
     MID_UI_DESKTOP.ALL_W = W_WIDTH - MID_UI_DESKTOP.PADDING_X * 2;
     stroke('rgba(255, 255,255, 0.5)')
     // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
-    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y*2 + MID_UI_DESKTOP.TOP_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.RADIUS)
+    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y * 2 + MID_UI_DESKTOP.TOP_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.RADIUS)
     if (DRAW_FILL) fill('rgba(255,255,255,0.02)')
-    rect(MID_UI_DESKTOP.PADDING_X,MID_UI_DESKTOP.PADDING_Y*3 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.RADIUS)
-    
-    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y*4 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H + MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.BOTTOM_H, MID_UI_DESKTOP.RADIUS)
+    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y * 3 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.RADIUS)
+
+    rect(MID_UI_DESKTOP.PADDING_X, MID_UI_DESKTOP.PADDING_Y * 4 + MID_UI_DESKTOP.TOP_H + MID_UI_DESKTOP.MID1_H + MID_UI_DESKTOP.MID2_H, MID_UI_DESKTOP.ALL_W, MID_UI_DESKTOP.BOTTOM_H, MID_UI_DESKTOP.RADIUS)
     noFill()
 }
 
@@ -322,7 +313,7 @@ function drawUIMobile() {
     // MID_UI_MOBILE.TOP_H = 80;
     // MID_UI_MOBILE.BOTTOM_H = 50;
 
-    
+
     // // if (SCENE === intro) {
     // //     MID2_H = 340;
     // //     DRAW_FILL = true
@@ -336,17 +327,17 @@ function drawUIMobile() {
 
     // MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
     // MID_UI_MOBILE.MID2_H = W_HEIGHT - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
-    
+
     // MID_UI_MOBILE.ALL_W = W_WIDTH - MID_UI_MOBILE.PADDING_X * 2;
 
     stroke('rgba(255, 255,255, 0.5)')
     // rect(PADDING_X, PADDING_Y, ALL_W, TOP_H, RADIUS )
-    if (!MID_UI_MOBILE.MID_FLAG) rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*2 + MID_UI_MOBILE.TOP_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.RADIUS)
+    if (!MID_UI_MOBILE.MID_FLAG) rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y * 2 + MID_UI_MOBILE.TOP_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.RADIUS)
     // if (DRAW_MID_GRAPH) fill('rgba(11,30,99,0.4)')
-    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.RADIUS)
+    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y * 3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.RADIUS)
     noFill()
-    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y*4 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.BOTTOM_H, MID_UI_MOBILE.RADIUS)
-    
+    rect(MID_UI_MOBILE.PADDING_X, MID_UI_MOBILE.PADDING_Y * 4 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H + MID_UI_MOBILE.MID2_H, MID_UI_MOBILE.ALL_W, MID_UI_MOBILE.BOTTOM_H, MID_UI_MOBILE.RADIUS)
+
 }
 
 
@@ -381,15 +372,12 @@ function setUIMobilePos() {
 
     MID_UI_MOBILE.MID1_H = MID_UI_MOBILE.MID_FLAG ? 0 : 70
     MID_UI_MOBILE.MID2_H = W_HEIGHT - MID_UI_MOBILE.TOP_H - MID_UI_MOBILE.BOTTOM_H - MID_UI_MOBILE.MID1_H - MID_UI_MOBILE.PADDING_X * 5;
-    
+
     MID_UI_MOBILE.ALL_W = W_WIDTH - MID_UI_MOBILE.PADDING_X * 2;
 }
 
 
 function setIntroPositions() {
-   
-    console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
-   
     if (ismobile) {
         setUIMobilePos();
         // mobile
@@ -411,19 +399,19 @@ function setIntroPositions() {
 
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
-        
-                //  calcolo posizione ellisse
-                const blockHeight = MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
-                const availableSpace =  UI.graphUI.line.y.high - blockHeight;
-                const ellipseHeight = 200;
-                
-                UI.ellipse = {
-                    draw: false,
-                    x: W_WIDTH / 2,
-                    y: blockHeight + availableSpace/2,
-                };
-        
-        
+
+        //  calcolo posizione ellisse
+        const blockHeight = MID_UI_MOBILE.PADDING_Y * 3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
+        const availableSpace = UI.graphUI.line.y.high - blockHeight;
+        const ellipseHeight = 200;
+
+        UI.ellipse = {
+            draw: false,
+            x: W_WIDTH / 2,
+            y: blockHeight + availableSpace / 2,
+        };
+
+
         // UI.ellipse = {
         //     x: W_WIDTH / 2,
         //     // y: W_WIDTH < 380 ? W_HEIGHT - 175 - 70 : W_HEIGHT - 175 - 80,
@@ -444,13 +432,13 @@ function setIntroPositions() {
             x: (W_WIDTH / 2) + 100,
             y: (UI.ellipse.y) + 50,
         }
-    
+
         UI.sampleNo = {
             x: (W_WIDTH / 2) - 100,
             y: (UI.ellipse.y) - 50,
         }
 
-        
+
     } else {
         // desktop
         UI.graphStartX = 230;
@@ -489,7 +477,6 @@ function setIntroPositions() {
         if (START) drawUIDesktop()
     }
 
-    console.log('ELLIPSE ', UI.ellipse)
     if (Object.keys(BUTTONS).length) {
         Object.values(BUTTONS).forEach(btn => btn.hide())
         BUTTONS.pauseButton.show();
@@ -503,7 +490,6 @@ function setMidPositions() {
     terminal.style.display = 'none';
     if (ismobile) {
         setUIMobilePos();
-        console.log('######### AOSDOADOSADODSAODSAODSAODASODASODASODASOASDOADSO', MID_UI_MOBILE)
         UI.graphStartX = 10;
         UI.graphUI = {};
         UI.graphUI.indicator = {
@@ -522,19 +508,19 @@ function setMidPositions() {
         UI.graphEndX = W_WIDTH - UI.graphUI.indicator.end
         UI.paddingGraphLine = 25;
         UI.paddingGraphText = 16
-        
-        
+
+
         //  calcolo posizione ellisse
-        const blockHeight = MID_UI_MOBILE.PADDING_Y*3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
+        const blockHeight = MID_UI_MOBILE.PADDING_Y * 3 + MID_UI_MOBILE.TOP_H + MID_UI_MOBILE.MID1_H;
         const availableSpace = DRAW_MID_GRAPH ? UI.graphUI.line.y.high - blockHeight : MID_UI_MOBILE.MID2_H;
         const ellipseHeight = 200;
-        
+
         UI.ellipse = {
             draw: false,
             x: W_WIDTH / 2,
-            y: blockHeight + availableSpace/2,
+            y: blockHeight + availableSpace / 2,
         };
-        
+
         if (availableSpace >= ellipseHeight) UI.ellipse.draw = true
 
     } else {
@@ -559,21 +545,17 @@ function setMidPositions() {
         UI.paddingGraphText = 16
 
         //  calcolo posizione ellisse
-        const blockHeight =  MID_UI_DESKTOP.PADDING_Y*2 + MID_UI_DESKTOP.TOP_H;
+        const blockHeight = MID_UI_DESKTOP.PADDING_Y * 2 + MID_UI_DESKTOP.TOP_H;
         const availableSpace = MID_UI_DESKTOP.MID1_H;//DRAW_MID_GRAPH ? UI.graphUI.line.y.high - blockHeight : MID_UI_DESKTOP.MID1_H;
         const ellipseHeight = 150;
 
-
-        console.log(blockHeight, availableSpace)
-        
         UI.ellipse = {
             x: W_WIDTH / 2,
             // y: W_HEIGHT / 2,
-            y: blockHeight + availableSpace/2,
+            y: blockHeight + availableSpace / 2,
         };
         UI.ellipse.draw = ellipseHeight > availableSpace ? false : true;
-        console.log('ellipse', UI.ellipse)
-        // drawUIDesktop()
+
     }
 
 
@@ -659,7 +641,7 @@ function drawAudioGraphLive(points, cb) {
     for (var i = 0; i < points.length; i++) {
         // var y = map(points[i], 0, 1, height - 25, height - 500) - OFFSET;
 
-        var y = map(points[i], 0, 0.5, UI.graphUI.line.y.bottom, UI.graphUI.line.y.high) ;
+        var y = map(points[i], 0, 0.5, UI.graphUI.line.y.bottom, UI.graphUI.line.y.high);
         vertex((i * 4) + UI.graphUI.line.x, y);
     }
     endShape();
@@ -671,12 +653,12 @@ function drawAudioGraphLive(points, cb) {
 // draws average graph
 function drawAudioGraphAverage() {
     const END = SCENE === end ? 'averageEnd' : 'average';
-    const OFFSET = ismobile? 0 : 100;//height > 600 ? 100 : 0;
+    const OFFSET = ismobile ? 0 : 100;//height > 600 ? 100 : 0;
 
     let xoff = 0.01
 
     Object.keys(graphData).forEach((year, index) => {
-        
+
         const DATA = graphData[year];
         noiseSeed(DATA.seed);
 
@@ -735,11 +717,7 @@ function toggleOverlay(year) {
         }
         else ovr.style.display = 'none'
     })
-    
-    // console.log('div display: ', div.style.display)
-    // if (div.style.display === 'none' || !div.style.display) div.style.display = 'block';
-    // else div.style.display = 'none';
-} 
+}
 
 function overlay2010() {
     toggleOverlay('2010')
@@ -773,7 +751,7 @@ function continueMid() {
     }
 }
 
-function startIntro(){
+function startIntro() {
     START = true;
 
     AUDIO.gladosEnd.stop();
@@ -796,9 +774,9 @@ function startIntro(){
 
 // starts MID section
 function startMid() {
-    AUDIO.glados.onended(() => {});
+    AUDIO.glados.onended(() => { });
     AUDIO.glados.stop();
-    
+
     // if (ismobile) {
     //     document.getElementById('bxt').style.left = '50%';
     //     document.getElementById('bxt').style["margin-left"] = '-75px';
@@ -845,10 +823,9 @@ function startMid() {
 function startEnd() {
     if (!START) return;
     clear();
-    AUDIO.gladosGraph.onended(() => {});
+    AUDIO.gladosGraph.onended(() => { });
     AUDIO.gladosGraph.stop();
     AUDIO.moviesGraph.stop();
-    console.log(graphData);
 
     DRAW_MID_GRAPH = true;
     // moving logo back
@@ -932,17 +909,14 @@ function mid() {
     if (MID.curr === 0 && MID.wasPaused) MID.changeYear = false;
     if (MID.curr > 0 && MID.wasPaused) {
         MID.wasPaused = false;
-        MID.changeYear= true
+        MID.changeYear = true
     }
 
 
 
     // change year
     if (MID.prev > 0 && MID.curr === 0 && MID.changeYear) {
-        console.log('change year', MID.changeYear)
-        console.log(MID.prev , MID.curr)
         // change points bucket
-        console.log('qua non devo entrare')
         MID.index++
         if (MID.index === MID.yearList.length) {
             graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
@@ -953,7 +927,7 @@ function mid() {
             return;
         }
 
-        console.log(' #### >> fetched points: ', graphData[MID.year].points.raw)
+        // console.log(' #### >> fetched points: ', graphData[MID.year].points.raw)
 
         // storing points 
         graphData[MID.year].points.normalized = normalizePoints(graphData[MID.year].points.raw)
@@ -984,13 +958,13 @@ function mid() {
         // draw live window
         stroke(graphData[MID.year].color)
         drawAudioGraphLive(graphData[MID.year].points.window, cb);
-    } 
+    }
 
     stroke('rgb(255,255,255');
-    if(UI.ellipse.draw) {
+    if (UI.ellipse.draw) {
         // resetting stroke color
         stroke('rgba(0,255,255, 0.1');
-    
+
         // drawing mouth
         ellipse(UI.ellipse.x, UI.ellipse.y, 200, (MID.curr || voiceAmp.getLevel()) * 200);
         textFont('monospace');
@@ -1027,20 +1001,16 @@ function preload() {
     AUDIO.gladosGraph = loadSound('./audio/glados_graph.mp3');
     AUDIO.moviesGraph = loadSound('./audio/movies_graph.mp3');
     AUDIO.gladosEnd = loadSound('./audio/glados_end.mp3');
-
-
 }
 
 
 function setWH() {
-    console.log('DIOCANEEEEEE')
     W_WIDTH = ismobile ? width : windowWidth;
     W_HEIGHT = ismobile ? height : windowHeight;
     ismobile = window.matchMedia("only screen and (max-width: 760px)").matches || width <= 760;
 
     if (ismobile) window.postMessage('TRIM', '*')
     else window.postMessage('UNTRIM', '*')
-
 }
 
 function setup() {
@@ -1067,14 +1037,13 @@ function setup() {
     SCENE = intro;
     SCENEPOS = setIntroPositions;
 
-   
-    const BUTTON_STYLE = ismobile ? BUTTON_STYLE_MOBILE : BUTTON_STYLE_DESKTOP; 
-    const BUTTON_STYLE_2010 = ismobile ? BUTTON_STYLE_2010_MOBILE : BUTTON_STYLE_2010_DESKTOP; 
-    const BUTTON_STYLE_2011 = ismobile ? BUTTON_STYLE_2011_MOBILE : BUTTON_STYLE_2011_DESKTOP; 
-    const BUTTON_STYLE_2012 = ismobile ? BUTTON_STYLE_2012_MOBILE : BUTTON_STYLE_2012_DESKTOP; 
-    const BUTTON_STYLE_2013 = ismobile ? BUTTON_STYLE_2013_MOBILE : BUTTON_STYLE_2013_DESKTOP; 
-    const BUTTON_STYLE_2014 = ismobile ? BUTTON_STYLE_2014_MOBILE : BUTTON_STYLE_2014_DESKTOP; 
-    console.log('#### BUTTON STYULE 2010' ,BUTTON_STYLE_2010)
+    const BUTTON_STYLE = ismobile ? BUTTON_STYLE_MOBILE : BUTTON_STYLE_DESKTOP;
+    const BUTTON_STYLE_2010 = ismobile ? BUTTON_STYLE_2010_MOBILE : BUTTON_STYLE_2010_DESKTOP;
+    const BUTTON_STYLE_2011 = ismobile ? BUTTON_STYLE_2011_MOBILE : BUTTON_STYLE_2011_DESKTOP;
+    const BUTTON_STYLE_2012 = ismobile ? BUTTON_STYLE_2012_MOBILE : BUTTON_STYLE_2012_DESKTOP;
+    const BUTTON_STYLE_2013 = ismobile ? BUTTON_STYLE_2013_MOBILE : BUTTON_STYLE_2013_DESKTOP;
+    const BUTTON_STYLE_2014 = ismobile ? BUTTON_STYLE_2014_MOBILE : BUTTON_STYLE_2014_DESKTOP;
+
     // creating buttons
     BUTTONS.toggleButton = createButton('toggle');
     BUTTONS.toggleButton.style(BUTTON_STYLE)
@@ -1125,11 +1094,8 @@ function setup() {
     BUTTONS.eButton.style(BUTTON_STYLE_2014)
     BUTTONS.eButton.mousePressed(overlay2014);
 
-
-
-
     setBTNPosition = ismobile ? setBTNPositionMobile : setBTNPositionDesktop;
-    
+
     setBTNPosition();
     Object.values(BUTTONS).forEach(btn => btn.hide())
 
@@ -1138,9 +1104,6 @@ function setup() {
     OVERLAYS.all.forEach(overlay => {
         OVERLAYS[overlay.id] = overlay;
     })
-
-    console.log('%%%%%%%%%%% OVERLAYS ', OVERLAYS)
-
 }
 
 function draw() {
@@ -1149,11 +1112,11 @@ function draw() {
 
     if (ismobile) drawUIMobile()
     else drawUIDesktop()
-    
-    
+
+
     SCENE();
-    
-    
+
+
     if (DEBUG) text(`sDEBUG: width: ${width} / height: ${height} / ismobile: ${ismobile} / ww: ${W_WIDTH} / wh: ${W_HEIGHT}`, 10, 10);
 }
 
@@ -1164,5 +1127,4 @@ function windowResized() {
     setCSS();
     setBTNPosition()
     SCENEPOS();
-    
 }
