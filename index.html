@@ -64,13 +64,17 @@
   <style>
 
     @media (max-width: 812px) {
+
+    }
+
+    @media (max-width: 760px) {
       .msg {
         position: absolute;
         top: 90px;
         margin-left: 10px;
         margin-right: 10px;
         width: 95%;
-        height: 80%;
+        height: 85%;
         z-index: 99999999;
         overflow-y: auto;
         /* text-align: center; */
@@ -84,22 +88,19 @@
         width: 300px;
         position: absolute;
       }
-    }
-
-    @media (max-width: 760px) {
       .loading-msg {
-      position: absolute;
-      /* top: 50%; */
-      /* left: 50%; */
-      right: 20px;
-      /* margin-left: -200px; */
-      /* width: 400px; */
-      z-index: 99999999;
-      text-align: center;
-      top: 20px;
+        position: absolute;
+        /* top: 50%; */
+        /* left: 50%; */
+        right: 20px;
+        /* margin-left: -200px; */
+        /* width: 400px; */
+        z-index: 99999999;
+        text-align: center;
+        top: 20px;
 
-      /* will center text in <p>, which is not a flex item */
-    }
+        /* will center text in <p>, which is not a flex item */
+      }
       .logo{
         z-index: 999999;
         top: 20px;
@@ -187,31 +188,32 @@
 
           /* will center text in <p>, which is not a flex item */
         }
+        .logo_img{
+          /* z-index: 999999; */
+          /* top: 20px;
+          left: 10px; */
+          width: 150px;
+          /* position: absolute; */
+        }
+
+        .msg {
+          position: absolute;
+          top: 20%;
+          left: 50%;
+          margin-left: -380px;
+
+          width: 760px;
+          z-index: 99999999;
+          /* text-align: center; */
+          /* visibility: hidden; */
+          /* will center text in <p>, which is not a flex item */
+        }
 
       }
 
     @media (min-width: 813px) {
 
-      .logo_img{
-        /* z-index: 999999; */
-        /* top: 20px;
-        left: 10px; */
-        width: 150px;
-        /* position: absolute; */
-      }
 
-      .msg {
-        position: absolute;
-        top: 20%;
-        left: 50%;
-        margin-left: -380px;
-
-        width: 760px;
-        z-index: 99999999;
-        /* text-align: center; */
-        /* visibility: hidden; */
-        /* will center text in <p>, which is not a flex item */
-      }
     
     }
 
