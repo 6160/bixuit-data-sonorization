@@ -104,7 +104,7 @@ window.addEventListener("message", function (e) {
     if (e.data === 'START') {
         console.log(' #### STARTING P5')
         const terminal = document.getElementsByClassName("terminal")[0];
-        terminal.style.display = 'block';
+        terminal.style.visibility = 'visible';
         startIntro();
     }
     if (e.data === 'REPLAY') {
