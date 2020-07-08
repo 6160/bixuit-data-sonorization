@@ -1089,10 +1089,6 @@ function setup() {
     BUTTONS.skipButton.style(BUTTON_STYLE)
     BUTTONS.skipButton.mousePressed(skip);
 
-    BUTTONS.skipButton = createButton('skip');
-    BUTTONS.skipButton.style(BUTTON_STYLE)
-    BUTTONS.skipButton.mousePressed(skip);
-
 
     BUTTONS.aButton = createButton('2010');
     BUTTONS.aButton.style(BUTTON_STYLE_2010)
