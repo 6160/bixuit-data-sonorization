@@ -134,8 +134,10 @@ window.addEventListener("message", function (e) {
         BUTTONS.muteButton.show();
         if (REPLAYED) BUTTONS.skipButton.show();
         NEXTSCENE = startMid;
-
-
+        OVERLAYS.all.forEach(ovr =>  ovr.style.display = 'none');
+        Object.keys(graphData).forEach((year, index) => {
+            graphData[year].done = false;
+        })
 
 
     }
@@ -674,7 +676,7 @@ function drawAudioGraphLive(points, cb) {
 
 // draws average graph
 function drawAudioGraphAverage() {
-    const END = SCENE === end ? 'averageEnd' : 'average';
+    const END = SCENE === end ;
     const OFFSET = ismobile ? 0 : 100;//height > 600 ? 100 : 0;
 
     let xoff = 0.01
@@ -685,7 +687,7 @@ function drawAudioGraphAverage() {
         stroke(DATA.color);
         // text(year, UI.graphUI.indicator.end + index * 30 +10, height - 140 );
         text(year, UI.graphUI.indicator.end + index * 30 + 10, UI.graphUI.line.y.bottom + 20);
-        if (DATA.done){
+        if (DATA.done || END){
             noiseSeed(DATA.seed);
 
 
