@@ -1,5 +1,5 @@
 // constants
-const DEBUG = true;
+const DEBUG = false;
 const MINWIDTH = 480;
 const UI = {};
 const AUDIO = {};
@@ -246,7 +246,7 @@ function setBTNPositionDesktop(bypass_offset, isEnd) {
 }
 
 function setBTNPositionMobile(bypass_offset) {
-    let OFFSET = REPLAYED && !bypass_offset ? 50 : 0;
+    let OFFSET = REPLAYED && !bypass_offset ? 45 : 0;
     OFFSET = W_WIDTH > 760 ? OFFSET + 10 : OFFSET;
     let X_OFFSET = W_WIDTH > 760 ? 10 : 0;
     const PADDING_BOTTOM = W_WIDTH > 760 ? 65 : 50;
